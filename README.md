@@ -1,5 +1,6 @@
 
 # ICO Client
+OASISBloc's Official and ICO web site
 
 ## Project setup
 * nodejs - express
@@ -7,7 +8,7 @@
 
 $ npm install
 
-## Run serve
+## Run server
 
 * Development Mode
 $ export NODE_ENV=development
