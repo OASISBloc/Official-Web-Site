@@ -2,6 +2,8 @@
 # ICO Client
 
 ## Project setup
+* nodejs - express
+* ejs
 
 $ npm install
 
@@ -15,7 +17,7 @@ $ export NODE_ENV=production
 
 $ npm start
 
-## directory structure
+## Directory structure
 ```.
 ├── app.js
 ├── bin
