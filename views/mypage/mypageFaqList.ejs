@@ -1,0 +1,78 @@
+			<!-- Contents -->
+			<div class="main-contents">
+                <section>
+                    <div class="outer">
+                        <div class="inner">
+                            <div class="m-tit cf">
+                                <h1>FAQ</h1>
+                                <div class="cnt">Total of <em id="totCnt">0</em></div>
+                            </div>
+                            <div class="mp-tit">
+                                <div class="desc">Please check the FAQ and for additional questions, send an email to support@oasisbloc.io.
+                                </div>
+                            </div>
+                            <div class="accordion">
+                                <ul id="faqList">
+                                    
+                                </ul>
+                            </div>
+                            <div class="btn-wrap" id="moreDiv">
+                                <button type="button" class="btn more" id="btnMore"><span>More</span></button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+            </div>
+            <!-- //Contents -->
+
+<script>
+    $(function() {
+        $("[name='lFaq']").addClass("active");
+        $("#mMenuLayer").text("FAQ");
+        fn_faqList('', false);
+    });
+
+    function fn_faqList(nextNum, more) {
+        $.ajax({
+            url: '/mypage/mypageFaqListAjax',
+            type: 'POST',
+            data: {'boardType': 'CD_FAQ', 'nextNum': nextNum, 'more': more},
+            dataType: 'json',
+            success: function(data){
+                $("#totCnt").text(data.cntInfo.totCnt);
+                var faqHtml = "";
+                if (data.boardList && data.boardList.length > 0) {
+                    for (var i = 0; i < data.boardList.length; i++) {
+                        var faqInfo = data.boardList[i];
+                        faqHtml += "<li>";
+                        faqHtml += "    <a href='#' class='ac-trigger'>";
+                        faqHtml += "        <div class='n'>" + faqInfo.seq + "</div>";
+                        faqHtml += "        <div class='t'><div class='e'>" + faqInfo.board_subject + "</div></div>";
+                        faqHtml += "    </a>";
+                        faqHtml += "    <div class='ac-content'>" + faqInfo.board_content + "</div>";
+                        faqHtml += "</li>";
+                        
+                        if (1 == faqInfo.seq) {
+                            $("#moreDiv").hide();
+                        } else {
+                            if ((i + 1) == data.boardList.length) {
+                                $("#btnMore").attr("onclick", "fn_faqList('" + faqInfo.board_id + "', '" + true + "')");
+                                $("#moreDiv").show();
+                            }
+                        }
+                    }
+                } else {
+                    faqHtml += "<li class='nodata'>No data</li>";
+                }
+                $("#faqList").append(faqHtml);
+                headerFooterPosition(); // 회면 사이즈 재설정
+            }
+            , error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+
+    function setStep() {}
+
+</script>

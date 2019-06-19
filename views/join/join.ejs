@@ -1,0 +1,304 @@
+<script type="text/javascript" src="/js/jquery.validate.min.js"></script>
+<script src='https://www.google.com/recaptcha/api.js?hl=en'></script>
+
+            <!-- Contents -->
+            <form id="joinForm" name="joinForm" onsubmit="fn_onsubmit();">
+                <div class="contents">
+                    <h1 class="h-tit">Create your account</h1>
+                    <section class="form-section">
+                    <% if (type) { %>
+                        <div class="s-tit">[ Company representative information ]</div>
+                    <% } %>
+                        <div class="form-row">
+                            <label class="fm-label" for="user_mail">Account (email address)</label>
+                            <div class="fm-input">
+                                <input type="text" id="user_mail" name="user_mail" onkeypress="fn_onsubmit(event)" placeholder="Enter your email address">
+                            </div>
+                        </div>
+                    <% if (type) { %>
+                        <div class="form-row-group">
+                            <div class="span4 form-row">
+                                <label class="fm-label" for="user_firstname">First name</label>
+                                <div class="fm-input">
+                                    <input type="text" id="user_firstname" name="user_firstname" onkeypress="fn_onsubmit(event)" placeholder="Enter first name">
+                                </div>
+                            </div>
+                            <div class="span6 form-row">
+                                <label class="fm-label" for="user_lastname">Last name</label>
+                                <div class="fm-input">
+                                    <input type="text" id="user_lastname" name="user_lastname" onkeypress="fn_onsubmit(event)" placeholder="Enter last name">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <label class="fm-label block" for="user_countrycode">Contact number</label>
+                            <div class="form-row">
+                                <div class="span4 first">
+                                   <div class="fm-input">
+                                      <input type="text" id="user_countrycode" name="user_countrycode" onkeypress="fn_onsubmit(event)" placeholder="Country code">
+                                   </div>
+                                </div>
+                                <div class="span6">
+                                   <div class="fm-input">
+                                      <input type="text" id="user_phonenum" name="user_phonenum" onkeypress="fn_onsubmit(event)" placeholder="Enter contact number">
+                                   </div>
+                                </div>
+                             </div>
+                        </div>
+                    <% } %>
+                        <div class="form-row">
+                            <label class="fm-label" for="user_password">Password</label>
+                            <div class="fm-input">
+                                <input type="password" id="user_password" name="user_password" onkeypress="fn_onsubmit(event)" placeholder="8~15 characters including letters, numbers">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <label class="fm-label" for="user_password_ok">Repeat password</label>
+                            <div class="fm-input">
+                                <input type="password" id="user_password_ok" name="user_password_ok" onkeypress="fn_onsubmit(event)" placeholder="Repeat password">
+                            </div>
+                        </div>
+                        <div class="captcha-wrap" id="recaptchaDiv">
+                            <div class="g-recaptcha" data-sitekey="<%=config.recaptchaSite %>" data-callback="recaptchaCallback"></div>
+                        </div>
+                        <div class="form-check-terms">
+                            <div class="check-all"><label class="fm-check"><input type="checkbox" id="allCheck"><span class="txt">Accept to all terms below</span></label></div>
+                            <ul class="check-list">
+                                <li><label class="fm-check"><input type="checkbox" name="agree_1" id="agree_1"><span class="txt">I accept the</span></label><a href="/mypage/termsnprivacy?type=terms" target="_blank" class="added-bold"> terms and conditions.</a></li>
+                                <li><label class="fm-check"><input type="checkbox" name="agree_2" id="agree_2"><span class="txt">I accept the</span></label><a href="/mypage/termsnprivacy?type=privacy" target="_blank" class="added-bold"> privacy policy.</a></li>
+                                <li><label class="fm-check"><input type="checkbox" name="agree_3" id="agree_3"><span class="txt">Accept emails (optional)</span></label></li>
+                                <li class="error" id="checkError" style="display:none;">Please check the required fields.</li>
+                            </ul>
+                        </div>
+                        <div class="btn-wrap">
+                            <button type="button" class="btn confirm full" onclick="$('#joinForm').submit()">Register</button>
+                        </div>
+                        <aside class="link">
+                            <div class="tit-line"><strong>OR</strong></div>
+                            <p class="txt-inlink">Already have an account? <a href="/login">Sign in</a></p>
+                            <p class="txt-inlink">Need help? <a href="mailto:<%=config.supportEmail %>"><%=config.supportEmail %></a></p>
+                        </aside>
+                    </section>
+                </div>    
+            </form>
+            <!-- //Contents -->
+
+            <!-- Modal -->
+            <div id="sendMailModal" class="modal hide fade">
+                <div class="modal-wrap">
+                    <div class="vcon v2"></div>
+                    <p class="md-tit"><strong>Verify your email address</strong></p>
+                    <p class="md-desc">Verification email has been sent<br>to your registered email address.<br><br>Verify your email address to complete your registration.</p>
+                    <div class="btn-wrap">
+                        <button type="button" class="btn confirm small" onclick="location.href='/login'">Close</button>
+                    </div>
+                </div>
+            </div>
+            <!-- //Modal -->
+<script>
+    $(function() {
+        $("#user_mail").focusout(function() {
+            $(this).val($(this).val().toLowerCase());
+
+        });
+
+        $("#joinForm").validate({
+            rules: {
+                user_mail: {
+                    required: true,
+                    email: true,
+                    duplEmail: true
+                }, user_firstname: {
+                    required: true
+                }, user_lastname: {
+                    required: true
+                }, user_countrycode: {
+                    required: true,
+                    number: true,
+                    maxlength: 3
+                }, user_phonenum: {
+                    required: true,
+                    number: true
+                }, user_password: {
+                    required: true,
+                    rangelength: [8, 15],
+                    regPwd: true
+                }, user_password_ok: {
+                    required: true,
+                    rangelength: [8, 15],
+                    equalTo: '#user_password'
+                }, agree_1: {
+                    checkBoxVal: true
+                }, agree_2:  {
+                    checkBoxVal: true
+                }
+            },
+            messages: {
+                user_mail: {
+                    required: "Enter your email address.",
+                    email: "Invalid email address. Please try again.",
+                    duplEmail: "This email address is already registered. Please sign in."
+                }
+                , user_firstname: {
+                    required: "Enter first name of the contact person."
+                }
+                , user_lastname: {
+                    required: "Enter last name of the contact person."
+                }
+                , user_countrycode: {
+                    required: "Enter Country code.",
+                    number: "Enter numbers only.",
+                    maxlength: "Country code should be 3 characters."
+                }
+                , user_phonenum: {
+                    required: "Enter contact number.",
+                    number: "Enter numbers only."
+                }
+                , user_password: {
+                    required: "Enter password.",
+                    rangelength: $.validator.format("Password should be between {0}~{1} characters including letters and numbers.")
+                }
+                , user_password_ok: {
+                    required: "Enter password.",
+                    rangelength: $.validator.format("Password should be between {0}~{1} characters including letters and numbers."),
+                    equalTo: "The passwords do not match. Please try again."
+                }
+            },
+            highlight: function(element, errorClass) {
+                if (errorClass == "error") {
+                    $(element).parent().addClass("error");
+                }
+            },
+            errorPlacement: function(err, el) {
+                el.after(err);
+                var errCls = el.attr("class");
+                if (errCls == "error") {
+                    $(el).parent().addClass("error");
+                }
+            },
+            success: function(el) {
+                $(el).parent().removeClass("error");
+            },
+            submitHandler: function (form) {
+                if (!recaptchaCheck) {
+                    $("#recaptchaErr").remove();
+                    $("#recaptchaDiv").append("<p class='captcha-error' id='recaptchaErr'>Check the box for reCAPTCHA.</p>");
+                    return;
+                }
+                var data = {'user_mail': $('#user_mail').val()
+                            , 'user_password': $('#user_password').val()
+                            , 'user_firstname': $('#user_firstname').val()
+                            , 'user_lastlame': $('#user_lastname').val()
+                            , 'user_countrycode': $('#user_countrycode').val()
+                            , 'user_phonenum': $('#user_phonenum').val()
+                            , 'agree_1': $('#agree_1').prop("checked") ? 'Y' : 'N'
+                            , 'agree_2': $('#agree_2').prop("checked") ? 'Y' : 'N'
+                            , 'agree_3': $('#agree_3').prop("checked") ? 'Y' : 'N'
+                            , 'recaptcha' : grecaptcha.getResponse()
+                        };
+                
+                $.ajax({
+                    url: '/join/joinAjax',
+                    data: data,
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function(data){
+                        if (data.result == 'OK') {
+                            $("#sendMailModal").modal();
+                        } else {
+                            if (!data.message) {
+                                alert('Registration failed.');
+                            } else {
+                                if (data.type == "reCaptcha") {
+                                    $("#recaptchaErr").remove();
+                                    $("#recaptchaDiv").append("<p class='captcha-error' id='recaptchaErr'>Failed recAPTCHA authentication.</p>");
+                                } else {
+                                    alert(data.message);
+                                }
+                            }
+                        }
+                    }
+                    , error: function(error) {
+                        alert('Error occurred.');
+                    }
+                });
+            }
+        });
+
+        // 약관 체크 박스 모두 선택 모두 해제
+        $("#allCheck").click(function() {
+            if ($(this).prop("checked")) {
+                $("input[name^=agree]").prop("checked", true);
+                $("#checkError").hide();
+            } else {
+                $("input[name^=agree]").prop("checked", false);
+            }
+        });
+        
+        // 전체 선택 제어
+        $("input[name^=agree]").click(function() {
+            var allCheckFlg = true;
+            $("input[name^=agree]").each(function () {
+                if (!$(this).prop("checked")) {
+                    allCheckFlg = false;
+                    return false;
+                }
+            });
+
+            if (allCheckFlg) {
+                $("#allCheck").prop("checked", true);
+            } else {
+                $("#allCheck").prop("checked", false);
+            }
+        });
+
+    });
+
+    $.validator.addMethod('regPwd', function(value, element) {
+            var regPwd = /^.*(?=.*[0-9])(?=.*[a-zA-Z]).*$/;
+            return regPwd.test(value);
+        }, 'Password should be between 8~15 characters including letters and numbers.'
+    );
+
+    $.validator.addMethod('duplEmail', function() {
+        var result = false;
+        $.ajax({
+            async: false,
+            cache: false,
+            url: '/join/duplEmailChkAjax',
+            data: {'email': $("#user_mail").val()},
+            type: 'POST',
+            dataType: 'json',
+            success: function(data){
+                result = data.result;
+            }
+        });
+        return result;
+    });
+
+    $.validator.addMethod('checkBoxVal', function(value, element) {
+        var result = $("[name=" + element.id + "]").is(":checked")
+
+        var result1 = $('#agree_1').prop("checked");
+        var result2 = $('#agree_2').prop("checked");
+
+        if (!result1 || !result2) {
+            $("#checkError").show();
+        } else {
+            $("#checkError").hide();
+        }
+        return result;
+    }, '');
+
+    var recaptchaCheck = false;
+    function recaptchaCallback() {
+        recaptchaCheck = true;
+        $("#recaptchaErr").remove();
+    }
+
+    function fn_onsubmit(event) {
+        if (event && event.keyCode == 13)
+            $('#joinForm').submit();
+    }
+
+</script>

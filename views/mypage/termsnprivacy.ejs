@@ -1,0 +1,121 @@
+		<!-- Contents -->
+		<div class="contents">
+                <h1 class="h-tit">OASISBloc Terms & Privacy</h1>
+                <section class="form-section">
+                    <nav class="mp-tabs">
+                        <ul>
+                            <li id="termsTab">
+                                <a href="#terms" data-toggle="tab" onclick="initTab('terms')">Terms &amp; conditions</a>
+                            </li>
+                            <li id="policyTab">
+                                <a href="#policy" data-toggle="tab" onclick="initTab('policy')">Privacy policy</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <div class="tab-content">
+                        <!-- Privacy policy -->
+                        <div class="tab-pane fade" id="policy">
+                            <div class="legal-wrap">
+                                <div class="legal-head">
+                                    <h2>Privacy policy</h2>
+                                    <div class="ver">
+                                        <div class="form-row inline">
+                                            <label class="fm-label" for="selectPolicy">See previous version</label>
+                                            <div class="fm-select">
+                                                <select name="selectPolicy" id="selectPolicy" onchange="getPolicy('2')">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="legal-cont" id="policyContent">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //Privacy policy -->
+                        <!-- Terms & conditions -->
+                        <div class="tab-pane fade" id="terms">
+                            <div class="legal-wrap">
+                                <div class="legal-head">
+                                    <h2>Terms &amp; conditions</h2>
+                                    <div class="ver">
+                                        <div class="form-row inline">
+                                            <label class="fm-label" for="selectTerms">See previous version</label>
+                                            <div class="fm-select">
+                                                <select name="selectTerms" id="selectTerms" onchange="getPolicy('1')">
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="legal-cont"  id="termsContent">
+                                </div>
+                            </div>
+                        </div>
+                        <!-- //Terms & conditions -->
+                    </div>
+                </section>
+            </div>
+            <!-- //Contents -->
+    <script>
+        $(function() {
+            var type = '<%=type%>';
+            initTab(type);
+        });
+    
+        function initTab(type) {
+            var termsType;
+            if (type == "terms") {
+                $("#terms").addClass("in active");
+                $("#termsTab").addClass("active");
+                $("[name='fTerms']").addClass("active");
+                $("#policy").removeClass("in active");
+                $("#policyTab").removeClass("active");
+                $("[name='fPolicy']").removeClass("active");
+                termsType = '1';
+            } else {
+                $("#policy").addClass("in active");
+                $("#policyTab").addClass("active");
+                $("[name='fPolicy']").addClass("active");
+                $("#terms").removeClass("in active");
+                $("#termsTab").removeClass("active");
+                $("[name='fTerms']").removeClass("active");
+                termsType = '2';
+            }
+            getPolicy(termsType);
+        }
+    
+        function getPolicy(termsType) {
+            var boardId = termsType == '1' ? $("#selectTerms option:selected").val() : $("#selectPolicy option:selected").val();
+            $.ajax({
+                url: '/policyData',
+                data: {'termsType': termsType, 'boardId': boardId},
+                type: 'POST',
+                dataType: 'json',
+                success: function(data){
+                    if (data.result) {
+                        var verList = data.verList;
+                        var policyData = data.policyData;
+                        var selectHtml = "";
+                        for (var i = 0; i < verList.length; i++) {
+                            var boardIdVal = boardId == verList[i].board_id ? "selected" : "";
+                            selectHtml += "<option value='" + verList[i].board_id + "' " + boardIdVal + ">" + verList[i].createDate + " (" + verList[i].terms_version + ")</option>";
+                        }
+                        if (termsType == '1') {
+                            $("#selectTerms").html(selectHtml);
+                            $("#termsContent").html(policyData.board_content);
+                            $("#selectTerms")
+                        } else {
+                            $("#selectPolicy").html(selectHtml);
+                            $("#policyContent").html(policyData.board_content);
+                        }
+                        headerFooterPosition(); // 회면 사이즈 재확인
+                    }
+                }
+                , error: function(error) {
+                    alert('Error occurred.');
+                }
+            });
+        }
+    </script>
+    

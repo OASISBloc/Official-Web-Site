@@ -1,0 +1,321 @@
+<script type="text/javascript" src="/js/jquery.validate.min.js"></script>
+
+            <!-- Contents -->
+            <form id="one_factor_form" name="one_factor_form">
+                <input type="hidden" id="callPage" value="<%=callPage %>">
+                <div class="contents">
+                    <h1 class="h-tit">Sign in</h1>
+                    <section class="form-section">
+                        <div class="form-row">
+                            <label class="fm-label" for="user_mail">Account (email address)</label>
+                            <div class="fm-input">
+                                <input id="user_mail" name="user_mail" type="text" placeholder="Enter your email address">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <label class="fm-label" for="user_pwd">Password</label>
+                            <div class="fm-input">
+                                <input id="user_pwd" name="user_pwd" type="password" placeholder="Enter password">
+                            </div>
+                        </div>
+                        <div class="btn-group">
+                            <div class="error" id="loginErr" style="display: none">The email address or password you entered is incorrect. Please check again.</div>
+                            <div class="btn-wrap">
+                                <button type="button" class="btn confirm full" onclick="$('#one_factor_form').submit()">Sign in</button>
+                            </div>
+                        </div>
+                        <ul class="sign-util cf">
+                            <li><a href="/login/forgotPassword">Forgot password?</a></li>
+                            <li><a href="/join">Don’t have an account?</a></li>
+                        </ul>
+                    </section>
+                </div>
+            </form>
+            <!-- //Contents -->
+
+<!-- Modal -->
+<div id="resendEmail" class="modal hide fade">
+    <div class="modal-wrap">
+        <div class="vcon v2"></div>
+        <p class="md-tit"><strong>Email verification <span class="em">incomplete</span></strong></p>
+        <p class="md-desc">Please check the inbox of your registered email address.<br><br>Check your spam mailbox if you have not received one.<br>Click on re-send button to receive<br>the verification email again.</p>
+        <div class="btn-wrap">
+            <button type="button" class="btn normal small" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn confirm small" onclick="resendVerifyEmail()">Re-send</button>
+        </div>
+    </div>
+</div>
+
+<form id="two_factor_form" name="">
+    <div id="two_factor" class="modal hide fade">
+        <div class="modal-wrap">
+            <div class="vcon v1"></div>
+            <p class="md-tit"><strong>Two-factor authentication</strong></p>
+            <p class="md-desc">Enter the 6-digit OTP code generated on the OTP app<br>for OASISBloc website.</p>
+            <div class="form-row flex inline">
+                <label class="fm-label" for="otpNum">OTP code</label>
+                <div class="fm-input">
+                    <input id="otpNum" name="otpNum" type="text" placeholder="Enter the OTP code" oninput="checkOtp()">
+                </div>
+            </div>
+            <div class="btn-wrap">
+                <button type="button" class="btn normal small" data-dismiss="modal" onclick="otpClear()">Cancel</button>
+                <button type="button" class="btn confirm small" onclick="$('#two_factor_form').submit()">Send</button>
+            </div>
+        </div>
+    </div>
+</form>
+<!-- //Modal -->
+
+<%  if (kind) {
+    if (kind == 'already') { %>
+
+    <div id="alreadyModal" class="modal hide fade">
+        <div class="modal-wrap">
+            <div class="vcon v3"></div>
+            <p class="md-tit"><strong>Certification completed.</strong></p>
+            <p class="md-desc">Email authentication has already been completed.</p>
+            <div class="btn-wrap">
+                <button type="button" class="btn confirm small" data-dismiss="modal" onclick="location.href='/login'">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function() {
+            $("#alreadyModal").modal();
+        });
+    </script>
+
+<%  	} else if (kind == 'expire') { %>
+
+    <div id="expireModal" class="modal hide fade">
+        <div class="modal-wrap">
+            <div class="vcon v3"></div>
+            <p class="md-tit"><strong>Authentication email has expired</strong></p>
+            <p class="md-desc">Please resend authentication email<br>by entering your ID & Password on the sign in page.</p>
+            <div class="btn-wrap">
+                <button type="button" class="btn confirm small" onclick="location.href='/login'">Sign in</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function() {
+            $("#expireModal").modal();
+        });
+    </script>
+
+<%  	} else if (kind == 'complete') { %>
+
+    <div id="completeModal" class="modal hide fade">
+        <div class="modal-wrap">
+            <div class="vcon v3"></div>
+            <p class="md-tit"><strong>Registration completed</strong></p>
+            <p class="md-desc">You are now registered.<br><br>You may sign in and participate in presale.<br>Click on participate button below<br>to participate in presale.</p>
+            <div class="btn-wrap">
+                <button type="button" class="btn normal small" onclick="location.href='/main'">Main page</button>
+                <button type="button" class="btn confirm small" onclick="location.href='/login'">Participate</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        $(function() {
+            $("#completeModal").modal();
+        });
+    </script>
+
+<%		}
+ } %>
+
+
+<script>
+    $(function() {
+        $("#user_pwd").keypress(function(e) {
+            if (e.which == 13) {
+                $('#one_factor_form').submit();
+            }
+        });
+
+        $("#otpNum").keypress(function(e) {
+            if (e.which == 13) {
+                $('#two_factor_form').submit();
+            }
+        });
+
+        // 로그인 처리
+        $("#one_factor_form").validate({
+            rules: {
+                user_mail: {
+                    required: true,
+                    email: true
+                }
+                , user_pwd: {
+                    required: true
+                }
+            },
+            messages: {
+                user_mail: {
+                    required: "Enter your email address.",
+                    email: "Invalid email address. Please try again."
+                }
+                , user_pwd: {
+                    required: "Enter password."
+                }
+            },
+            highlight: function(element, errorClass) {
+                if (errorClass == "error") {
+                    $(element).parent().addClass("error");
+                }
+            },
+            errorPlacement: function(err, el) {
+                el.after(err);
+                var errCls = el.attr("class");
+                if (errCls == "error") {
+                    $(el).parent().addClass("error");
+                }
+            },
+            success: function(el) {
+                var errCls = el.attr("class");
+                $(el).parent().removeClass("error");
+            },
+            submitHandler: function (form) {
+                var params = {'user_mail': $('#user_mail').val()
+                            , 'user_pwd': $('#user_pwd').val()
+                };
+                
+                $.ajax({
+                    url: '/login/loginAjax',
+                    data: JSON.stringify(params), 
+                    type: 'POST',
+                    contentType: 'application/json; charset=UTF-8',
+                    dataType: 'json',
+                    success: function(data) {
+                        if (data.result && !data.otpflg) {  // 일반 로그인
+                            localStorage.setItem('access_token', data.token);
+                            if ($("#callPage").val() == "") {
+                                location.href = '/mypage/profile?loginFlg=true';
+                            } else {
+                                var nextPage = $("#callPage").val();
+                                var urls = nextPage.split('/');
+                                
+                                if (nextPage.indexOf('/login') > -1 || nextPage.indexOf('/join') > -1 || nextPage.indexOf('/main') > -1 || !urls[4]) {
+                                    nextPage = '/mypage/profile?loginFlg=true';
+                                }
+                                location.href = nextPage;
+                            }
+                        } else if (data.result && data.otpflg) {    // otp 로그인
+                            $("#two_factor").modal();
+                            $('body').on('shown.bs.modal', '#two_factor', function () {
+                                $('input:visible:enabled:first', this).focus();
+                            })
+                        } else if (!data.result && data.status == 'notYetEmail') {  // 메일 인증이 완료되지 않음. 인증메일 재전송 화면
+                            $("#resendEmail").modal();
+                        } else {
+                            $("#loginErr").show();
+                            //alert(data.message);
+                        }
+                    }
+                    , error: function(error) {
+                        alert(error.responseText);
+                    }
+                });
+            }
+        });
+        
+        // OTP 인증
+        $("#two_factor_form").validate({
+            rules: {
+                otpNum: {
+                    required: true,
+                    checkOTP: true
+                }
+            },
+            messages: {
+                otpNum: {
+                    required: "Enter the OTP code."
+                }
+            },
+            highlight: function(element, errorClass) {
+                if (errorClass == "error") {
+                    $(element).parent().addClass("error");
+                }
+            },
+            submitHandler: function (form) {
+            }
+        });
+    });
+    var nextPage;
+
+    $.validator.addMethod('checkOTP', function() {
+        if ($.trim($('#otpNum').val()).length == 6) {
+            var params = {'user_mail' : $('#user_mail').val(), 'user_pwd' : $('#user_pwd').val(), 'otpNum': $('#otpNum').val()};
+            $.ajax({
+                async: false,
+                cache: false,
+                url: '/login/otpVerifyAjax',
+                type: 'POST',
+                data: params,
+                dataType: 'json',
+                success: function(data) {
+                    if (data.result) {
+                        localStorage.setItem('access_token', data.token);
+                        if ($("#callPage").val() == "") {
+                            location.href = '/mypage/profile?loginFlg=true';
+                        } else {
+                            nextPage = $("#callPage").val();
+                            var urls = nextPage.split('/');
+                            
+                            if (nextPage.indexOf('/login') > -1 || nextPage.indexOf('/join') > -1 || nextPage.indexOf('/main') > -1 || !urls[4]) {
+                                nextPage = '/mypage/profile?loginFlg=true';
+                            } else if (nextPage.indexOf('/refundWallet' > -1)) {
+                                nextPage =  '/' + urls[3] + '/' +  urls[4];
+                            }
+                            location.href = nextPage;
+                        }
+                    }
+                }
+            });
+        } else {
+            return false;
+        }
+    }, 'Incorrect OTP code. Please try again.');
+
+    function checkOtp() {
+        if ($('#otpNum').val().length == 6) {
+            $("#otpNum-error").remove();
+            $('#otpNum').parent().removeClass("error");
+        }
+    }
+
+    function otpClear() {
+        $("#otpNum").val('');
+        var validator = $("#two_factor_form").validate();
+        validator.resetForm();
+    }
+
+    // 인증 메일 재전송
+    function resendVerifyEmail() {
+        event.preventDefault();
+        $.ajax({
+            url: '/login/resendVerifyEmailAjax',
+            data: {'user_mail' : $("#user_mail").val()},
+            type: 'POST',
+            dataType: 'json',
+            success: function(data) {
+                if (data.result == 'OK') {
+                    alert(data.message);
+                    location.href = '/login';
+                } else {
+                    alert(data.message);
+                }
+            },
+            error: function(error) {
+                alert(error);
+            }
+        });
+    }
+
+</script>
+

@@ -1,0 +1,304 @@
+<script type="text/javascript" src="/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="/js/pubCommon.js"></script>
+
+        <!-- Contents(OTP 설정) -->
+        <div class="mp-contents" id="otpSet">
+            <div class="mp-tit">
+                <h2>Two factor authentication</h2>
+                <p class="desc">Keep your account protected with two-factor authentication.</p>
+            </div>
+            <section class="mp-section otp">
+                <form id="qrcode_form" name="qrcode_form">
+                    <input type="hidden" id="secretAsciiKey" value="">
+                    <h3 class="g-tit">Setting OTP security</h3>
+                    <div class="cont-box">
+                        <p class="txt-cbu">Set your two-factor authentication for security</p>
+                        <div class="otp-wrap">
+                            <div class="left">
+                                <div class="code">
+                                    <img src="" id="qrImg" alt="QR code">
+                                </div>
+                                <div class="addr" id="secretKey"></div>
+                                <button type="button" class="btn confirm small" onclick="btnCopy()">Copy</button>
+                            </div>
+                            <div class="right">
+                                <ul class="num-list">
+                                    <li><span class="n">1</span><span class="t">Download the OTP app (e.g. Google OTP) and register the authentication key by scanning the QR code on the left or by registering the address through ‘copy & paste’ function.</span></li>
+                                    <li><span class="n">2</span><span class="t">After setting OTP, you need the OTP code when signing in together with your password.</span></li>
+                                    <li><span class="n">3</span><span class="t">Please take a screenshot or print out the OTP authentication key and safely store it. (Authentication key is required when recovering your account.)</span></li>
+                                </ul>
+                                <div class="form-row-group">
+                                    <div class="form-row">
+                                        <label class="fm-label" for="user_pwd">Sign in Password</label>
+                                        <div class="fm-input">
+                                            <input type="password" id="user_pwd" name="user_pwd" placeholder="Enter your password">
+                                        </div>
+                                    </div>
+                                    <div class="form-row">
+                                        <label class="fm-label" for="user_otp">OTP code</label>
+                                        <div class="fm-input">
+                                            <input type="text" id="user_otp" name="user_otp" placeholder="Enter the OTP code on the app">
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                    <div class="btn-wrap">
+                        <button type="button" class="btn confirm fixed" onclick="$('#qrcode_form').submit()">Enable OTP</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+        <!-- //Contents(OTP 설정) -->
+
+        <!-- Contents(OTP 해제) -->
+        <div class="mp-contents" id="otpRemove" style="display:none">
+            <div class="mp-tit">
+                <h2>Two factor authentication</h2>
+                <p class="desc">Keep your account protected with two-factor authentication.</p>
+            </div>
+            <section class="mp-section otp">
+                <form id="otp_remove_form" name="otp_remove_form">
+                    <input type="hidden" id="remove_secretKey" value="">
+                    <h3 class="g-tit">Disable OTP security</h3>
+                    <div class="cont-box">
+                        <p class="txt-cbu">Disable two-factor authentication</p>
+                        <div class="otp-wrap noflex">
+                            <ul class="num-list">
+                                <li><span class="n">1</span><span class="t">Open the OTP app.</span></li>
+                                <li><span class="n">2</span><span class="t">Enter both password for signing in and OTP code. Click on disable button.</span></li>
+                                <li><span class="n">3</span><span class="t">Two-factor authentication will be disabled and you can sign in by entering your email and password.</span></li>
+                            </ul>
+                            <div class="form-row-group">
+                                <div class="form-row">
+                                    <label class="fm-label" for="remove_user_pwd">Sign in Password</label>
+                                    <div class="fm-input">
+                                        <input type="password" id="remove_user_pwd" name="remove_user_pwd" placeholder="Enter your password">
+                                    </div>
+                                </div>
+                                <div class="form-row">
+                                    <label class="fm-label" for="remove_user_otp">OTP code</label>
+                                    <div class="fm-input">
+                                        <input type="text" id="remove_user_otp" name="remove_user_otp" placeholder="Enter the OTP code on the app">
+                                    </div>
+                                </div>
+                            </div>
+                        </div>    
+                    </div>
+                    <div class="btn-wrap">
+                        <button type="button" class="btn confirm fixed" onclick="$('#otp_remove_form').submit()">Disable OTP</button>
+                    </div>
+                </form>
+            </section>
+        </div>
+        <!-- //Contents(OTP 해제) -->
+
+<!-- Modal -->
+<div id="otpSetDiv" class="modal hide fade">
+	<div class="modal-wrap">
+		<div class="vcon v1"></div>
+		<p class="md-tit"><strong>Your OTP is now set</strong></p>
+		<div class="btn-wrap">
+            <button type="button" id="btnEnable" class="btn confirm small" onclick="location.href='/mypage/tFactorAuth'">Confirm</button>
+		</div>
+	</div>
+</div>
+<!-- //Modal -->
+
+<!-- Modal -->
+<div id="otpRemoveDiv" class="modal hide fade">
+	<div class="modal-wrap">
+		<div class="vcon v1"></div>
+		<p class="md-tit"><strong>Your OTP is <span class="em">disabled</span></strong></p>
+		<div class="btn-wrap">
+            <button type="button" id="btnDisable" class="btn confirm small" onclick="location.href='/mypage/tFactorAuth'">Confirm</button>
+		</div>
+	</div>
+</div>
+<!-- //Modal -->
+
+
+
+<script>
+    $(function() {
+        $("[name='lTfactor']").addClass("active");
+        $("#mMenuLayer").text("Two factor authentication");
+        // 초기 OTP QRCode 가져오기
+        createQRcode();
+        
+        $("#user_otp").keypress(function(e) {
+            if (e.which == 13) {
+                $("#user_otp").blur();
+                $('#qrcode_form').submit();
+            }
+        });
+
+        $("#remove_user_otp").keypress(function(e) {
+            if (e.which == 13) {
+                $("#remove_user_otp").blur();
+                $('#otp_remove_form').submit();
+            }
+        });
+
+        // OTP 설정
+        $("#qrcode_form").validate({
+            rules: {
+                user_pwd: {
+                    required: true
+                },
+                user_otp: {
+                    required: true,
+                    number: true
+                }
+            },
+            messages: {
+                user_pwd: {
+                    required: "Enter password."
+                },
+                user_otp: {
+                    required: "Enter OTP code.",
+                    number: "Please enter numbers only."
+                }
+            },
+            highlight: function(element, errorClass) {
+                if (errorClass == "error") {
+                    $(element).parent().addClass("error");
+                }
+            },
+            errorPlacement: function(err, el) {
+                el.after(err);
+                var errCls = el.attr("class");
+                if (errCls == "error") {
+                    $(el).parent().addClass("error");
+                }
+            },
+            success: function(el) {
+                var errCls = el.attr("class");
+                $(el).parent().removeClass("error");
+            },
+            submitHandler: function (form) {
+                $.ajax({
+                    url: '/mypage/createOTPAjax',
+                    type: 'POST',
+                    data: {'secretKey': $("#secretKey").text(), 'secretAsciiKey': $("#secretAsciiKey").val(), 'user_pwd': $("#user_pwd").val(), 'user_otp': $("#user_otp").val()},
+                    dataType: 'json',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('access_token'));
+                    },
+                    success: function(data) {
+                        data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                        if (data.result) {
+                            $("#otpSetDiv").modal();
+                        } else {
+                            if (data.type == 'INVALID') alert(data.message);
+                        }
+                    },
+                    error: function(error) {
+                        alert('Error occurred.');
+                    }
+                });
+            }
+        });
+
+        // OTP 해제
+        $("#otp_remove_form").validate({
+            rules: {
+                remove_user_pwd: {
+                    required: true
+                },
+                remove_user_otp: {
+                    required: true,
+                    number: true
+                }
+            },
+            messages: {
+                remove_user_pwd: {
+                    required: "Enter password."
+                },
+                remove_user_otp: {
+                    required: "Enter OTP code.",
+                    number: "Please enter numbers only."
+                }
+            },
+            highlight: function(element, errorClass) {
+                if (errorClass == "error") {
+                    $(element).parent().addClass("error");
+                }
+            },
+            errorPlacement: function(err, el) {
+                el.after(err);
+                var errCls = el.attr("class");
+                if (errCls == "error") {
+                    $(el).parent().addClass("error");
+                }
+            },
+            success: function(el) {
+                var errCls = el.attr("class");
+                $(el).parent().removeClass("error");
+            },
+            submitHandler: function (form) {
+                $.ajax({
+                    url: '/mypage/removeOTPAuthAjax',
+                    data: {'remove_user_pwd': $("#remove_user_pwd").val(), 'remove_user_otp': $("#remove_user_otp").val()},
+                    type: 'POST',
+                    dataType:'json',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('access_token'));
+                    },
+                    success : function(data) {
+                        data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                        if (data.result) {
+                            $("#otpRemoveDiv").modal();
+                        } else {
+                            if (data.type == 'INVALID') alert(data.message);
+                        }
+                    }
+
+                });
+            }
+        });
+
+    });
+
+    // OTP QRCode 생성 OR 해지 유무
+    function createQRcode() {
+        $.ajax({
+            url: '/mypage/createQRcodeAjax',
+            type: 'POST',
+            //data: {'userEmail': $("#userEmail").val()},
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('access_token'));
+            },
+            success: function(data) {
+                data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                if (data.result && !data.secretKeyDB) {
+                    $("#qrImg").attr('src', data.qrcode);
+                    $("#secretKey").text(data.secretKey);
+                    $("#secretAsciiKey").val(data.secretAsciiKey);
+                    $("#otpSet").show();
+                    $("#otpRemove").hide();
+                } else if (data.tfaUseYn == 'Y') {
+                    $("#otpSet").hide();
+                    $("#otpRemove").show();
+                } else if (data.tfaUseYn == 'N') {
+                    $("#otpSet").hide();
+                    $("#otpRemove").hide();
+                }
+            },
+            error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+
+    function btnCopy() {
+        var text = $("#secretKey").text();
+        Clipboard.copy(text);
+        alert("OTP code has copied to the clipboard.");
+    }
+    
+    function setStep() {}
+
+</script>

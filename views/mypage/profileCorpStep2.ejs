@@ -1,0 +1,197 @@
+		<!-- Contents -->
+		<div class="mp-contents">
+			<div class="mp-tit">
+                <h2>Profile</h2>
+                <p class="desc">Please check the registered company details and contact us if there are changes to be made.</p>
+            </div>
+            <section class="mp-section step">
+                <div class="step-head cf">
+                    <div class="s-tit">
+                        <em class="n">Step 2</em><span class="t">Company information</span>
+                    </div>
+                    <div class="step">
+                        <ul>
+                            <li>1</li>
+                            <li class="active">2</li>
+                            <li>3</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step-body">
+                    <form action="">
+                        <!-- input[type=hidden] 은 여기에 넣으세요 -->
+                        <div class="form-row-group first">
+                            <div class="span5 form-row">
+                                <label class="fm-label" for="companyNm">Company name</label>
+                                <div class="fm-input">
+                                    <input id="companyNm" type="text" value="" readonly>
+                                </div>
+                            </div>
+                            <div class="span5 form-row">
+                                <label class="fm-label" for="taxNo">Private company registration number</label>
+                                <div class="fm-input">
+                                    <input id="taxNo" type="text" value="" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row-group">
+                            <div class="span5 form-row">
+                                <label class="fm-label" for="companyNo">Incorporated company registration number</label>
+                                <div class="fm-input">
+                                    <input id="companyNo" type="text" value="" readonly>
+                                </div>
+                            </div>
+                            <div class="span5 form-row">
+                                <label class="fm-label" for="corpAbode">Company location</label> 
+                                <div class="fm-select">
+                                    <select name="corpAbode" id="corpAbode" disabled>
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row-group">
+                            <div class="span5 form-row">
+                                <label class="fm-label" for="addr1">Address 1</label>
+                                <div class="fm-input">
+                                    <input id="addr1" type="text" value="" readonly>
+                                </div>
+                            </div>
+                            <div class="span5 form-row">
+                                <label class="fm-label" for="addr2">Address 2</label>
+                                <div class="fm-input">
+                                    <input id="addr2" type="text" value="" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row-group">
+                            <div class="span5 form-row">
+                                <label class="fm-label" for="gugun">State</label>
+                                <div class="fm-input">
+                                    <input id="gugun" type="text" value="" readonly>
+                                </div>
+                            </div>
+                            <div class="span5 form-row">
+                                <div class="form-row-group">
+                                    <div class="span7 form-row">
+                                        <label class="fm-label" for="sido">City</label>
+                                        <div class="fm-input">
+                                            <input id="sido" type="text" value="" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="span3 form-row">
+                                        <label class="fm-label" for="zipcode">Zip code</label>
+                                        <div class="fm-input">
+                                            <input id="zipcode" type="text" value="" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row-group">
+                            <div class="span5 form-row">
+                                <label class="fm-label" for="taxFile">Company registration certificate</label> 
+                                <div class="fm-input clip">
+                                    <input id="taxFile" type="text" value="" readonly>
+                                </div>
+                            </div>
+                            <div class="span5 form-row">
+                                <label class="fm-label" for="delegateFile">Power of attorney from the company representative</label> 
+                                <div class="fm-input clip">
+                                    <input id="delegateFile" type="text" value="" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row-group">
+                            <div class="span5 only form-row">
+                                <label class="fm-label" for="etcFile">Others</label> 
+                                <div class="fm-input clip">
+                                    <input id="etcFile" type="text" value="-" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-wrap">
+                            <button type="button" class="btn bu prev"onclick="location.href ='/mypage/profileCorpStep1'">Back</button>
+                            <button type="button" class="btn bu next" onclick="goProceed()">Proceed</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+   
+		</div>
+        <!-- //Contents -->
+
+<script>
+    $(function() {
+        $("[name='lProfile']").addClass("active");
+        $("#mMenuLayer").text("Profile");
+
+        getProfileCorpStep2();
+    });
+
+    // 1. 법인 회원 프로파일 정보 조회
+    function getProfileCorpStep2() {
+        $.ajax({
+            url: '/mypage/profileCorpStep2Ajax',
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + token);
+            },
+            success: function(data){
+                data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                if (data.result) {
+                    var memProfile = data.memProfile[0];
+                    if (memProfile.complete_yn == 'Y') {
+                        $("#companyNm").val(memProfile.company_nm);
+                        $("#taxNo").val(memProfile.tax_no);
+                        $("#companyNo").val(memProfile.company_no);
+                        data.abode.filter(function(item) {
+                            var selectedYn = item.code == memProfile.corpAbode ? 'selected' : '';
+                            var abodeOption = "<option value='" + item.code + "' " + selectedYn + ">" + item.name + "</option>";
+                            $("#corpAbode").append(abodeOption);
+                        });
+                        $("#addr1").val(memProfile.addr1);
+                        $("#addr2").val(memProfile.addr2);
+                        $("#gugun").val(memProfile.gugun);
+                        $("#sido").val(memProfile.sido);
+                        $("#zipcode").val(memProfile.zipcode);
+
+                        if (data.memAttachFiles) {
+                            var attachFiles = data.memAttachFiles;
+                            for (var i = 0; i < attachFiles.length; i++) {
+                                if (attachFiles[i].attach_type == 'C') {
+                                    $("#taxFile").val(attachFiles[i].org_filename);
+                                }
+                                if (attachFiles[i].attach_type == 'D') {
+                                    $("#delegateFile").val(attachFiles[i].org_filename);
+                                }
+                                if (attachFiles[i].attach_type == 'E') {
+                                    $("#etcFile").val(attachFiles[i].org_filename);
+                                }
+                            }
+                        }
+                    } else {
+                        location.href = '/mypage/profile';
+                    }
+                } else {
+                    if (data.loginFlg) {
+                        location.href = '/login';
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            }
+            , error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+
+    // proceed
+    function goProceed() {
+        location.href = '/mypage/profileCorpStep3';
+    }
+
+    function setStep(info) {}
+
+</script>

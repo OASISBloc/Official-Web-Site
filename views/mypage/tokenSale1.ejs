@@ -1,0 +1,381 @@
+<script type="text/javascript" src="/js/jquery.validate.min.js"></script>
+
+        <!-- Contents -->
+        <div class="mp-contents">
+            <div class="mp-tit">
+                <h2>Token sale</h2>
+                <p class="desc">Follow the instructions below carefully to participate in presale.</p>
+            </div>
+            <!-- person -->
+            <div id="personTokenSaleDiv" style="display:none;">
+                <form id="personTokenSaleForm" name="personTokenSaleForm">
+                    <section class="mp-section step">
+                        <div class="step-head cf">
+                            <div class="s-tit">
+                                <em class="n">Step 1</em><span class="t">Upload for KYC verification</span>
+                            </div>
+                            <div class="step">
+                                <ul>
+                                    <li class="active">1</li>
+                                    <li>2</li>
+                                    <li>3</li>
+                                    <li>4</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="step-body">
+                            <div class="s-desc">KYC (Know Your Customer) verification is required to participate in presale.
+                                <br>Upload a photo (or a scan copy) of your passport and a selfie of you holding your passport.
+                                <br>Only passport (valid and not expired) is accepted as ID for KYC verification.
+                            </div>
+                            <div class="upload-group">
+                                <div class="left">
+                                    <h3>Example</h3>
+                                    <div class="pic-wrap">
+                                        <div class="cell">
+                                            <div class="p1"><img src="/images/img-idcard-01.jpg" alt="Scan of Photo passport"></div>
+                                            <div class="d">Scan of Photo passport</div>
+                                        </div>
+                                        <div class="cell">
+                                            <div class="p2"><img src="/images/img-idcard-02.jpg" alt="Picture of youself holding Photo passport"></div>
+                                            <div class="d">Picture of youself holding Photo passport</div>
+                                        </div>
+                                    </div>
+                                    <ul class="pic-desc">
+                                        <li><span class="num">1.</span><span class="txt">The quality of the uploaded photos should be clear and visible.</span></li>
+                                        <li><span class="num">2.</span><span class="txt">The photo passport and the person holding the passport must be identical and should be recognizable.</span></li>
+                                        <li><span class="num">3.</span><span class="txt">The size of the file should be between 40KB~4MB with jpg, png, and gif formats.</span></li>
+                                     </ul>
+                                </div>
+                                <div class="right">
+                                    <h3>Upload image</h3>
+                                    <div class="upload-wrap">
+                                        <div class="cell">
+                                            <div class="u-tit">Upload photo (or scan copy) of your passport</div>
+                                            <div class="pic-upload" id="identityCardDiv">
+                                                <div class="pic" id="identityCardThumbnail">
+                                                    <!-- <img src="/images/img-idcard-01.jpg" id="identityCardThumbnail"> -->
+                                                </div>
+                                                <div class="pic-search">
+                                                    <div class="fm-input">
+                                                        <input type="text" id="identityCardText" name="identityCardText" onclick="$('#identityCard').click();" placeholder="Upload image file" readonly>
+                                                    </div>
+                                                    <button type="button" class="btn search" id="btnidentityCard" onclick="$('#identityCard').click();">Search</button>
+                                                    <input type="file" id="identityCard" name="identityCard" onchange="fnImageChange('identityCard');">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="cell">
+                                            <div class="u-tit">Upload photo of yourself holding your passport</div>
+                                            <div class="pic-upload" id="photoPassportDiv">
+                                                <div class="pic" id="photoPassportThumbnail">
+                                                    <!-- <img src="/images/img-idcard-02.jpg" id="photoPassportThumbnail"> -->
+                                                </div>
+                                                <div class="pic-search">
+                                                    <div class="fm-input">
+                                                        <input type="text" id="photoPassportText" name="photoPassportText" onclick="$('#photoPassport').click();" placeholder="Upload image file" readonly>
+                                                    </div>
+                                                    <button type="button" class="btn search" id="btnphotoPassport" onclick="$('#photoPassport').click();">Search</button>
+                                                    <input type="file" id="photoPassport" name="photoPassport" onchange="fnImageChange('photoPassport');">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn-wrap">
+                                <button type="button" class="btn bu next" onclick="$('#personTokenSaleForm').submit()">Continue</button>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="precaution">
+                        <div class="tit">Precaution</div>
+                        <ul class="list">
+                            <li><span class="num">1.</span><span class="txt">Any forgery actions of information or documents for KYC will cancel your participation and you may be legally liable.
+                            </span></li>
+                        </ul>
+                    </div>
+                </form>
+            </div>
+            <!-- // person -->
+
+            <!-- corp -->
+            <div id="corpTokenSaleDiv" style="display:none;">
+                <form id="corpTokenSaleForm" name="corpTokenSaleForm">
+                    <section class="mp-section step">
+                        <div class="step-head cf">
+                            <div class="s-tit">
+                                <em class="n">Step 1</em><span class="t">KYC verification status</span>
+                            </div>
+                            <div class="step">
+                                <ul>
+                                    <li class="active">1</li>
+                                    <li>2</li>
+                                    <li>3</li>
+                                    <li>4</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="step-body">
+                            <div class="s-desc">When entering the profile, the KYC status of registered shareholders will be displayed. 
+                                <br>Please check the KYC status of each shareholder and proceed to the next step only if all KYC results are successful.
+                            </div>            
+                            <div class="table-wrap list1">
+                                <table> 
+                                    <colgroup>
+                                        <col style="width:11%;">
+                                        <col style="width:30%;">
+                                        <col style="width:32%;">
+                                        <col style="">
+                                    </colgroup>
+                                    <thead>
+                                        <tr>
+                                            <th>NO</th>
+                                            <th>Shareholder</th>
+                                            <th>Member no.</th>
+                                            <th>KYC status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="corpShareHolderInfo">
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="btn-wrap">
+                                <button type="button" class="btn bu next" id="btnCorpProceed" onclick="corpProceed()">Proceed</button>
+                            </div>
+                        </div>
+                    </section>
+                    <div class="precaution">
+                        <div class="tit">Precaution</div>
+                        <ul class="list">
+                            <li><span class="num">1.</span><span class="txt">Companies can participate in presale only if all the registered shareholders pass the KYC.</span></li>
+                            <li><span class="num">2.</span><span class="txt">Companies can proceed with KYC after registering their profile from 'My participation'.</span></li>
+                        </ul>
+                    </div>
+            
+                </form>
+            </div>
+            <!-- // corp -->
+            
+        </div>
+    
+<!-- Modal -->
+<div id="compFileUpload" class="modal hide fade"><!-- 적용시 hide fade 클래스 추가해야 안보입니다 class="modal hide fade" -->
+	<div class="modal-wrap">
+		<div class="vcon v7"></div>
+		<p class="md-tit"><strong>File uploaded</strong></p>
+        <p class="md-desc">
+            Image file for KYC has been uploaded.<br><br>
+            The admin will review your uploaded files<br>
+            and KYC results will be sent via email.<br>
+            (takes about <em>5</em> business days)<br>
+        </p>
+		<div class="btn-wrap">
+            <button type="button" onclick="goTokenSale2()" class="btn confirm small">Confirm</button>
+		</div>
+	</div>
+</div>
+<!-- //Modal -->
+
+<script>
+    $(function() {
+        $("[name='lTokenSale']").addClass("active");
+        $("#mMenuLayer").text("Token sale");
+
+        $("#personTokenSaleForm").validate({
+            rules: {
+                identityCard: {
+                    fileCheck: "jpg|jpeg|png|gif"
+                }
+                , photoPassport: {
+                    fileCheck: "jpg|jpeg|png|gif"
+                }
+            },
+            submitHandler: function (form) {
+                var formData = new FormData();
+                formData.append("identityCard", $("input[name='identityCard']")[0].files[0]);
+                formData.append("photoPassport", $("input[name='photoPassport']")[0].files[0]);
+
+                $.ajax({
+                    url: '/mypage/tokenSaleKYCUploadAjax',
+                    data: formData, 
+                    type: 'POST',
+                    processData: false,
+                    contentType: false,
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', "Bearer " + token);
+                    },
+                    success: function(data){
+                        data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                        if (data.result) {
+                            $("#compFileUpload").modal();
+                        } else {
+                            if (data.loginFlg) {
+                                location.href = '/login';
+                            } else {
+                                alert(data.message);
+                            }
+                        }
+                    }
+                    , error: function(error) {
+                        alert('Error occurred.');
+                    }
+                });
+            }
+        });
+    });
+
+    $.validator.addMethod("fileCheck", function (value, element, param) {
+        var result = false;
+        var inputId = element.id;
+        $("[name='" + inputId + "_name']").remove();
+        if (value.toLowerCase().match(new RegExp("." + param.toLowerCase() + "$")) && ((this.optional(element) || (element.files[0].size > (40*1024) && element.files[0].size < (4*1024*1024))))) {
+            result = true;
+        } else {
+            $("#" + inputId + "Div").append("<label for='' id='" + inputId + "-error' name='" + inputId + "_name' class='error'>Upload image file is 40KB~4MB with jpg, png, and gif formats.</label>");
+        }
+        return result;
+    }, '');
+
+
+    // 법인 주주 상태정보 조회
+    function corpShareHolderInfo() {
+        $.ajax({
+            url: '/mypage/corpShareHolderInfoAjax',
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + token);
+            },
+            success: function(data){
+                data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                if (data.result) {
+                    var shareHolders = data.shareHolderInfo;
+                    var innerHtml = "";
+                    var kycFlg = shareHolders.length > 0 ? true : false;
+                    for (var i = 0; i < shareHolders.length; i++) {
+                        var kycYn = shareHolders[i].kyc_yn == 'Y' ? 'success' : shareHolders[i].kyc_yn == 'F' ? 'decline' : 'review';
+                        var kycYnTxt = shareHolders[i].kyc_yn == 'Y' ? 'Successful' : shareHolders[i].kyc_yn == 'F' ? 'Declined' : 'Reviewing'
+                        innerHtml += "<tr>";
+                        innerHtml += "    <td>" + (i + 1) + "</td>";
+                        innerHtml += "    <td class='left'>" + shareHolders[i].sh_name + "</td>";
+                        innerHtml += "    <td>" + shareHolders[i].sh_user_seq + "</td>";
+                        innerHtml += "    <td><span class='label " + kycYn + "'>" + kycYnTxt + "</span></td>";
+                        innerHtml += "</tr>";
+                        if (kycFlg) {
+                            if (shareHolders[i].kyc_yn != 'Y') kycFlg = false; 
+                        }
+                    }
+                    $("#corpShareHolderInfo").append(innerHtml);
+                    if (!kycFlg) $("#btnCorpProceed").prop('disabled', true);
+                } else {
+                    if (data.loginFlg) {
+                        location.href = '/login';
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            }
+            , error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+
+    // 썸네일, 파일명 설정
+    function fnImageChange(id) {
+        $("[name='" + id + "_name']").remove();
+        var file = $("#" + id)[0].files[0];
+        var reader = new FileReader();
+        try {
+            reader.readAsDataURL(file);
+            
+            reader.onload = function  () {
+                var tempImg = new Image();
+                tempImg.src = reader.result;
+                tempImg.onload = function() {
+                    //리사이즈를 위해 캔버스 객체 생성
+                    var canvas = document.createElement('canvas');
+                    var canvasContext = canvas.getContext("2d");
+                    
+                    //캔버스 크기 설정
+                    canvas.width = 100; //가로 100px
+                    canvas.height = 100; //세로 100px
+                    
+                    //이미지를 캔버스에 그리기
+                    canvasContext.drawImage(this, 0, 0, 100, 100);
+                    //캔버스에 그린 이미지를 다시 data-uri 형태로 변환
+                    var dataURI = canvas.toDataURL("image/jpeg");
+                    
+                    //썸네일 이미지 보여주기
+                    //$("#" + id + "Thumbnail").attr("src", dataURI);
+                    $("#" + id + "Thumbnail > img").remove();
+                    var imageHtml = "<img src='" + dataURI + "'>";
+                    $("#" + id + "Thumbnail").append(imageHtml);
+                    $("#" + id + "Text").val(file.name);
+                }
+            }
+        } catch(e) {
+        }
+    }
+
+    function goTokenSale2() {
+        location.href = '/mypage/tokenSale2';
+    }
+
+    // 법인 proceed
+    function corpProceed() {
+        $.ajax({
+            url: '/mypage/proceedSetStepAjax',
+            data: {'type': 'T', 'step': '1'},
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + token);
+            },
+            success: function(data){
+                data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                if (data.result) {
+                    location.href = '/mypage/tokenSale2';
+                } else {
+                    if (data.loginFlg) {
+                        location.href = '/login';
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            }
+            , error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+
+    function setStep(info) {
+        if ((info.userd_type == 'P' && !info.user_first_name) || (info.userd_type == 'C' && info.completeYn != 'Y')) {
+            alert('Please register your profile first.');
+            return location.href = '/mypage/profile';
+        }
+
+        if (info.completeSep == '4') {
+            location.href = '/mypage/tokenSale2';
+        } else if (info.userd_type == 'P') {
+            if (info.completeSep > 0) {
+                location.href = '/mypage/tokenSale' + (parseInt(info.completeSep) + 1);
+            } else if (info.kyc_yn == 'F' || !info.completeSep) {
+                $("#personTokenSaleDiv").show();
+            } else {
+                $("#personTokenSaleDiv").show();
+            }
+        } else {
+            if (info.completeSep == '0') {
+                corpShareHolderInfo();
+                $("#corpTokenSaleDiv").show();
+            } else {
+                location.href = '/mypage/tokenSale' + (parseInt(info.completeSep) + 1);
+            }
+        }
+        headerFooterPosition(); // 회면 사이즈 재확인
+    }
+
+</script>

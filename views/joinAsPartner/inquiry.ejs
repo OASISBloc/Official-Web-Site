@@ -1,0 +1,333 @@
+<script type="text/javascript" src="/js/jquery.validate.min.js"></script>
+
+    <!-- Container -->
+	<div class="container">
+
+        <!-- Contents -->
+        <div class="contents">
+
+            <h1 class="page-tit">Join as partner</h1>
+
+            <div class="join-partner-section">
+                
+                <p class="desc">Please contact us if you would like to join as Domain Chain or have any inquiries on Domain Chain.</p>
+                <form id="partnerForm" name="partnerForm">
+                    <div class="tbl">
+                        <table>
+                            <caption>join as partner</caption>
+                            <colgroup>
+                                <col style="width:160px">
+                                <col style="width:*">
+                            </colgroup>
+                            <tbody>
+                                <tr>
+                                    <th>First name</th>
+                                    <td>
+                                        <span class="form-wrap">
+                                            <input type="text" id="first_name" name="first_name" style="width:200px;">
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Last name</th>
+                                    <td>
+                                        <span class="form-wrap">
+                                            <input type="text" id="last_name" name="last_name" style="width:200px;">
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Company</th>
+                                    <td>
+                                        <span class="form-wrap">
+                                            <input type="text" id="comp_name" name="comp_name" style="width:100%;">
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Business</th>
+                                    <td>
+                                        <span class="form-wrap">
+                                            <% 
+                                                var businessHtml = '';
+                                                busiList.forEach(function(item) {
+                                                    businessHtml += "<label class='chk-label'><input type='checkbox' name='busi_name' value='" + item.cate_code + "'><span class='txt'>" + item.cate_code_nm_en + "</span></label>";
+                                                })
+                                            %>
+                                            <%- businessHtml %>
+                                        </span>
+                                        <p class="err-msg" id="busi_name_err" style="display:none;">Check Business</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Field</th>
+                                    <td>
+                                        <span class="form-wrap">
+                                            <% 
+                                                var fieldHtml = '';
+                                                fieldList.forEach(function(item) {
+                                                    if (item.cate_code != '99999')
+                                                        fieldHtml += "<label class='chk-label'><input type='checkbox' name='field_name' value='" + item.cate_code + "'><span class='txt'>" + item.cate_code_nm_en + "</span></label>";
+                                                })
+                                            %>
+                                            <%- fieldHtml %>
+                                        </span>
+                                        <span class="form-wrap flex-wrap">
+                                            <label class="chk-label"><input type="checkbox" name="field_name" value="99999"><span class="txt">Others</span></label>
+                                            <input type="text" id="inputOthers" name="inputOthers" class="flex-box2" oninput="fnOthersCheck()" readonly>
+                                        </span>
+                                        <p class="err-msg" id="field_name_err" style="display:none;">Check Field</p>
+                                        <p class="err-msg" id="field_name_others_err" style="display:none;">Enter others field</p>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Country</th>
+                                    <td>
+                                        <span class="form-wrap">
+                                            <select id="country" name="country" style="width:450px;">
+                                                <option value="">Select</option>
+                                                <%
+                                                    var countriesHtml = '';
+                                                    countries.filter(function(item) {
+                                                        countriesHtml += "<option value='" + item.code + "'>" + item.name + "</option>";
+                                                    });
+                                                %>
+                                                <%- countriesHtml %>
+                                            </select>
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Phone</th>
+                                    <td>
+                                        <span class="form-wrap">
+                                            <input type="text" id="phone" name="phone" style="width:450px;">
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Email</th>
+                                    <td>
+                                        <span class="form-wrap">
+                                            <input type="text" id="email" name="email" style="width:450px;">
+                                        </span>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <th>Message</th>
+                                    <td>
+                                        <span class="form-wrap">
+                                            <textarea id="message" name="message" rows="3" cols="50"></textarea>
+                                        </span>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                
+                    <div class="agr-chk form-wrap">
+                        <label class="chk-label">
+                            <input type="checkbox" id="agree_term" name="agree_term"><span class="txt">I agree to provide my data according to </span>
+                        </label>
+                        <a href="/termsnprivacy" target='_blank' class="btn-policy">Privacy policy</a>
+                        <p class="err-msg" id="agree_term_err" style="display:none;">Check agree</p>
+                    </div>
+                    <div class="list-btn">
+                        <a href="javascript:;" onclick="fnSubmit()">Submit</a>
+                    </div>
+                </form>
+
+            </div>
+
+        </div>
+        <!-- //Contents -->
+
+    </div>
+    <!-- //Container -->
+
+<script>
+    $(function() {
+        $("header").addClass("sub-header");
+        $("#countdown").remove();
+        $("[name='mMenu'] > li").click(function() {
+            var menu = $(this).attr('name');
+            if (menu != 'faq' && menu != 'news') {
+                location.href = '/main?target=' + menu;
+            }
+        });
+        
+        $("[name='busi_name']").click(function() {
+            var busiFlg = false;
+            $("[name='busi_name']").each(function() {
+                if (this.checked) {
+                    busiFlg = true;
+                    return false;
+                }    
+            });
+            busiFlg ? $("#busi_name_err").hide() : $("#busi_name_err").show();
+        });
+        
+        $("[name='field_name']").click(function() {
+            if ($(this).val() == "99999") {
+                var othersFlg = this.checked;
+                if (othersFlg) {
+                    $("#inputOthers").removeAttr("readonly");
+                } else {
+                    $("#inputOthers").attr("readonly", true);
+                    $("#inputOthers").val('');
+                }
+                $("[name='field_name']").each(function() {
+                    if (othersFlg) {
+                        if ($(this).val() != "99999") {
+                            $(this).prop("checked", false);
+                            $(this).attr("disabled", true);
+                        }
+                    } else {
+                        $(this).attr("disabled", false);
+                    }
+                });
+            }
+
+            var fieldFlg = false;
+            $("[name='field_name']").each(function() {
+                if (this.checked) {
+                    fieldFlg = true;
+                    return false;
+                }    
+            });
+            fieldFlg ? $("#field_name_err").hide() : $("#field_name_err").show();
+        });
+
+        $("[name='agree_term']").click(function() {
+            $("[name='agree_term']").is(":checked") ? $("#agree_term_err").hide() : $("#agree_term_err").show();
+        })
+        
+        $("#partnerForm").validate({
+            rules: {
+                first_name: {
+                    required: true,
+                    maxlength: 20
+                }
+                , last_name: {
+                    required: true,
+                    maxlength: 20
+                }
+                , comp_name: {
+                    required: true,
+                    maxlength: 50
+                }
+                , country: "required"
+                , phone: {
+                    required: true,
+                    number: true
+                }
+                , email: {
+                    required: true,
+                    email: true,
+                }
+                , message: {
+                    maxlength: 300
+                }
+            },
+            messages: {
+                first_name: {
+                    required: "Enter your first name.",
+                    maxlength: "You can enter up to 20 characters."
+                }
+                , last_name: {
+                    required: "Enter your last name.",
+                    maxlength: "You can enter up to 20 characters."
+                }
+                , comp_name: {
+                    required: "Enter your company name.",
+                    maxlength: "You can enter up to 50 characters."
+                }
+                , country: "Select your country"
+                , phone: {
+                    required: "Enter your contact number.",
+                    number: "Please enter numbers only."
+                }
+                , email: "Enter your email."
+                , message: {
+                    maxlength: "You can enter up to 300 characters."
+                }
+            },
+            highlight: function(element, errorClass) {
+                if (errorClass == "error") {
+                    $(element).parent().addClass("error");
+                }
+            },
+            errorPlacement: function(err, el) {
+                el.after(err);
+                var errCls = el.attr("class");
+                
+                if (errCls == "error") {
+                    $(el).parent().addClass("error");
+                }
+            },
+            success: function(el) {
+                var errCls = el.attr("class");
+                $(el).parent().removeClass("error");
+            }
+        })
+
+    });
+
+    function fnSubmit() {
+        var busiFlg = false;
+        var fieldFlg = false;
+        $("[name='busi_name']").each(function() {
+            if (this.checked) {
+                busiFlg = true;
+                return false;
+            }    
+        });
+        var someFieldVal;
+        $("[name='field_name']").each(function() {
+            if (this.checked) {
+                fieldFlg = true;
+                someFieldVal = this.value;
+                return false;
+            }    
+        });
+
+        var agreeFlg = $("[name='agree_term']").is(":checked") ? true : false;
+
+        busiFlg ? $("#busi_name_err").hide() : $("#busi_name_err").show();
+        fieldFlg ? $("#field_name_err").hide() : $("#field_name_err").show();
+        agreeFlg ? $("#agree_term_err").hide() : $("#agree_term_err").show();
+        
+        if (someFieldVal == "99999" && $.trim($("#inputOthers").val()) == "") {
+            $("#field_name_others_err").show();
+            fieldFlg = false;
+        }
+
+        if ($('#partnerForm').valid() && busiFlg && fieldFlg && agreeFlg) {
+            $("[name='agree_term']").val('Y');
+            $.ajax({
+                url: '/addInquiryAjax',
+                data: $("#partnerForm").serialize(),
+                type: 'POST',
+                dataType: 'json',
+                success: function(data){
+                    if (data.result) {
+                        alert("Your message has been sent.");
+                        location.href = '/';
+                    } else {
+                        alert("failed");
+                    }
+                }
+                , error: function(error) {
+                    alert('Error occurred.');
+                }
+            });
+        }
+    }
+
+    function fnOthersCheck() {
+        if ($.trim($("#inputOthers").val()) != "") {
+            $("#field_name_others_err").hide();
+        }
+    }
+</script>
+    

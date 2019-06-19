@@ -1,0 +1,96 @@
+        <div class="container">
+            <!-- Contents -->
+			<div class="contents">
+                <h1 class="page-tit">FAQ</h1>
+
+                <div class="faq-section">
+				
+                    <p class="total-num" id="totCnt">Total of 0</p>
+                    <dl class="faq-list" id="faqList" name="faqList">
+                        
+                    </dl>
+    
+                    <div class="list-btn" id="moreDiv">
+                        <a href="javascript:;" id="btnMore">See more</a>
+                    </div>
+        
+                </div>
+        
+            </div>
+            <!-- //Contents -->
+        </div>
+
+<script>
+    $(function() {
+        $("[name='faq']").addClass("active");
+        $("header").addClass("sub-header");
+        $("#mHeadMenu").text('FAQ');
+        $("#countdown").remove();
+        fn_faqList('', false);
+        $("[name='mMenu'] > li").click(function() {
+            var menu = $(this).attr('name');
+            if (menu != 'faq' && menu != 'news') {
+                location.href = '/main?target=' + menu;
+            }
+        });
+    });
+    
+    function fn_faqList(nextNum, more) {
+        $.ajax({
+            url: '/board/faq/listAjax',
+            type: 'POST',
+            data: {'boardType': 'CD_FAQ', 'nextNum': nextNum, 'more': more},
+            dataType: 'json',
+            success: function(data){
+                $("#totCnt").text("Total of " + data.cntInfo.totCnt);
+                var faqHtml = "";
+                if (data.boardList && data.boardList.length > 0) {
+                    for (var i = 0; i < data.boardList.length; i++) {
+                        var faqInfo = data.boardList[i];
+                        faqHtml += "<dt>";
+                        faqHtml += "    <a href='javascript:;' id='faq_" + faqInfo.seq + "' onclick='faqDetail(" + faqInfo.seq + ")'>";
+                        faqHtml += "        <span class='num'>" + faqInfo.seq + "</span>";
+                        faqHtml += "        <strong class='tit'>" + faqInfo.board_subject + "</strong>";
+                        faqHtml += "    </a>";
+                        faqHtml += "</dt>";
+                        faqHtml += "<dd>";
+                        faqHtml += "    <p>" + faqInfo.board_content + "</p>";
+                        faqHtml += "</dd>";
+                        
+                        if (1 == faqInfo.seq) {
+                            $("#moreDiv").hide();
+                        } else {
+                            if ((i + 1) == data.boardList.length) {
+                                $("#btnMore").attr("onclick", "fn_faqList('" + faqInfo.board_id + "', '" + true + "')");
+                                $("#moreDiv").show();
+                            }
+                        }
+                    }
+                } else {
+                    faqHtml += "<ul class='faq-none'>";
+                    faqHtml += "    <li class='nodata'>No data</li>";
+                    faqHtml += "</ul>";
+                    $("#moreDiv").hide();
+                }
+                $("#faqList").append(faqHtml);
+            }
+            , error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+
+    function faqDetail(seq) {
+        var $parent = $("#faq_" + seq).closest("dt");
+        if($parent.is('.active')){
+            $parent.removeClass('active');
+            $parent.next('dd').slideUp();
+        }else{
+            $(".faq-list dt").removeClass('active');
+            $(".faq-list dd").slideUp();
+            $parent.addClass('active');
+            $parent.next('dd').slideDown();
+        }
+    }
+
+</script>

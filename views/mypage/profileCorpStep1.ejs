@@ -1,0 +1,141 @@
+		<!-- Contents -->
+		<div class="mp-contents">
+			<div class="mp-tit">
+                <h2>Profile</h2>
+                <p class="desc">Please check the company representative's details registered during sign-up.</p>
+            </div>
+            <section class="mp-section step">
+                <div class="step-head cf">
+                    <div class="s-tit">
+                        <em class="n">Step 1</em><span class="t">Account information</span>
+                    </div>
+                    <div class="step">
+                        <ul>
+                            <li class="active">1</li>
+                            <li>2</li>
+                            <li>3</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step-body">
+                    <form action="">
+                        <!-- input[type=hidden] 은 여기에 넣으세요 -->
+                        <div class="form-row-group first">
+                            <div class="span5 form-row">
+                                <label class="fm-label" for="userEmail">Email (ID)</label>
+                                <div class="fm-input">
+                                    <input id="userEmail" type="text" value="abcdef@naver.com" readonly>
+                                </div>
+                            </div>
+                            <div class="span5 form-row">
+                                <div class="form-row-group">
+                                    <div class="span5 form-row">
+                                        <label class="fm-label" for="userFirstName">First name of person in charge</label>
+                                        <div class="fm-input">
+                                            <input id="userFirstName" type="text" value="" readonly>
+                                        </div>
+                                    </div>
+                                    <div class="span5 form-row">
+                                        <label class="fm-label" for="userLastName">Last name of person in charge</label>
+                                        <div class="fm-input">
+                                            <input id="userLastName" type="text" value="" readonly>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row-group">
+                            <div class="span5 only form-row">
+								<label class="fm-label block" for="cn">Contact number</label>
+								<div class="form-row fixed">
+									<div class="span3">
+										<div class="fm-input">
+											<input id="countryCode" type="text" value="" readonly>
+										</div>
+									</div>
+									<div class="span7">
+										<div class="fm-input">
+											<input id="userPhone" type="text" value="" readonly>
+										</div>
+									</div>
+								</div>
+                            </div>
+                        </div>
+                        <div class="btn-wrap">
+                            <button type="button" class="btn bu next" onclick="goProceed()">Proceed</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+            <div class="precaution">
+                <div class="tit">Precaution</div>
+                <ul class="list">
+                    <li><span class="num">1.</span><span class="txt">Please contact us to change the company information.</span></li>
+                    <li><span class="num">2.</span><span class="txt">The admin will review and may request for additional documents.</span></li>
+                </ul>
+            </div>
+   
+		</div>
+        <!-- //Contents -->
+
+<script>
+    $(function() {
+        $("[name='lProfile']").addClass("active");
+        $("#mMenuLayer").text("Profile");
+        
+        getProfileCorpStep1();
+
+    });
+
+    // 1. 법인 회원 프로파일 정보 조회
+    function getProfileCorpStep1() {
+        $.ajax({
+            url: '/mypage/profileCorpStep1Ajax',
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + token);
+            },
+            success: function(data){
+                data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                if (data.result) {
+                    var corpInfo = data.corpInfo;
+                    $("#corpDiv").find("input").each(function () {
+                        $(this).prop("readonly", true);
+                    });
+                    $("#userEmail").val(corpInfo.user_email);
+                    $("#userFirstName").val(corpInfo.user_first_name);
+                    $("#userLastName").val(corpInfo.user_last_name);
+                    $("#userPhone").val(corpInfo.user_phone);
+                    var countryCode = corpInfo.country_code ? ('+' + corpInfo.country_code) : '';
+                    $("#countryCode").val(countryCode);
+                    // $("#proofFile").val(corpInfo.proofFile);
+                    // $("#etcFile").val(corpInfo.etcFile);
+
+                } else {
+                    if (data.loginFlg) {
+                        location.href = '/login';
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            }
+            , error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+
+    function setStep(info) {}
+
+    // proceed
+    function goProceed() {
+        location.href = '/mypage/profileCorpStep2';
+    }
+
+    // Edit 버튼
+    function fnEdit() {
+        $("#corpEditDiv").show();
+    }
+
+</script>

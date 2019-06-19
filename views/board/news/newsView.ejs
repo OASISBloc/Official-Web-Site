@@ -1,0 +1,110 @@
+        <div class="container">
+
+            <!-- Contents -->
+            <div class="contents">
+                <h1 class="page-tit">NEWS</h1>
+                <div class="news-section">
+            
+                    <div class="news-view">
+                        <div class="head"><p id="currBoardSubject">subject</p><span id="currMDY">date</span></div>
+                        <div class="body">
+                            <div class="viewer" id="currBoardContents">
+                            </div>
+                            <div class="attach" id="divAttach">
+                                <div class="t">Attachments</div>
+                                <div class="f" id="imgLink">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="list">
+                            <a href="#" class="row" id="nextBoardId">
+                                <div class="t">Next</div>
+                                <div class="c">
+                                    <p id="nextBoardSubject">subject</p><span id="nextMDY">date</span>
+                                </div>
+                            </a>
+                            <a href="#" class="row" id="prevBoardId">
+                                <div class="t">Prev</div>
+                                <div class="c"><p id="prevBoardSubject">subject</p><span id="prevMDY">date</span>
+                                </div>
+                            </a>
+                        </div>
+                    </div>
+    
+                    <div class="list-back">
+                        <button type="button" onclick="location.href = '/official/news'">List</button>
+                    </div>
+                </div>
+            
+            </div>
+            <!-- //Contents -->
+        </div>
+
+<script>
+    $(function() {
+        $("[name='news']").addClass("active");
+        $("header").addClass("sub-header");
+        $("#mHeadMenu").text('NEWS');
+        $("#countdown").remove();
+        fn_newsInfo();
+        $("[name='mMenu'] > li").click(function() {
+            var menu = $(this).attr('name');
+            if (menu != 'faq' && menu != 'news') {
+                location.href = '/main?target=' + menu;
+            }
+        });
+    });
+
+    function fn_newsInfo() {
+        $.ajax({
+            url: '/official/news/newsViewAjax',
+            type: 'POST',
+            data: {'boardId': '<%=boardId%>'},
+            dataType: 'json',
+            success: function(data){
+                var currData = data.currData;
+                var nextData = data.nextData;
+                var prevData = data.prevData;
+                $("#currBoardSubject").html(currData.boardSubject);
+                $("#currMDY").text(currData.MDY);
+                $("#currBoardContents").html(currData.boardContents);
+                
+                if (currData.attachId) {
+                    var imgLinkHtml = "<a class='file' href='javascript:fileDownload(" + currData.attachId + ")'>" + currData.orgFile + "</a>";
+                    $("#imgLink").append(imgLinkHtml);
+                } else {
+                    $("#divAttach").remove();
+                }
+
+                if (nextData) {
+                    $("#nextBoardId").attr('href', "/official/news/view?boardId=" + nextData.boardId);
+                    $("#nextBoardSubject").html(nextData.boardSubject);
+                    $("#nextMDY").text(nextData.MDY);
+                } else {
+                    $("#nextBoardId").remove();
+                }
+                if (prevData) {
+                    $("#prevBoardId").attr('href', "/official/news/view?boardId=" + prevData.boardId);
+                    $("#prevBoardSubject").html(prevData.boardSubject);
+                    $("#prevMDY").text(prevData.MDY);
+                } else {
+                    $("#prevBoardId").remove();
+                }
+
+            }
+            , error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+
+    function fileDownload(attachId) {
+        var form = $('<form>', {'method': 'POST', 'action': '/official/news/fileDownload'}).hide();
+        form.append($('<input>', {'type': 'hidden', 'name': 'attachId', 'value': attachId}));
+        $('body').append(form);
+        form.submit();
+        form.remove();
+        return false;
+    }
+
+</script>

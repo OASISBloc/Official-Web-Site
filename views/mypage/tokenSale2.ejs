@@ -1,0 +1,227 @@
+        <!-- Contents -->
+        <div class="mp-contents">
+            <div class="mp-tit">
+                <h2>Token sale</h2>
+                <p class="desc">Follow the instructions below carefully to participate in presale.</p>
+            </div>
+            <section class="mp-section step">
+                <div class="step-head cf">
+                    <div class="s-tit">
+                        <em class="n">Step 2</em><span class="t" id="stepTxt">Confirmation</span>
+                    </div>
+                    <div class="step">
+                        <ul>
+                            <li>1</li>
+                            <li class="active">2</li>
+                            <li>3</li>
+                            <li>4</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- person -->
+                <div id="personDiv" style="display:none;">
+                    <div class="step-body">
+                        <div class="s-desc">Please check your KYC results. You can proceed to the next step only if you pass the KYC.</div>
+            
+                        <!-- 진행 중 -->
+                        <div class="info-box" id="personReviewingDiv" style="display:none;">
+                            <div class="ico i"></div>
+                            <p><strong>Your KYC verification is being reviewed.</strong></p>
+                            <p>You can proceed to the next step once the KYC verification is confirmed.<br>
+                                The review process will take about <em>5</em> business days.<br><br>
+                                The result will be sent via email.</p>
+                        </div>
+                        <!-- 진행 완료 성공 -->
+                        <div class="info-box" id="personSuccessfulDiv" style="display:none;">
+                            <div class="ico s"></div>
+                            <p><strong>Your KYC verification has been successfully completed.</strong></p>
+                            <p>Click on proceed button to continue.</p>
+                        </div>
+                        <!-- 진행 완료 실패 -->
+                        <div class="info-box" id="personDeclinedDiv" style="display:none;">
+                            <div class="ico f"></div>
+                            <p><strong>Your KYC verification has been declined due to the following reason.</strong></p>
+                            <p id="kycFailF" style="display:none;">Unable to review ID (upload ID again)</p>
+                            <p id="kycFailD" style="display:none;">KYC declined</p>
+                        </div>
+                        <div class="btn-wrap">
+                            <button type="button" class="btn bu prev" name="btnBack" onclick="goBack()">Back</button>
+                            <button type="button" class="btn bu next" name="btnProceed" onclick="goProceed()">Continue</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- // person -->
+                <!-- corp -->
+                <div id="corpDiv" style="display:none;">
+                    <div class="step-body">
+                        <div class="s-desc">Please check the Company confirmation result.<br>You can procceed to the next step only if verified.</div>                   
+                        <!-- 진행 중 -->
+                        <div class="info-box" id="corpReviewingDiv" style="display:none;">
+                            <div class="ico i"></div>
+                            <p><strong>Your verification for enterprise is being reviewed.</strong></p>
+                            <p>You can proceed to the next step once the verification is confirmed.<br>
+                                The review process will take about <em>7</em> business days.<br><br>    
+                                The result will be sent via email.</p>
+                        </div>
+                        <!-- 진행 완료 성공 -->
+                        <div class="info-box" id="corpSuccessfulDiv" style="display:none;">
+                            <div class="ico s"></div>
+                            <p><strong>Your verification for enterprise has been successfully completed.</strong></p>
+                            <p>Click on proceed button to continue.</p>
+                        </div>
+                        <!-- 진행 완료 실패 -->
+                        <div class="info-box" id="corpDeclinedDiv" style="display:none;">
+                            <div class="ico f"></div>
+                            <p><strong>Your verification has been declined.</strong></p>
+                            <p>Contact us for more details on enterprise verification.<br>
+                                <a href="mailto:<%=config.supportEmail %>"><%=config.supportEmail %></a></p>
+                        </div>
+                        <div class="btn-wrap">
+                            <button type="button" class="btn bu prev" name="btnBack" onclick="goBack()">Back</button>
+                            <button type="button" class="btn bu next" name="btnProceed" onclick="goProceed()">Continue</button>
+                        </div>
+                    </div>
+                </div>
+                <!-- // corp -->
+
+            </section>
+            <!-- person -->
+            <div class="precaution" id="personPrecaution" style="display: none">
+                <div class="tit">Precaution</div>
+                <ul class="list">
+                    <li><span class="num">1.</span><span class="txt">The KYC verification may take 5 business days and the result will be sent via email.</span></li>
+                    <li><span class="num">2.</span><span class="txt">You cannot participate in presale or TGE if the KYC verification is declined.</span></li>
+                    <li><span class="num">3.</span><span class="txt">Please click on the 'Back' button and proceed with KYC again if your result is 'Unable to review ID (upload ID again)'.</span></li>
+                    <li><span class="num">4.</span><span class="txt">Even if you participate in both presale and TGE, you only need one KYC verification.</span></li>
+                </ul>
+            </div>
+            <!-- // person -->
+            <!-- corp -->
+            <div class="precaution" id="corpPrecaution" style="display: none">
+                <div class="tit">Precaution</div>
+                <ul class="list">
+                    <li><span class="num">1.</span><span class="txt">Company confirmation may take 7 business days after shareholder's KYC, and the result will be sent via email.</span></li>
+                    <li><span class="num">2.</span><span class="txt">If the company confirmation is declined, you will not be able to participate.<br>Please contact support@oasisbloc.io for more details.</span></li>
+                </ul>
+            </div>
+            <!-- // corp -->
+    
+        </div>
+        <!-- //Contents -->
+
+<script>
+    $(function() {
+        $("[name='lTokenSale']").addClass("active");
+        $("#mMenuLayer").text("Token sale");
+        checkCertified(token);
+    });
+
+    // 인증 대기/완료/실패 여부
+    function checkCertified(token) {
+        $.ajax({
+            url: '/mypage/checkCertifiedAjax',
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + token);
+            },
+            success: function(data){
+                data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                if (data.result) {
+                    if (data.userdTypeTxt == 'corp') {
+                        $("#stepTxt").text("Company confirmation");
+                    }
+                    $("#" + data.userdTypeTxt + "Div").show();
+                    $("#" + data.userdTypeTxt + data.kycResult + "Div").show();
+                    
+                    if (data.kycResult != "Successful") {
+                        $("[name='btnProceed']").prop('disabled', true);
+                    }
+                    if (data.userdTypeTxt == 'person' && data.kycResult != "Declined") {
+                        $("[name='btnBack']").prop('disabled', true);
+                    }
+
+                    if (data.kycFailCd == 'D') {    // 사양
+                        $("#kycFailD").show();
+                        $("[name='btnBack']").prop('disabled', true);
+                    } else if (data.kycFailCd == 'F') {    // 판독불가
+                        $("#kycFailF").show();
+                    }
+
+                    $("#" + data.userdTypeTxt + "Precaution").show();
+                } else {
+                    alert(data.message);
+                }
+                headerFooterPosition(); // 회면 사이즈 재설정
+            }
+            , error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+
+    function goBack() {
+        $.ajax({
+            url: '/mypage/proceedSetStepAjax',
+            data: {'type': 'T', 'step': '0'},
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + token);
+            },
+            success: function(data){
+                data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                if (data.result) {
+                    location.href = '/mypage/tokenSale1';
+                } else {
+                    if (data.loginFlg) {
+                        location.href = '/login';
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            }
+            , error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+
+    function goProceed() {
+        $.ajax({
+            url: '/mypage/proceedSetStepAjax',
+            data: {'type': 'T', 'step': '2'},
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + token);
+            },
+            success: function(data){
+                data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                if (data.result) {
+                    location.href = '/mypage/tokenSale3';
+                } else {
+                    if (data.loginFlg) {
+                        location.href = '/login';
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            }
+            , error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+
+    function setStep(info) {
+        if (info.completeSep) {
+            if (info.completeSep == '4') {
+
+            } else if (parseInt(info.completeSep) > 1) {
+                location.href = '/mypage/tokenSale' + (parseInt(info.completeSep) + 1);
+            }
+        }
+    }
+
+</script>

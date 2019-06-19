@@ -1,0 +1,1423 @@
+<script type="text/javascript" src="/js/jquery.validate.min.js"></script>
+
+<script type="text/javascript">
+
+    $(document).ready(function() {
+        var swiper = new Swiper('.swiper-container', {
+            spaceBetween: 100,
+            slidesPerView: 1,
+            loop: true,
+            autoplay: {
+                delay: 3000,
+                disableOnInteraction: true,
+			    waitForTransition: true
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+            pagination: {
+                el: '.swiper-pagination',
+                clickable: false,
+                renderBullet: function (index, className) {
+                    return '<span class="' + className + '">' + (index + 1) + '</span>';
+                },
+            },
+        });
+        $('.slider-zone dl').on('mouseover',function(){
+            swiper.autoplay.stop();
+        });
+        $('.slider-zone dl').on('mouseleave',function(){
+            swiper.autoplay.start();
+        });
+
+    });
+</script>
+
+    <div class="main-container">
+		<!-- Notice -->
+		<aside class="notice" id="noticeArea" style="display: none;">
+            <div class="wrap">
+                <div class="top">
+                    <div class="more">
+                        <a href="javascript:" class="btn-more" onclick="noticeMore()"><span>NOTICE</span></a>
+                    </div>
+                    <div class="summary" id="noticeSubject">
+                    </div>	
+                </div>
+                <div class="desc" style="display:none;" id="noticeContent">
+                </div>
+                <a href="javascript:;" class="btn-close" onclick="$('.notice').animate({height:0});">Close</a>
+            </div>
+        </aside>
+        <!-- //Notice -->
+
+        <!-- Contents -->
+        <div class="main-contents">
+            
+            <!-- Visual -->
+			<div class="visual">
+                <div class="inner">
+                    <h2 class="visual-title">oasis bloc</h2>
+                    <div class="main-desc">
+                        <h3>The Oracle of Blockchain</h3>
+                        <p>OASISBloc is the 1<sup>st</sup> blockchainized data platform for trading<br> useful data and value between real businesses </p>
+                    </div>
+                    <!-- presale open 전 -->
+                    <div class="link" id="beforOpen" style="display:none;">
+                        <a href="/inquiry">Join as partner</a>
+                        <!-- <a class="slide-btn" href="#tokenomics">OASISBloc coin</a> -->
+                        <a href="/OASISBloc_WHITEPAPER.pdf#page=1" target="_blank">Whitepaper</a>
+                    </div>
+                    <!-- // presale open 전 -->
+                    <!-- presale open 후 -->
+                    <div class="link" id="afterOpen" style="display:none;">
+                        <!-- <a href="javascript:;" onclick="window.open('/login')">Join presale</a> -->
+                        <a href="/OASISBloc_WHITEPAPER.pdf#page=1" target="_blank">Whitepaper</a>
+                    </div>
+                    <!-- // presale open 후 -->
+                    <div class="slider-zone">
+                        <dl>
+                            <dt>
+                                <p>Data Management Hub</p>
+                                <span>Big data , AI, Auto Contract, IoT</span>
+                            </dt>
+                            <dd>
+                                <!-- Swiper -->
+								<div class="swiper-container">
+									<ul class="swiper-wrapper main-slider">
+                                        <li class="swiper-slide"><img alt="health chain" src="/images/main/data01_health.gif"><span class="txt">Health chain</span></li>
+										<li class="swiper-slide"><img alt="AD chain" src="/images/main/data02_ad.gif"><span class="txt">AD chain</span></li>
+										<li class="swiper-slide"><img alt="Point chain" src="/images/main/data03_point.gif"><span class="txt">Point chain</span></li>
+										<li class="swiper-slide"><img alt="Energy chain" src="/images/main/data04_energy.gif"><span class="txt">Energy chain</span></li>
+										<li class="swiper-slide"><img alt="Food chain" src="/images/main/data05_food.gif"><span class="txt">Food chain</span></li>
+										<li class="swiper-slide"><img alt="Construction chain" src="/images/main/data06_construction.gif"><span class="txt">Construction chain</span></li>
+										<li class="swiper-slide"><img alt="Sports chain" src="/images/main/data07_sports.gif"><span class="txt">Sports chain</span></li>
+										<li class="swiper-slide"><img alt="Real Estate chain" src="/images/main/data08_real_estate.gif"><span class="txt">Real Estate chain</span></li>
+										<li class="swiper-slide"><img alt="e-Commerce chain" src="/images/main/data09_e_commerce.gif"><span class="txt">e-Commerce chain</span></li>
+										<li class="swiper-slide"><img alt="Cloud chain" src="/images/main/data10_cloud.gif"><span class="txt">Cloud chain</span></li>
+										<li class="swiper-slide"><img alt="Fashion chain" src="/images/main/data11_fashion.gif"><span class="txt">Fashion chain</span></li>
+										<li class="swiper-slide"><img alt="Farm chain" src="/images/main/data12_farm.gif"><span class="txt">Farm chain</span></li>
+										<li class="swiper-slide"><img alt="Merchant chain" src="/images/main/data13_merchant.gif"><span class="txt">Merchant chain</span></li>
+										<li class="swiper-slide"><img alt="Contents chain" src="/images/main/data14_contents.gif"><span class="txt">Contents chain</span></li>
+										<li class="swiper-slide"><img alt="Logistics chain" src="/images/main/data15_logistics.gif"><span class="txt">Logistics chain</span></li>
+										<li class="swiper-slide"><img alt="Education chain" src="/images/main/data16_education.gif"><span class="txt">Education chain</span></li>
+										<li class="swiper-slide"><img alt="Vehicle chain" src="/images/main/data17_vehicle.gif"><span class="txt">Vehicle chain</span></li>
+										<li class="swiper-slide"><img alt="Game chain" src="/images/main/data18_game.gif"><span class="txt">Game chain</span></li>
+                                        <li class="swiper-slide"><img alt="Travel chain" src="/images/main/data19_travel.gif"><span class="txt">Travel chain</span></li>
+                                        <li class="swiper-slide"><img alt="IoT chain" src="/images/main/data20_iot.gif"><span class="txt">IoT chain</span></li>
+										<li class="swiper-slide"><img alt="Gold chain" src="/images/main/data19_gold.gif"><span class="txt">Gold chain</span></li>
+									</ul>
+									<!-- Add Arrows -->
+									<div class="swiper-button-next"></div>
+									<div class="swiper-button-prev"></div>
+									<!-- Add Pagination -->
+									<div class="swiper-pagination"></div>
+								</div>
+
+                            </dd>
+                        </dl>
+                    </div>
+                    <div class="sns-area">
+                        <!-- <a href="javascript:;" class="telegram">Telegram</a> -->
+                        <a href="https://www.facebook.com/OASISBloc-355025675237938/" target="_blank" title="New Window" class="facebook">Facebook</a>
+						<a href="https://www.youtube.com/channel/UCBddUGCADrH0zEJxyyNU-TA" target="_blank" title="New Window" class="youtube">Youtube</a>
+                    </div>
+                </div>
+            </div>
+            <!-- //Visual -->
+
+            <!-- oasis -->
+            <section id="oasis" class="scroll-section oasis-section">
+                <div class="video-area">
+                    <iframe src="https://www.youtube.com/embed/r1oxH78Z1rs" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+                </div>
+                <div class="outer">
+                    <div class="inner what">
+                        <h2 class="s-tit cate">OASISBloc</h2>
+                        <h3 class="s-tit">What is OASISBloc?</h3>
+                        <p class="s-desc">
+                            OASISBloc is a blockchain based data trading platform. <br>
+                            OASISBloc aims to create collaborative value by providing a global data trading platform due to increase in demand for access to global data and to overcome limitations of current blockchains which are focused on each industry domains.
+                        </p>
+                    </div>
+                </div>
+                <div class="outer ">
+                    <div class="inner structure">
+                        <h3 class="s-tit">Platform structure</h3>
+                        <p class="s-desc">
+                            Oasis Chain is the hub of data trading, connecting all Domain Chains by each business sector.
+                        </p>
+                        <div class="s-map">
+                            <div class="map-img"><img src="/images/main/platform.png" alt=""></div>
+                            <div class="map-desc">
+                                <ul>
+                                    <li class="bgc01">Consists of Oasis Chain and various Domain Chains</li>
+                                    <li class="bgc02">All Domain Chains are connected through Oasis Chain</li>
+                                    <li class="bgc03">Each Domain Chain is customized according to the business sector</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>			
+                <div class="outer">
+                    <div class="inner key">
+                        <h3 class="s-tit">Key feature</h3>
+                        <p class="s-desc">
+                            Blockchain platform for data trading and convergence of value that are distributed across various businesses.
+                        </p>
+                        <ul>
+                            <li class="bg-key-01">Blockchainized data trading platform<br>through interchain</li>
+                            <li class="bg-key-02">Links distributed data assets by<br>connecting Domain Chains</li>
+                            <li class="bg-key-03">ePoA consensus algorithm<br>(equitable Proof of Authority)</li>
+                            <li class="bg-key-04">Blockchain Oracle<br>(provide Oracle SDK)</li>
+                        </ul>
+                    </div>
+                </div>	
+                <div class="outer">
+                    <div class="inner platform">
+                        <h3 class="s-tit">Platform architecture</h3>
+                        <p class="s-desc">
+                            Oasis Chain acts as an interchain that connects each Domain Chain with users.
+                        </p>
+                        <div class="platform-step">
+                            <div class="step-oasis">
+                                <dl class="type01">
+                                    <dt>Oasis Chain</dt>
+                                    <dd>
+                                        <ul>
+                                            <li><span>Data marketplace</span></li>
+                                            <li><span>Internal exchange module</span></li>
+                                            <li><span>Domain Chain management</span></li>
+                                            <li><span>Blockchain</span></li>
+                                        </ul>
+                                    </dd>
+                                </dl>
+                            </div>
+                            <div class="step-user">
+                                user
+                            </div>
+                            <div class="step-domain">
+                                <dl class="type01">
+                                    <dt>Domain Chain</dt>
+                                    <dd>
+                                        <dl>
+                                            <dt>On-chain node</dt>
+                                            <dd>
+                                                <ul>
+                                                    <li><span>Off-chain node</span></li>
+                                                    <li><span>Domain blockchain</span></li>
+                                                </ul>
+                                            </dd>
+                                        </dl>
+                                        <dl>
+                                            <dt>Off-chain node</dt>
+                                            <dd>
+                                                <ul>
+                                                    <li><span>Data delivery</span></li>
+                                                    <li><span>Data management</span></li>
+                                                    <li><span>IDFS</span></li>
+                                                </ul>
+                                            </dd>
+                                        </dl>
+                                    </dd>
+                                </dl>
+                                <dl class="type02">
+                                    <dt>External chain Oracle SDK</dt>
+                                    <dd><span>Other blockchain<br>On-chain & Off-chain</span></dd>
+                                </dl>
+                            </div>
+                        </div>
+                        <p class="desc">[OASISBloc data trading platform]</p>
+                    </div>
+                </div>	
+                <div class="outer">
+                    <div class="inner role">
+                        <h3 class="s-tit">Role of platform</h3>
+                        <p class="s-desc">
+                            Organize an Oasis Alliance (Oasis Foundation, OIC, Partners) to devote and lead the platform innovation and excellent service.
+                        </p>
+                        <ul class="role-list">
+                            <li>
+                                <strong class="tit">Business development</strong>
+                                <p>Provide business development suggestions for the Oasis Chain and Domain Chains.</p>
+                            </li>
+                            <li>
+                                <strong class="tit">Project discovery</strong>
+                                <p>Discover projects to become new Domain Chains<br>(including business model evaluation and consulting)</p>
+                            </li>
+                            <li>
+                                <strong class="tit">Data standardization</strong>
+                                <p>Develop and apply data standardization model for various data trading between Domain Chains.</p>
+                            </li>
+                        </ul>						
+                    </div>
+                </div>
+                <div class="outer">
+                    <div class="inner business">
+                        <h3 class="s-tit">Business model</h3>
+                        <h4 class="s-tit02">OASISBloc data marketplace</h4>
+                        <p class="s-desc">
+                            The data market is expected to grow from $ 33.5 billion in 2017 to $ 99.2 billion in 2026 with CAGR (Compound Annual Growth Rate) of 13%.
+                        </p>
+                        <div class="data-img">
+                            <p>Increase in platform role, Increase in data market size</p>
+                            <ul>
+                                <li>1Step(Data gathering) - Platform Provide(Raw Data)</li>
+                                <li>2Step(Data trading) - Smart Data(Processed Data)</li>
+                                <li>3Step(Data converging) - Smart Life(Value Added Data)</li>
+                            </ul>
+                            <p>OASISBloc’s daily data trading estimates</p>
+                            <ul>
+                                <li>100,000 Health chain data</li>
+                                <li>28,000 Food chain data</li>
+                                <li>123 Game chain data</li>
+                                <li>913,425 AD chain data</li>
+                                <li>1,041,904 Point chain data</li>
+                                <li>356 Real estate chain data</li>
+                            </ul>
+                        </div>
+
+						<div class="m_none">
+                            <h4 class="s-tit02">BaaS Model (Blockchain as a Service)</h4>
+                            <p class="s-desc">
+                                There are various barriers such as technology, cost, and time for companies to newly adopt blockchain into their businesses. OASISBloc provides solutions to eliminate such barriers.
+                            </p>
+                            <div class="baas-cont">
+                                <dl class="bass-img">
+                                    <dt>OASISBloc</dt>
+                                    <dd>Blockchain Dev. Tool</dd>
+                                    <dd>Blockchain based Data Market Place</dd>
+                                    <dd>Integrated ID & Wallet</dd>
+                                    <dd>Operation Tool</dd>
+                                    <dd>IDFS (File & Data Storage)</dd>
+                                    <dd>Library</dd>
+                                </dl>
+                                <div class="txt">
+                                    <p>Provides test chain, development guidelines, SDK & API, and audit tool through Blockchain Dev. Tool</p>
+                                    <p>Provides access to Oasis Chain, Domain Chain, and dApp with an integrated ID</p>
+                                    <p>Enables integrated asset management with integrated wallet</p>
+                                    <p>Provides operation tool for info graphic dashboard, criteria for user activity, token circulation supply and max supply etc.</p>
+                                </div>
+    
+                            </div>
+                        
+                            <h4 class="s-tit02">DaaS Model (Data as a Service)</h4>
+							<p class="s-desc">
+								As data trading and processing become more active, the data trading platform must be transparent and the data provider should gain fair profits. Now that data trading platforms need to have the greatest efficiency and business value, data services based on blockchain are a necessity, not an option.
+							</p>
+							<div class="dass-img">
+								<ul>
+									<li>Domain Chain</li>
+									<li>Data trading platform</li>
+									<li>Data buyer</li>
+									<li>User</li>
+									<li>Exchange module</li>
+								</ul>
+								<p>Provide data → Tokens for selling data → Provide token request for exchange → OSB token exchange</p>
+							</div>
+
+                        </div>
+                        
+                    </div>
+                </div>
+            </section>
+            <!-- //oasis -->
+
+            <!-- chain -->
+			<section id="chain" class="scroll-section chain-section">
+                <div class="outer article01">
+                    <div class="inner">
+                        <h2 class="s-tit cate">Domain Chain</h2>
+                        <h3 class="s-tit">What is Domain Chain?</h3>
+                        <p class="s-desc">
+                            Domain Chains are partners of the OASISBloc, enabling OASISBloc to build a global data trading platform that overcomes the industry and geographic limitations of the OASISBloc.<br>
+                            Numerous Domain Chains from various business types build a decent ecosystem that shares and trades practical data through the OASISBloc platform to create synergy.
+                        </p>
+                    </div>
+                </div>
+                <div class="outer article02">
+                    <div class="inner">
+                        <ul class="list-img">
+                            <li>OASISBloc Data standardization → Domain Chain A, Domain Chain A → OASISBloc Data standardization</li>
+                            <li>OASISBloc Data standardization → Domain Chain B, Domain Chain B → OASISBloc Data standardization</li>
+                            <li>OASISBloc Data standardization → Domain Chain C, Domain Chain C → OASISBloc Data standardization</li>
+                            <li>OASISBloc Data standardization → Domain Chain D, Domain Chain D → OASISBloc Data standardization</li>
+                            <li>OASISBloc Data standardization → Domain Chain E, Domain Chain E → OASISBloc Data standardization</li>
+                            <li>OASISBloc Data standardization → Domain Chain F, Domain Chain F → OASISBloc Data standardization</li>
+                        </ul>
+                        <ul class="bu-arrow">
+                            <li class="bu-raw">Raw data</li>
+                            <li class="bu-processed">Processed data<br>(with confidentiality, integrity, availability)</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="outer article03">
+                    <div class="inner">
+                        <h3 class="s-tit">Role and benefits of Domain Chain</h3>
+                        <p class="s-desc">
+                            Every Domain Chain plays a given role as a fundamental and core member of the OASISBloc platform and receives various benefits.
+                        </p>
+                        <dl class="role">
+                            <dt>Role</dt>
+                            <dd>
+                                <ul>
+                                    <li>1. Cooperate with the requirements for Domain Chains project development/operation and healthy operation of the platform.</li>
+                                    <li>2. Discuss and implement the improvement proposal and situation check of the Domain Chain project proposed by OIC.</li>
+                                    <li>3. Payback a portion of generated profits from Domain Chain operations to discover and support new Domain Chains.</li>
+                                </ul>
+                            </dd>
+                        </dl>
+                        <p class="domain"><span>OASISBloc Domain Chain</span></p>
+                        <dl class="benefit">
+                            <dt>Benefit</dt>
+                            <dd>
+                                <ul>
+                                    <li>1. OIC will provide consulting and blockchain technology for project development.</li>
+                                    <li>2. OASISBloc will provide ‘Crowd funding platform’.</li>
+                                    <li>3. Able to use business incubating program and consulting program for funding process for each project according to the characteristics of Domain Chains.</li>
+                                </ul>
+                            </dd>
+                        </dl>
+                    </div>
+                </div>
+                <div class="outer article04" id="support">
+                    <div class="inner">
+                        <p>If you want to be a Domain Chain of OASISBloc,<br>Please contact us</p>
+                        <div class="btn-mail"><a href="/inquiry">Join as partner</a></div>
+                    </div>
+                </div>
+            </section>
+            <!-- //chain -->
+
+            <!-- team -->
+            <section id="team" class="scroll-section team-section">
+                <!-- team -->
+                <div class="outer our-team">
+                    <div class="inner">
+                        <h2 class="s-tit cate">TEAM</h2>
+                        <h3 class="s-tit">Meet our team</h3>
+                        <ul class="team-list">
+                            <li>
+								<div class="pic">
+									<img src="/images/main/team_william.png" alt="">
+									<a href="http://www.linkedin.com/in/삼구-전-7548954b/" target="_blank" title="New window" class="in">in</a>
+								</div>
+								<dl>
+									<dt>William Chun</dt>
+									<dd class="p">Founder & CEO</dd>
+                                    <dd class="d">Korea Fintech Platform Forum / President</dd>
+                                    <dd class="s">
+                                        <ul>
+                                            <li><span class="bu">-</span>Hdac Founder</li>
+                                        </ul>
+                                    </dd>
+								</dl>
+							</li>
+							<li>
+								<div class="pic">
+									<img src="/images/main/team_robert.png" alt="">
+									<a href="http://www.linkedin.com/in/mktforum/" target="_blank" title="New window" class="in">in</a>
+								</div>
+								<dl>
+									<dt>Robert Choi, <span class="thin">Ph.D</span></dt>
+									<dd class="p">CMO</dd>
+                                    <dd class="d">Cornet Pte. Ltd. / CEO & Founder</dd>
+                                    <dd class="s">
+                                        <ul>
+                                            <li><span class="bu">-</span>Hdac Marketing Director</li>
+                                        </ul>
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <div class="pic">
+                                    <img src="/images/main/team_moonie.png" alt="">
+                                    <a href="https://www.linkedin.com/in/moonie-hee-cheol-moon-78a57913/" target="_blank" title="New window" class="in">in</a>
+                                </div>
+                                <dl>
+                                    <dt>Moonie Moon</dt>
+                                    <dd class="p">CPO</dd>
+                                    <dd class="d">Data Protection Officer</dd>
+								</dl>
+							</li>
+							<li>
+								<div class="pic">
+									<img src="/images/main/team_felix.png" alt="">
+									<a href="http://www.linkedin.com/in/pastday/" target="_blank" title="New window" class="in">in</a>
+								</div>
+								<dl>
+									<dt>Felix Choi</dt>
+									<dd class="p">Full Stack Development Director</dd>
+                                    <dd class="d">Platform Team</dd>
+                                    <dd class="s">
+                                        <ul>
+                                            <li><span class="bu">-</span>Hdac Development Engineer</li>
+                                        </ul>
+                                    </dd>
+								</dl>
+							</li>
+							<li>
+								<div class="pic">
+									<img src="/images/main/team_ilhun.png" alt="">
+									<a href="http://www.linkedin.com/in/ilhunchung" target="_blank" title="New window" class="in">in</a>
+								</div>
+								<dl>
+									<dt>Ilhun Chung</dt>
+									<dd class="p">Core Development Director</dd>
+                                    <dd class="d">Blockchain Lab.</dd>
+                                    <dd class="s">
+                                        <ul>
+                                            <li><span class="bu">-</span>Hdac Development Engineer</li>
+                                        </ul>
+                                    </dd>
+								</dl>
+							</li>
+							<li>
+								<div class="pic">
+									<img src="/images/main/team_hyukdong.png" alt="">
+									<a href="http://www.linkedin.com/in/hyuk-dong-kim-6bb66215a/" target="_blank" title="New window" class="in">in</a>
+								</div>
+								<dl>
+									<dt>Hyuk Dong Kim</dt>
+									<dd class="p">Core Developer</dd>
+									<dd class="d">Blockchain Lab.</dd>
+								</dl>
+							</li>
+							<li>
+								<div class="pic">
+									<img src="/images/main/team_renov.png" alt="">
+									<a href="http://www.linkedin.com/in/renov-jung/" target="_blank" title="New window" class="in">in</a>
+								</div>
+								<dl>
+									<dt>Renov Jung</dt>
+									<dd class="p">Core Developer</dd>
+									<dd class="d">Blockchain Lab.</dd>
+								</dl>
+							</li>
+							<li>
+								<div class="pic">
+									<img src="/images/main/team_sangkyu.png" alt="">
+								</div>
+								<dl>
+									<dt>Sang kyu Ji</dt>
+									<dd class="p">Service Development Director</dd>
+                                    <dd class="d">Blockchain Lab.</dd>
+                                    <dd class="s">
+                                        <ul>
+                                            <li><span class="bu">-</span>Hdac Development Engineer</li>
+                                        </ul>
+                                    </dd>    
+								</dl>
+							</li>
+							<li>
+								<div class="pic">
+									<img src="/images/main/team_yunhee.png" alt="">
+								</div>
+								<dl>
+									<dt>Yun Hee Park</dt>
+									<dd class="p">Service Developer</dd>
+									<dd class="d">Blockchain Lab.</dd>
+								</dl>
+							</li>
+							<li>
+								<div class="pic">
+									<img src="/images/main/team_jeremie.png" alt="">
+									<a href="http://www.linkedin.com/in/in-guen-seo-46a4a4109/" target="_blank" title="New window" class="in">in</a>
+								</div>
+								<dl>
+									<dt>Jeremie Seo</dt>
+									<dd class="p">Blockchain Strategy Director</dd>
+                                    <dd class="d">Strategy Planning Team</dd>
+                                    <dd class="s">
+                                        <ul>
+                                            <li><span class="bu">-</span>Hdac Strategy Director</li>
+                                        </ul>
+                                    </dd>    
+								</dl>
+							</li>
+							<li>
+								<div class="pic">
+									<img src="/images/main/team_andrew.png" alt="">
+									<a href="http://www.linkedin.com/in/dojun-kim" target="_blank" title="New window" class="in">in</a>
+								</div>
+								<dl>
+									<dt>Andrew Kim</dt>
+									<dd class="p">Strategy Planner</dd>
+									<dd class="d">Strategy Planning Team</dd>
+								</dl>
+							</li>
+							<li>
+								<div class="pic">
+									<img src="/images/main/team_neo.png" alt="">
+									<a href="http://www.linkedin.com/in/jihoon-kim-243753aa/" target="_blank" title="New window" class="in">in</a>
+								</div>
+								<dl>
+									<dt>Neo Kim</dt>
+									<dd class="p">Strategy Planner</dd>
+                                    <dd class="d">Strategy Planning Team</dd>
+                                    <dd class="s">
+                                        <ul>
+                                            <li><span class="bu">-</span>Hdac Strategy Planning Assistant</li>
+                                        </ul>
+                                    </dd>    
+								</dl>
+							</li>
+							<li>
+								<div class="pic">
+									<img src="/images/main/team_haejin.png" alt="">
+									<a href="http://www.linkedin.com/in/HaejinLee-530999172" target="_blank" title="New window" class="in">in</a>
+								</div>
+								<dl>
+									<dt>Haejin Lee</dt>
+									<dd class="p">Strategy Planner</dd>
+                                    <dd class="d">Strategy Planning Team</dd>
+                                    <dd class="s">
+                                        <ul>
+                                            <li><span class="bu">-</span>Hdac Strategy Planning Assistant</li>
+                                        </ul>
+                                    </dd>    
+								</dl>
+							</li>
+							<li>
+								<div class="pic">
+									<img src="/images/main/team_youna.png" alt="">
+									<a href="http://www.linkedin.com/in/youna-yang-a19a94a9/" target="_blank" title="New window" class="in">in</a>
+								</div>
+								<dl>
+									<dt>Youna Yang</dt>
+									<dd class="p">Strategy Planner</dd>
+									<dd class="d">Strategy Planning Team</dd>
+								</dl>
+							</li>
+							<li>
+								<div class="pic">
+									<img src="/images/main/team_seungwon.png" alt="">
+									<a href="http://www.linkedin.com/in/seungwon-chuh-787a8319/" target="_blank" title="New window" class="in">in</a>
+								</div>
+								<dl>
+									<dt>Seungwon Chuh</dt>
+									<dd class="p">Design Director</dd>
+									<dd class="d">Design Team</dd>
+								</dl>
+							</li>
+							<li>
+								<div class="pic">
+									<img src="/images/main/team_hwajung.png" alt="">
+								</div>
+								<dl>
+									<dt>Hwajung Ryu</dt>
+									<dd class="p">UI/UX Designer</dd>
+                                    <dd class="d">Design Team</dd>
+                                    <dd class="s">
+                                        <ul>
+                                            <li><span class="bu">-</span>Hdac UI/UX Designer</li>
+                                        </ul>
+                                    </dd>    
+								</dl>
+							</li>
+							<li>
+								<div class="pic">
+									<img src="/images/main/team_gilwon.png" alt="">
+								</div>
+								<dl>
+									<dt>Gil Won Park</dt>
+									<dd class="p">UI/UX Designer</dd>
+									<dd class="d">Design Team</dd>
+								</dl>
+							</li>
+							<li>
+								<div class="pic">
+									<img src="/images/main/team_ryanh.png" alt="">
+									<a href="http://www.linkedin.com/in/ryan-seol-a0b37723/" target="_blank" title="New window" class="in">in</a>
+								</div>
+								<dl>
+									<dt>Ryan H. Seol</dt>
+									<dd class="p">Marketing, Investor Relationship</dd>
+									<dd class="d">Crypto Labs</dd>
+								</dl>
+							</li>
+							<li>
+								<div class="pic">
+									<img src="/images/main/team_won.png" alt="">
+									<a href="http://www.linkedin.com/in/lee-jungwon-321372141" target="_blank" title="New window" class="in">in</a>
+								</div>
+								<dl>
+									<dt>Won Lee</dt>
+									<dd class="p">Marketing Manager</dd>
+                                    <dd class="d">Marketing Team</dd>
+                                    <dd class="s">
+                                        <ul>
+                                            <li><span class="bu">-</span>Hdac Marketing Assistant</li>
+                                        </ul>
+                                    </dd>    
+								</dl>
+							</li>
+							<li>
+								<div class="pic">
+									<img src="/images/main/team_steven.png" alt="">
+									<a href="http://www.linkedin.com/in/steven-kang-33b633148/" target="_blank" title="New window" class="in">in</a>
+								</div>
+								<dl>
+									<dt>Steven Kang</dt>
+									<dd class="p">Marketing Manager</dd>
+                                    <dd class="d">Marketing Team</dd>
+                                    <dd class="s">
+                                        <ul>
+                                            <li><span class="bu">-</span>Hdac Marketing Assistant</li>
+                                        </ul>
+                                    </dd>    
+								</dl>
+                            </li>
+                        </ul>
+
+                        <h3 class="s-tit">Meet our advisors</h3>
+						<ul class="team-list half">
+							<li>
+								<div class="pic">
+									<img src="/images/main/team_eddy.png" alt="">
+									<a href="https://www.linkedin.com/in/startupeddy/" target="_blank" title="New window" class="in">in</a>
+								</div>
+								<dl>
+									<dt>Eddy Travia</dt>
+									<dd class="p">Chief Advisor</dd>
+									<dd class="d">CEO at Coinsilium</dd>
+								</dl>
+							</li>
+							<li>
+								<div class="pic">
+                                    <img src="/images/main/team_thomas.png" alt="">
+									<a href="https://www.linkedin.com/in/dr-thomas-b-98244228/" target="_blank" title="New window" class="in">in</a>
+								</div>
+								<dl>
+                                    <dt>Dr. Thomas C. Bächtold</dt>
+									<dd class="p">Legal Advisor</dd>
+									<dd class="d">Attorney-at-Law</dd>
+								</dl>
+							</li>
+                        </ul>
+                    </div>
+                </div>
+                <!-- //team -->
+
+                <!-- partner -->
+				<div class="outer partner">
+                    <div class="inner">
+                        <h3 class="s-tit">Strategic Partners</h3>
+                        <ul class="partner-list">
+                            <li>
+                                <div class="pic">
+                                    <img src="/images/main/partner_doublechain.png" alt="">
+                                    <a href="http://doublechain.com/" class="link" target="_blank" title="New window">link</a><!-- 20190222 수정 -->
+                                </div>
+                                <dl>
+                                    <dt>DoubleChain</dt>
+                                    <dd>Blockchain platform &<br>core development</dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <div class="pic">
+                                    <img src="/images/main/partner_cornet.png" alt="">
+                                    <a href="http://cornet.asia/" class="link" target="_blank" title="New window">link</a><!-- 20190222 수정 -->
+                                </div>
+                                <dl>
+                                    <dt>Cornet</dt>
+                                    <dd>Blockchain consulting &<br>marketing</dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <div class="pic">
+                                    <img src="/images/main/partner_dexko.png" alt="">
+                                    <a href="https://dexko.co.kr/" class="link" target="_blank" title="New window">link</a><!-- 20190222 수정 -->
+                                </div>
+                                <dl>
+                                    <dt>DEXKO</dt>
+                                    <dd>Cryptocurrency exchange</dd>
+                                </dl>
+                            </li>
+                            <li>
+								<div class="pic">
+									<img src="/images/main/partner_coinsilium.png" alt="">
+									<a href="https://www.coinsilium.com/" class="link" target="_blank" title="New window">link</a>
+								</div>
+								<dl>
+									<dt>Coinsilium</dt>
+									<dd>Venture builder & advisory</dd>
+								</dl>
+							</li>
+                        </ul>
+
+                        <h3 class="s-tit">Domain Chain Partners</h3>
+                        <ul class="partner-list02">
+                            <li>
+                                <span class="in">
+                                    <img src="/images/main/partner01.gif" alt="MEDIBIG">
+                                    <span class="txt">MEDIBIG</span>
+                                </span>
+                            </li>
+                            <li>
+                                <a href="https://www.megazone.com/" class="in" target="_blank" title="New window">
+                                    <img src="/images/main/partner02.gif" alt="MEGAZONE">
+                                    <span class="txt">MEGAZONE</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="http://www.forbiz.co.kr/" class="in" target="_blank" title="New window">
+                                    <img src="/images/main/partner03.gif" alt="FORBIZ KOREA">
+                                    <span class="txt">FORBIZ KOREA</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.century21global.com" class="in" target="_blank" title="New window"><!-- 수정 -->
+                                    <img src="/images/main/partner04.gif" alt="Century21">
+                                    <span class="txt">Century21</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="http://www.uzen.net/" class="in" target="_blank" title="New window">
+                                    <img src="/images/main/partner05.gif" alt="UZEN">
+                                    <span class="txt">UZEN</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="http://www.additcorp.com/" class="in" target="_blank" title="New window">
+                                    <img src="/images/main/partner06.gif" alt="add.I.T.">
+                                    <span class="txt">add.I.T.</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.madahm.com/" class="in" target="_blank" title="New window">
+                                    <img src="/images/main/partner07.gif" alt="MADAHM">
+                                    <span class="txt">MADAHM</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="http://www.thinkforbl.com/" class="in" target="_blank" title="New window">
+                                    <img src="/images/main/partner08.gif" alt="Think for BL">
+                                    <span class="txt">Think for BL</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="http://hash.kr/" class="in" target="_blank" title="New window">
+                                    <img src="/images/main/partner09.gif" alt="Hashnet">
+                                    <span class="txt">Hashnet</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="http://www.webiztech.co.kr/" class="in" target="_blank" title="New window">
+                                    <img src="/images/main/partner10.gif" alt="We Biztech">
+                                    <span class="txt">We Biztech</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="http://www.dgient.com/" class="in" target="_blank" title="New window">
+                                    <img src="/images/main/partner11.gif" alt="DG Entertainment">
+                                    <span class="txt">DG Entertainment</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="http://www.erakorea.com/" class="in" target="_blank" title="New window">
+                                    <img src="/images/main/partner12.gif" alt="ERA Korea">
+                                    <span class="txt">ERA Korea</span>
+                                </a>
+                            </li>
+                            <li>
+                                <span class="in">
+                                    <img src="/images/main/partner13.gif" alt="Coins Wallet">
+                                    <span class="txt">Coins Wallet</span>
+                                </span>
+                            </li>
+                            <li>
+                                <a href="https://www2.deloitte.com/kr/ko.html" class="in" target="_blank" title="New window">
+                                    <img src="/images/main/partner14.gif" alt="Deloitte">
+                                    <span class="txt">Deloitte</span>
+                                </a>
+                            </li>
+                            <li>
+                                <span class="in">
+                                    <img src="/images/main/partner15.gif" alt="Blockchain Box">
+                                    <span class="txt">Blockchain Box</span>
+                                </span>
+                            </li>
+                            <li>
+                                <a href="http://www.harvestq.co.jp/" class="in" target="_blank" title="New window">
+                                    <img src="/images/main/partner16.gif" alt="HarvestQ">
+                                    <span class="txt">HarvestQ</span>
+                                </a>
+                            </li>
+                            <li>
+                                <span class="in">
+                                    <img src="/images/main/partner17.gif" alt="Wordwide Investment">
+                                    <span class="txt">Wordwide Investment</span>
+                                </span>
+                            </li>
+                            <li>
+                                <a href="https://www.tuple.tech/" class="in" target="_blank" title="New window">
+                                    <img src="/images/main/partner18.gif" alt="Tuple Technologies">
+                                    <span class="txt">Tuple Technologies</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="http://lvl88.world/" class="in" target="_blank" title="New window">
+                                    <img src="/images/main/partner19.gif" alt="LVL 88 Ventures">
+                                    <span class="txt">LVL 88 Ventures</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.smartmedi.io/" class="in" target="_blank" title="New window">
+                                    <img src="/images/main/partner20.gif" alt="SmartMedi">
+                                    <span class="txt">SmartMedi</span>
+                                </a>
+                            </li>
+                            <li>
+                                <a href="https://www.asiablockchainreview.com/" class="in" target="_blank" title="New window">
+                                    <img src="/images/main/partner21.gif" alt="AsiaBlockchainReview">
+                                    <span class="txt">AsiaBlockchainReview</span>
+                                </a>
+                            </li>
+                            <li>
+								<a href="http://enjoyworks.co.kr/" class="in" target="_blank" title="New window">
+									<img src="/images/main/partner22.gif" alt="Enjoy Works">
+									<span class="txt">Enjoy Works</span>
+								</a>
+							</li>
+							<li>
+								<a href="https://www.kanaxis.com/" class="in" target="_blank" title="New window">
+									<img src="/images/main/partner23.gif" alt="KANAXIS">
+									<span class="txt">KANAXIS</span>
+								</a>
+							</li>
+							<li>
+								<a href="https://mobilebridge.com/" class="in" target="_blank" title="New window">
+									<img src="/images/main/partner24.gif" alt="MobileBridge">
+									<span class="txt">MobileBridge</span>
+								</a>
+							</li>
+
+                        </ul>
+    
+                    </div>
+                </div>
+                <!-- //partner -->
+
+                <!-- roadmap -->
+                <div class="outer roadmap">
+                    <div class="inner">
+                        <h3 class="s-tit">Roadmap</h3>
+                        <!-- pc -->
+                        <ul class="roadmap-list type01">
+                            <li>
+                                <dl>
+                                    <dt>
+                                        <span class="year">2018</span>
+                                        <strong>Alliance expansion</strong>
+                                    </dt>
+                                    <dd>
+                                        <span class="num">4Q</span>
+                                        <p class="desc">Alliance agreement<br>Official website launch</p>
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>
+                                        <span class="year">2019</span>
+                                        <strong>Domain Chain</strong>
+                                    </dt>
+                                    <dd>
+                                        <p class="desc">
+                                            OASISBloc whitepaper<br>
+                                            Communication protocol & CDM <br>
+                                            Release OASISBloc MVP and Data Market Place <br>
+                                            Data Standardization for data trading<br>
+                                            Consensus Algorithm improvement												
+                                        </p>
+                                        <span class="num">1~2Q</span>
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>
+                                        <span class="year">2019</span>
+                                        <strong>Test-net launch</strong>
+                                    </dt>
+                                    <dd>
+                                        <span class="num">3~4Q</span>
+                                        <p class="desc">
+                                            Inter-Chain protocol implement<br>
+                                            Domain Chain registration & management process<br>
+                                            Data Market Place between multiple Domain Chains<br>
+                                            Data trading model<br>
+                                            Test-net launch<br>
+                                            Release various libraries, tools & SDK
+                                        </p>
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>
+                                        <span class="year">2020</span>
+                                        <strong>Oasis Chain<br>Main-net launch</strong>
+                                    </dt>
+                                    <dd>
+                                        <p class="desc">
+                                            Test-net stabilization<br>
+                                            PoC application release<br>
+                                            Main-net launch(IBC, IDFS)
+                                        </p>
+                                        <span class="num">2Q</span>
+                                    </dd>
+                                </dl>
+                            </li>
+                        </ul>
+                        <!-- //pc -->
+
+                        <!-- mobile/tablet -->
+                        <ul class="roadmap-list type02">
+                            <li>
+                                <dl>
+                                    <dt>
+                                        <strong>Alliance expansion</strong>
+                                        <span class="num">2018. 4Q</span>
+                                    </dt>
+                                    <dd>
+                                        <p class="desc">Alliance agreement<br>Official website launch</p>
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>
+                                        <strong>Domain Chain</strong>
+                                        <span class="num">2019. 1~2Q</span>
+                                    </dt>
+                                    <dd>
+                                        <p class="desc">
+                                            OASISBloc whitepaper<br>
+                                            Communication protocol & CDM <br>
+                                            Release OASISBloc MVP and Data Market Place <br>
+                                            Data Standardization for data trading<br>
+                                            Consensus Algorithm improvement
+                                        </p>
+        
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>
+                                        <strong>Test-net launch</strong>
+                                        <span class="num">2019. 3~4Q</span>
+                                    </dt>
+                                    <dd>
+                                        <p class="desc">
+                                            Inter-Chain protocol implement<br>
+                                            Domain Chain registration & management process<br>
+                                            Data Market Place between multiple Domain Chains<br>
+                                            Data trading model<br>
+                                            Test-net launch<br>
+                                            Release various libraries, tools & SDK
+                                        </p>
+                                    </dd>
+                                </dl>
+                            </li>
+                            <li>
+                                <dl>
+                                    <dt>
+                                        <strong>Oasis Chain<br>Main-net launch</strong>
+                                        <span class="num">2020.2Q</span>
+                                    </dt>
+                                    <dd>
+                                        <p class="desc">
+                                            Test-net stabilization<br>
+                                            PoC application release<br>
+                                            Main-net launch(IBC, IDFS)
+                                        </p>
+                                    </dd>
+                                </dl>
+                            </li>
+                        </ul>
+                        <!-- //mobile/tablet -->
+                    </div>
+                </div>
+                <!-- //roadmap -->
+            </section>
+            <!-- //team -->
+    
+            <!-- tokenomics -->
+            <section id="tokenomics" class="scroll-section tokenomics-section">
+				<!-- detail -->
+				<div class="outer detail">
+					<div class="inner">
+						<h2 class="s-tit cate">Tokenomics</h2>
+						<h3 class="s-tit">Token details</h3>
+						<h4 class="s-tit02">All about the OSB</h4>
+						<ul class="detail-list">
+							<li>
+								<dl>
+									<dt><span>Total issuance</span></dt>
+									<dd>
+										<p class="val">2.1 billion</p>
+									</dd>
+								</dl>
+							</li>
+							<li>
+								<dl>
+									<dt><span>First block reward</span></dt>
+									<dd>
+										<p class="val">0.6 billion<span>(29% of the total issuance)</span></p>
+									</dd>
+								</dl>
+							</li>
+							<li>
+								<dl>
+									<dt><span>Block reward</span></dt>
+									<dd>
+										<p class="val">1.5 billion<span>(71% of the total issuance)</span></p>
+									</dd>
+								</dl>
+							</li>
+							<li>
+								<dl>
+									<dt><span>Consensus algorithm</span></dt>
+									<dd>
+										<p class="val">ePoA<span>(equitable Proof-of-Authority)</span></p>
+									</dd>
+								</dl>
+							</li>
+							<!-- <li>
+								<dl>
+									<dt><span>Accepted cryptocurrency</span></dt>
+									<dd>
+										<p class="val">BTC or ETH</p>
+									</dd>
+								</dl>
+							</li> -->
+							<!-- <li>
+								<dl>
+									<dt><span>Minimum participation amount</span></dt>
+									<dd>
+                                        <p class="val">0.1 BTC / 1 ETH</p>
+									</dd>
+								</dl>
+							</li> -->
+							<!-- <li>
+								<dl>
+									<dt><span>Exchange rate</span></dt>
+									<dd>
+                                        <p class="val">1 BTC = 180,000 OSB<br>1 ETH = 6,400 OSB</p>
+									</dd>
+								</dl>
+							</li>
+							<li>
+								<dl>
+									<dt><span>Hardcap</span></dt>
+									<dd>
+										<p class="val">4,000 BTC</p>
+									</dd>
+								</dl>
+							</li> -->
+						</ul>
+					</div>
+				</div>
+				<!-- //detail -->
+
+				<!-- issuing -->
+				<div class="outer issuing">
+					<div class="inner">
+						<h3 class="s-tit">Token issuing</h3>
+						<ul class="issu-chart">
+							<li>
+								<h4 class="s-tit02">Token allocation</h4>
+                                <img src="/images/main/issu_chart01.png" alt="Token Sales: 41.4%, Company Reserve: 25.6%, Partners: 14%, Business Development : 0.1%, Founder & Team: 8%, Advisors: 3.2%, OIC Operation & Management: 2.1, Marketing: 2%, Development: 3.5%, Infra Operation : 0.1%">
+								<img src="/images/main/issu_m_chart01.png" class="m_none" alt="Token Sales: 41.4%, Company Reserve: 25.6%, Partners: 14%, Business Development : 0.1%, Founder & Team: 8%, Advisors: 3.2%, OIC Operation & Management: 2.1, Marketing: 2%, Development: 3.5%, Infra Operation : 0.1%">
+							</li>
+							<li>
+								<h4 class="s-tit02">Fund allocation</h4>
+								<img src="/images/main/issu_chart02.png" alt="Platform Development : 44.5%, Marketing : 35%, Advisors 0.9%, Infra operation : 3.5%, Business Development : 2.5%, OIC management : 6.5%, Partners : 4.5%, Reserve : 2.6">
+								<img src="/images/main/issu_m_chart02.png" class="m_none" alt="Platform Development : 44.5%, Marketing : 35%, Advisors 0.9%, Infra operation : 3.5%, Business Development : 2.5%, OIC management : 6.5%, Partners : 4.5%, Reserve : 2.6">
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- //issuing -->				
+
+				<!-- schedule -->
+				<!-- <div class="outer schedule">
+					<div class="inner">
+						<h3 class="s-tit">Token sale schedule</h3>
+						<ul class="schedule-list">
+							<li>
+								<dl>
+                                    <dt><span>Private presale</span></dt>
+									<dd class="bonus">
+										<strong>Bonus</strong>
+										<span class="val">35<em>%</em></span>
+									</dd>
+									<dd>
+										<strong>Starts</strong>
+										<span class="val">2018. 11</span>
+									</dd>
+									<dd>
+										<strong>Ends</strong>
+										<span class="val">2019. 01</span>
+									</dd>
+									<dd>
+										<strong>Exchange rate</strong>
+                                        <span class="val">
+											1 BTC = 100,000 OSB<br>
+											1 ETH = 2,800 OSB
+                                        </span>
+									</dd>
+								</dl>
+							</li>
+							<li>
+								<dl>
+									<dt><span>Public presale</span></dt>
+									<dd class="bonus">
+										<strong>Bonus</strong>
+										<span class="val">20<em>%</em></span>
+									</dd>
+									<dd>
+										<strong>Starts</strong>
+										<span class="val">2019. 02</span>
+									</dd>
+									<dd>
+										<strong>Ends</strong>
+										<span class="val">2019. 04</span>
+									</dd>
+									<dd>
+										<strong>Exchange rate</strong>
+										<span class="val">
+											1 BTC = 100,000 OBS<br>
+											1 ETH = 2,800 OBS
+										</span>
+									</dd>
+								</dl>
+							</li>
+							<li>
+								<dl>
+									<dt><span>TGE</span></dt>
+									<dd class="bonus">
+										<strong>Bonus</strong>
+										<span class="val">NO</span>
+									</dd>
+									<dd>
+										<strong>Starts</strong>
+										<span class="val">2019. 05</span>
+									</dd>
+									<dd>
+										<strong>Ends</strong>
+										<span class="val">2019. 08</span>
+									</dd>
+									<dd>
+										<strong>Exchange rate</strong>
+										<span class="val">
+											1 BTC = 100,000 OBS<br>
+											1 ETH = 2,800 OBS
+										</span>
+									</dd>
+								</dl>
+							</li>
+						</ul>
+					</div>
+				</div> -->
+				<!-- //schedule -->				
+
+				<!-- why -->
+				<div class="outer why">
+					<div class="inner">
+						<h3 class="s-tit">Why OASISBloc coin?</h3>
+						<ul class="why-list">
+							<li>
+								<dl>
+									<dt>SHARING</dt>
+									<dd>data across<br>various domains</dd>
+								</dl>
+							</li>
+							<li>
+								<dl>
+									<dt>CREATING</dt>
+									<dd>collaborated<br>value</dd>
+								</dl>
+							</li>
+							<li>
+								<dl>
+									<dt>SECURITY</dt>
+									<dd>through confidentiality, integrity, availability</dd>
+								</dl>
+							</li>
+						</ul>
+					</div>
+				</div>
+				<!-- //why -->
+            </section>
+            <!-- //tokenomics -->
+
+            <!-- update -->
+			<section class="update-section">
+				<div class="outer">
+                    <form id="subscribeForm" name="subscribeForm" >
+                        <div class="inner">
+                            <h2 class="s-tit cate">Want to receive updates?</h2>
+                            <div class="e-wrap">
+                                <div class="e-top">
+                                    <div class="fm-input">
+                                        <input type="text" id="subscribeEmail" name="subscribeEmail" placeholder="Email address">
+                                    </div>
+                                    <button type="button" class="btn-submit" onclick="$('#subscribeForm').submit()">Subscribe</button>
+                                </div>
+                                <div class="e-btm">
+                                    <label><input type="checkbox" id="subscribeEmailCheck" name="subscribeEmailCheck"><span class="txt">I agree to provide my email address to receive updates.</span></label>	
+                                    <p class="error" id="subscribeEmailCheckError" style="display:none;">Please agree to our policy.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+				</div>
+			</section>
+
+        </div>
+        <!-- //Contents -->
+    </div>
+
+<!-- Modal -->
+<div id="subscribeEmailModal" class="main-modal hide fade"><!-- 숨김 class = "hide", 보이기 class = "in" -->
+    <div class="modal-wrap">
+        <div class="vcon"></div>
+        <p class="md-tit"><strong>Email registered.</strong></p>
+        <div class="btn-wrap">
+            <button type="button" class="btn" onclick="location.href='/main'">Close</button>
+        </div>
+    </div>
+</div>
+<!-- //Modal -->
+
+
+
+<script>
+    var interval = null;
+    var intervalCnt = 0;
+
+    $(function() {
+        var target = '<%=target%>';
+        if (target) {
+            location.href = "#" + target;   //$("#link" + target).trigger("click");
+        } else {
+            getNotice();
+        }
+
+        $("#subscribeForm").validate({
+            rules: {
+                subscribeEmail: {
+                    required: true,
+                    email: true,
+                    duplEmail: true
+                }, subscribeEmailCheck: {
+                    checkBoxVal: true
+                }
+            },
+            messages: {
+                subscribeEmail: {
+                    required: "Enter your email address.",
+                    email: "Invalid email address. Please try again.",
+                    duplEmail: "This email address is already registered. Please sign in."
+                }
+            },
+            highlight: function(element, errorClass) {
+                if (errorClass == "error") {
+                    $(element).parent().addClass("error");
+                }
+            },
+            errorPlacement: function(err, el) {
+                el.after(err);
+                var errCls = el.attr("class");
+                if (errCls == "error") {
+                    $(el).parent().addClass("error");
+                }
+            },
+            success: function(el) {
+                $(el).parent().removeClass("error");
+            },
+            submitHandler: function (form) {
+                $.ajax({
+                    url: '/addSubscribeEmailAjax',
+                    data: {'subscribeEmail': $("#subscribeEmail").val()},
+                    type: 'POST',
+                    dataType: 'json',
+                    success: function(data){
+                        if (data.result) {
+                            $("#subscribeEmailModal").removeClass('hide');
+                            $("#subscribeEmailModal").addClass('in');
+                        }
+                    }
+                    , error: function(error) {
+                        alert('Error occurred.');
+                    }
+                });
+            }
+        });
+    });
+
+    $.validator.addMethod('duplEmail', function() {
+        var result = false;
+        $.ajax({
+            async: false,
+            cache: false,
+            url: '/subscribeDuplEmailChkAjax',
+            data: {'subscribeEmail': $("#subscribeEmail").val()},
+            type: 'POST',
+            dataType: 'json',
+            success: function(data){
+                result = data.result;
+            }
+        });
+        return result;
+    });
+
+    $.validator.addMethod('checkBoxVal', function(value, element) {
+        var result = $("[name=" + element.id + "]").is(":checked");
+        if (!result) {
+            $("#" + element.id + "Error").show();
+        } else {
+            $("#" + element.id + "Error").hide();
+        }
+        return result;
+    }, '');
+
+    function getNotice() {
+        $.ajax({
+            url: '/getNoticeAjax',
+            type: 'POST',
+            dataType: 'json',
+            success: function(data){
+                if (data.result) {
+                    $("#noticeArea").show();
+                    $("#noticeSubject").html("<p>" + data.noticeInfo.subject) + "</p>";
+                    $("#noticeContent").html(data.noticeInfo.content);
+                    noticeMore();
+                }
+            }
+            , error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+
+    function noticeMore() {
+        var $el = $("aside.notice");
+        var $content = $el.find(".desc");
+
+        if (!$el.is(".active")) {
+            $el.addClass("active");
+            $content.slideDown(300);
+        } else {
+            $el.removeClass("active");
+            $content.slideUp(200);
+        }
+        event.preventDefault();
+    }
+
+</script>

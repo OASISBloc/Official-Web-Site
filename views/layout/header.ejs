@@ -1,0 +1,47 @@
+<div class="top-wrap">
+    <div class="h-logo"><img src="/images/logo.png" alt="OASISBloc"></div>
+    <div class="sign">
+        <ul>
+            <li><a href="/join" id="single1">Register</a></li>
+            <li><a href="/login" id="single2">Sign in</a></li>
+        </ul>
+    </div>
+</div>
+
+<script>
+    $(document).ajaxStart(function () {
+        $("body").prepend("<div class='loader'></div>");
+    });
+    $(document).ajaxStop(function() {
+        $(".loader").remove();
+    });
+
+    $(document).ready(function() {
+        var pathName = location.pathname;
+        
+        if (pathName.indexOf("termsnprivacy") > -1 || pathName.indexOf("refundWallet") > -1) {
+            if (localStorage.getItem('access_token')) {
+                $("#single1").text('My participation');
+                $("#single1").attr("href", "/mypage/profile");
+                $("#single2").text('Sign out');
+                $("#single2").attr("href", "javascript:");
+                $("#single2").attr("onclick", "signOut(true)");
+            } else {
+                signOut(false)               
+            }
+        } else {
+            signOut(false);
+        }
+
+    });
+
+    function signOut(logoutFlg) {
+        localStorage.removeItem('access_token');
+        localStorage.removeItem('localCoinType');
+        localStorage.removeItem('localInvAmt');
+        if (logoutFlg) {
+            alert("You have singed out.");
+            location.href = "/main";
+        }
+    }
+</script>

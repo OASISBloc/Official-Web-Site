@@ -1,0 +1,418 @@
+<script type="text/javascript" src="/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="/js/pubCommon.js"></script>
+
+        <!-- Contents -->
+        <div class="mp-contents">
+            <div class="mp-tit">
+                <h2>Token sale</h2>
+                <p class="desc">Follow the instructions below carefully to participate in presale.</p>
+            </div>
+            <section class="mp-section step">
+                <div class="step-head cf">
+                    <div class="s-tit">
+                        <em class="n">Step 4</em><span class="t">Confirm wallet address</span>
+                    </div>
+                    <div class="step">
+                        <ul>
+                            <li>1</li>
+                            <li>2</li>
+                            <li>3</li>
+                            <li class="active">4</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step-body">
+                    <div class="s-desc">Please transfer only from your registered wallet address as below.<br>According to the participating cryptocurrency, the relevant wallet address for participation will be provided at the final step.</div>
+                    <h3 class="g-tit">Wallet address for token withdrawal / deposit</h3>
+                    
+                    <!-- BTC 선택시 -->
+                    <div class="cont-box" id="BTCDiv" style="display:none;">
+                        <form id="BTCTokenSaleForm" name="BTCTokenSaleForm">
+                            <input type="hidden" name="coinType" value="">
+                            <input type="hidden" name="investSeq" value="">
+                            <input type="hidden" name="planSeq">
+                            <input type="hidden" id="BTCInvestAddress" name="investAddress" />
+                            <div class="cont-row first">
+                                <div class="amount-wrap">
+                                    <div class="form-row flex">
+                                        <label class="fm-label bu-input" for="btc">Participation amount:</label>
+                                        <div class="fm-input right">
+                                            <input id="BTCInvestAmt" type="text" placeholder="" value="0" readonly>
+                                        </div>
+                                        <div class="fm-unit">BTC</div>
+                                    </div>
+                                    <div class="inner"><p class="txt-warning">Please double-check the participation amount.</p></div>
+                                </div>
+                            </div>
+                            <div class="cont-row">
+                                <div class="form-row">
+                                    <label class="fm-label bu-txt" for="mw">My BTC wallet address for withdrawal</label>
+                                    <div class="fm-input inner">
+                                        <input type="text" id="BTCUserWalletAddr" name="BTCUserWalletAddr" placeholder="" maxlength="80" oninput="checkInput('BTC')">
+                                    </div>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <!-- ETH 선택시 -->
+                    <div class="cont-box" id="ETHDiv" style="display:none;">
+                        <form id="ETHTokenSaleForm" name="ETHTokenSaleForm">
+                            <input type="hidden" name="coinType" value="">
+                            <input type="hidden" name="investSeq" value="">
+                            <input type="hidden" name="planSeq">
+                            <input type="hidden" id="ETHInvestAddress" name="investAddress" />
+                            <div class="cont-row first">
+                                <div class="amount-wrap">
+                                    <div class="form-row flex">
+                                        <label class="fm-label bu-input" for="btc">Participation amount:</label>
+                                        <div class="fm-input right">
+                                            <input id="ETHInvestAmt" type="text" placeholder="" value="0" readonly>
+                                        </div>
+                                        <div class="fm-unit">ETH</div>
+                                    </div>
+                                    <div class="inner"><p class="txt-warning">Please double-check the participation amount.</p></div>
+                                </div>
+                            </div>
+                            <div class="cont-row">
+                                <div class="form-row">
+                                    <label class="fm-label bu-txt" for="mw">My ETH wallet address for withdrawal</label>
+                                    <div class="fm-input inner">
+                                        <input type="text" id="ETHUserWalletAddr" name="ETHUserWalletAddr" placeholder="" maxlength="80" oninput="checkInput('ETH')">
+                                    </div>
+                                </div>
+                                <div class="inner"><p class="txt-warning">Please send only with the above wallet address for withdrawal as it is difficult to check for participation if the provided participation wallet address and the actual wallet address used for participation are different. OASISBloc is not responsible for this matter. Do not use the exchange or the emulator wallet as the wallet address may change when transferring.</p></div>
+                            </div>
+                        </form>
+                    </div>
+
+                    <div class="btn-wrap">
+                        <button type="button" class="btn bu prev" onclick="btnBack()">Back</button>
+                        <button type="button" class="btn bu next" id="btnProceed" onclick="btnProceed()" disabled>Proceed</button>
+                    </div>
+                </div>
+            </section>
+            <div class="precaution">
+                <div class="tit">Precaution</div>
+                <ul class="list">
+                    <li><span class="num">1.</span><span class="txt">You should enter your wallet address which you will use to trasfer to OASISBloc under 'My BTC wallet address'.<br>If the registered wallet address and the actual wallet address used are different, your participation may not be accepted.</span></li>
+                    <li><span class="num">2.</span><span class="txt">Wallets of cryptocurrency exchanges and emulator are prohibited for participation.</span></li>
+                    <li><span class="num">3.</span><span class="txt">The final confirmed participation amount will be the actual transferred amount and not the registered amount. (You are responsible for the transaction fee).
+                    </span></li>
+                </ul>
+            </div>
+    
+        </div>
+        <!-- //Contents -->
+
+<!-- Modal -->
+<div id="investChekDiv" class="modal hide fade">
+    <div class="modal-wrap">
+		<div class="vcon v8"></div>
+		<p class="md-tit"><strong>Confirm participation</strong></p>
+        <div class="table-wrap grid1">
+            <table>
+                <colgroup>
+                    <col style="width:32%;">
+                    <col style="">
+                </colgroup>
+                <tbody>
+                    <tr>
+                        <th>Amount</th>
+                        <td class="right"><em id="checkInvestAmt">0</em> <span class="unit" id="checkModalCoinType">BTC</span></td>
+                    </tr>
+                    <!-- <tr>
+                        <th>Deposit wallet<br>address</th>
+                        <td><em id="checkInvestAddr"></em></td>
+                    </tr> -->
+                </tbody>
+            </table>
+        </div>
+        <p class="txt-notice">The amount accepted as participation is not the applied amount but the actual amount transferred excluding transaction fee.</p>
+        <p class="md-desc">
+            <em class="green"><br>You cannot change after confirmation.<br>Please double-check before proceeding any further.</em><br><br>
+            You can check your presale details from<br>“My participation” page.</p>
+        <div class="btn-wrap">
+            <button type="button" class="btn normal small" data-dismiss="modal">Cancel</button>
+            <button type="button" class="btn confirm small" id="confirmProceed" onclick="">Confirm</button>
+		</div>
+	</div>
+</div>
+<!-- //Modal -->
+
+<!-- Modal -->
+<div id="investComplete" class="modal large hide fade">
+	<div class="modal-wrap">
+		<div class="vcon v9"></div>
+		<p class="md-tit"><strong>Participation successful!</strong></p>
+        <p class="md-desc">
+            Your participation in presale has been completed.<br><br>
+            Details on presale participation history<br>
+            can be checked from “My participation”.</p>
+        <div class="cont-box">
+                <div class="cont-row">
+                    <div class="form-row">
+                        <div class="fm-label bu-txt" id="completeModalTxt">BTC wallet address for deposit(participation)</div>
+                        <div class="inner">
+                            <div class="qrcode-wrap">
+                                <div class="code"><img src="" id="qrImg" alt="QR code"></div>
+                                <div class="addr" id="provWalletAddr"></div>
+                                <button type="button" class="btn confirm small" onclick="btnCopy()">Copy</button>
+                            </div>
+                            <p class="txt-warning">Double-check the wallet address before sending. OASISBloc is not responsible for the tokens sent to wrong addresses.<br>Only the participation amount transferred within 24 hours will be accepted.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        
+        <div class="btn-wrap">
+            <button type="button" class="btn confirm small" id="btnClose">Close</button>
+		</div>
+	</div>
+</div>
+<!-- //Modal -->
+
+<script>
+    $(function() {
+        $("[name='lTokenSale']").addClass("active");
+        $("#mMenuLayer").text("Token sale");
+        getInitData();
+
+        $("#BTCTokenSaleForm, #ETHTokenSaleForm").validate({
+            rules: {
+                BTCInvestAmt: {
+                    checkAmt: true
+                },
+                ETHInvestAmt: {
+                    checkAmt: true
+                },
+                BTCUserWalletAddr: {
+                    required: true
+                },
+                ETHUserWalletAddr: {
+                    required: true
+                }
+            },
+            highlight: function(element, errorClass) {
+                if (errorClass == "error") {
+                    $(element).parent().addClass("error");
+                }
+            },
+            errorPlacement: function(err, el) {
+                el.after(err);
+                var errCls = el.attr("class");
+                if (errCls == "error") {
+                    $(el).parent().addClass("error");
+                }
+            },
+            success: function(el) {
+                var errCls = el.attr("class");
+                $(el).parent().removeClass("error");
+                //$("#checkInvestAddr").text($("#" + $("[name='coinType']").val() + "UserWalletAddr").val());
+            },
+            submitHandler: function (form) {
+                var coinType = $("[name='coinType']").val();
+                var investAmt = $("#" + coinType + "InvestAmt").val();
+                //var provWalletAddr = $("#provWalletAddr").text();
+                $.ajax({
+                    url: '/mypage/tokenSaleParticipatedAjax',
+                    data: $("#" +  coinType + "TokenSaleForm").serialize(), 
+                    type: 'POST',
+                    dataType: 'json',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', "Bearer " + token);
+                    },
+                    success: function(data){
+                        data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                        localStorage.removeItem('localCoinType');
+                        localStorage.removeItem('localInvAmt');
+                        if (data.result) {
+                            $("#investComplete").modal();
+                        } else {
+                            if (data.loginFlg) {
+                                location.href = '/login';
+                            } else if (data.falseKYC) {
+                                alert(data.message);
+                                btnBack('1');
+                            } else {
+                                alert(data.message);
+                            }
+                        }
+                    }
+                    , error: function(error) {
+                        alert('Error occurred.');
+                    }
+                });
+            }
+        });
+
+        $("#btnClose").click(function() {
+            location.href = "/mypage/transaction";
+        });
+    });
+
+    $.validator.addMethod('checkAmt', function() {
+        var coinType = $("#coinType").val();
+        var inAmt = parseFloat($("#partiAmount").val() ? $("#partiAmount").val() : '0');
+        if (coinType == 'BTC') {
+            return (inAmt >= <%=config.BTCMin%>)   // 테스트에 따른 변경 BTC 0.1 -> 0.01 , ETH 0.1 -> 0.01
+        } else if (coinType == 'ETH') {
+            return (inAmt >= <%=config.ETHMin%>)     // 테스트에 따른 변경 BTC 0.1 -> 0.01 , ETH 0.1 -> 0.01
+        } else {
+            return false;
+        }
+    });
+
+    function getInitData() {
+        $.ajax({
+            url: '/mypage/tokenSalePartiInfoAjax',
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + token);
+            },
+            success: function(data){
+                data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                if (data.result) {
+                    var info = data.tokenSalePartiInfo;
+                    var coinType = info.coin_type;
+                    $("#" + coinType + "Div").show();
+                    $("[name='investSeq']").val(info.invest_seq);
+                    $("[name='coinType']").val(coinType);
+                    $("[name='planSeq']").val(info.plan_seq);
+                    $("#" + coinType + "InvestAmt").val(numberWithCommas(parseFloat(info.invest_amt).toFixed(8)));
+                    $("#" + coinType + "InvestAddress").val(info.wallet);
+
+                    $("#confirmProceed").attr("onclick", "$('#investChekDiv').modal('hide'); $('#" + coinType + "TokenSaleForm').submit();");
+                    $("#checkInvestAmt").text(numberWithCommas(parseFloat(info.invest_amt).toFixed(8)));
+                    // $("#checkInvestAddr").text(info.wallet);
+
+                    $("#checkModalCoinType").text(coinType);
+                    $("#completeModalTxt").text(coinType + " wallet address for deposit(participation)");
+                    $("#qrImg").attr('src', info.walletQrcode);
+                    $("#provWalletAddr").text(info.wallet);
+                    
+                } else {
+                    alert(data.message);
+                }
+                headerFooterPosition(); // 회면 사이즈 재설정
+            }
+            , error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+
+    function checkInput(coinType) {
+        if ($.trim($("#" + coinType + "UserWalletAddr").val())) {
+            var walletId = $("[name='coinType']").val() + "UserWalletAddr";
+            $("#" + walletId).parent().removeClass("error");
+            $("#" + walletId + "-error").remove();
+            $("#btnProceed").prop("disabled", false);
+        } else {
+            $("#btnProceed").prop("disabled", true);
+        }
+    }
+
+    function btnCopy() {
+        var text = $("#provWalletAddr").text();
+        Clipboard.copy(text);
+        alert("Your wallet address has copied to the clipboard.");
+    }
+
+    function btnProceed() {
+        var walletId = $("[name='coinType']").val() + "UserWalletAddr";
+        $("#" + walletId).parent().removeClass("error");
+        $("#" + walletId + "-error").remove();
+
+        if ($.trim($("#" + walletId).val())) {
+
+            $.ajax({
+                url: '/mypage/checkWalletDuplAjax',
+                data: {'walletAddress': $("#" + walletId).val(), 'coinType': $("[name='coinType']").val()},
+                type: 'POST',
+                dataType: 'json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', "Bearer " + token);
+                },
+                success: function(data){
+                    data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                    if (data.result && data.duplCnt < 1) {
+                        $("#investChekDiv").modal();
+                    } else {
+                        if (data.coninInvalid) {
+                            $("#" + walletId).parent().removeClass("error");
+                            $("#" + walletId + "-error").remove();
+                            $("#" + walletId).parent().addClass("error");
+                            $("#" + walletId).parent().append("<label id='" + walletId + "-error' class='error' for='" + walletId + "'>Invalid wallet address</label>");
+                        } else {
+                            $("#" + walletId).parent().addClass("error");
+                            $("#" + walletId).parent().append("<label id='" + walletId + "-error' class='error' for='" + walletId + "'>This wallet address is already registered</label>");
+                            $("#btnProceed").prop("disabled", true);
+                        }
+                    }
+                }
+                , error: function(error) {
+                    alert('Error occurred.');
+                }
+            });
+            
+        } else {
+            $("#" + walletId).parent().addClass("error");
+            $("#" + walletId).parent().append("<label id='" + walletId + "-error' class='error' for='" + walletId + "'>This field is required.</label>");
+        }
+    }
+
+    function btnBack(step) {
+        var pStep = step ? step : '2';
+
+        $.ajax({
+            url: '/mypage/proceedSetStepAjax',
+            data: {'type': 'T', 'step': pStep, 'dType': 'I'},
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + token);
+            },
+            success: function(data){
+                data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                if (data.result) {
+                    if (pStep == '1') {
+                        location.href = '/mypage/tokenSale2';
+                    } else {
+                        location.href = '/mypage/tokenSale3';
+                    }
+                } else {
+                    if (data.loginFlg) {
+                        location.href = '/login';
+                    } else {
+                        alert(data.message);
+                    }
+                }
+            }
+            , error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+
+    function setStep(info) {
+        if ((info.userd_type == 'P' && info.kyc_yn != 'Y') || (info.userd_type == 'C' && info.agree_admin != 'Y')) {
+            alert("Not yet completed KYC.");
+            btnBack('1');
+        } else {
+            if (info.completeSep) {
+                if (info.completeSep != '3') {
+                    if (info.completeSep == '4') {
+                        location.href = '/mypage/tokenSale2';
+                    } else {
+                        location.href = '/mypage/tokenSale' + (parseInt(info.completeSep) + 1);
+                    }
+                }
+            } else {
+                location.href = '/mypage/tokenSale1';
+            }
+        }
+    }
+
+</script>

@@ -1,0 +1,46 @@
+	<h1><%= __('main_title') %></h1>
+	<p>Welcome222 to <%= title %></p>
+
+<%  if (kind) {
+		if (kind == 'already') { %>
+			<div class="modal">
+				<div class="modal-wrap">
+					<div class="vcon v3"></div>
+					<p class="md-tit"><strong>Certification completed.</strong></p>
+					<p class="md-desc">Email authentication has already been completed.</p>
+					<div class="btn-wrap">
+						<a href="/login" class="btn confirm small" data-dismiss="modal">Close</a>
+					</div>
+				</div>
+			</div>
+<%  	} else if (kind == 'expire') { %>
+			<div class="modal">
+				<div class="modal-wrap">
+					<div class="vcon v3"></div>
+					<p class="md-tit"><strong>Expired Email.</strong></p>
+					<p class="md-desc">Expired Email.</p>
+					<div class="btn-wrap">
+						<a href="/login" class="btn confirm small" data-dismiss="modal">Close</a>
+					</div>
+				</div>
+			</div>
+<%  	} else if (kind == 'complete') { %>
+		<div class="modal">
+			<div class="modal-wrap">
+				<div class="vcon v3"></div>
+				<p class="md-tit"><strong>Registration completed</strong></p>
+				<p class="md-desc">You are now registered.<br><br>You may sign in and participate in presale.<br>Click on participate button below<br>to participate in presale.</p>
+				<div class="btn-wrap">
+					<a href="/main" class="btn normal small">Main page</a>
+					<a href="/login" class="btn confirm small">Participate</a>
+				</div>
+			</div>
+		</div>
+<%		}
+ 	} %>
+
+	<script>
+		$(function() {
+
+		});
+	</script>

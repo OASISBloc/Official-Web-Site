@@ -1,0 +1,106 @@
+        <div class="top-wrap">
+            <div class="h-logo"><span>OASISBloc</span></div>
+            <h1 class="mp-tit">My Participation</h1>
+            <a class="h-btn" href="javascript:;"><span>Menu</span></a>
+            <!-- Memu -->
+            <div class="h-menu">
+                <div class="pane">
+                    <div class="m-logo"><img src="/images/logo-mp-m.png" alt="OASISBloc"></div>
+                    <div class="user">
+                        <div class="img"></div>
+                        <div class="info">
+                            <div class="email" name="mUserEmail"></div>
+                            <div class="member" name="mUserSeq"></div>
+                        </div>
+                    </div>
+                    <nav class="gnb">
+                        <ul name="menu">
+                            <li class="m-hide"><a href="">Home</a></li>
+                            <li class="first" name="lProfile"><a href="/mypage/profile">Profile</a></li>
+                            <li name="lTokenSale"><a href="/mypage/tokenSale1">Token sale</a></li>
+                            <li name="lTransaction"><a href="/mypage/transaction">Transaction</a></li>
+                            <!-- <li name="lExchange"><a href="/mypage/exchange">Exchange</a></li> 20190318 기획요청 -->
+                            <li name="lTfactor"><a href="/mypage/tFactorAuth">2Factor authentication</a></li>
+                            <li name="lFaq"><a href="/mypage/mypageFaqList">FAQ</a></li>
+                        </ul>
+                    </nav>
+                    <div class="h-util">
+                        <button type="button" class="btn emphasis" id="signOut">Sign out</button>
+                    </div>
+                </div>
+                <div class="dim"></div>
+            </div>
+            <!-- //Memu -->		
+        </div>
+        <div class="btm-wrap dropdown">
+            <div class="location"><a class="d-select" href="javascript:;" id="mMenuLayer">Transaction</a></div>
+            <nav class="lnb d-option" style="display:none;">
+                <ul name="menu">
+                    <li name="lProfile"><a href="/mypage/profile">Profile</a></li>
+                    <li name="lTokenSale"><a href="/mypage/tokenSale1">Token sale</a></li>
+                    <li name="lTransaction"><a href="/mypage/transaction">Transaction</a></li>
+                    <!-- <li name="lExchange"><a href="/mypage/exchange">Exchange</a></li> 20190318 기획요청 -->
+                    <li name="lTfactor"><a href="/mypage/tFactorAuth">Two factor authentication</a></li>
+                    <li name="lFaq"><a href="/mypage/mypageFaqList">FAQ</a></li>
+                </ul>
+            </nav>
+        </div>
+<script>
+    var token;
+
+    $(document).ajaxStart(function () {
+        $("body").prepend("<div class='loader'></div>");
+    });
+    $(document).ajaxStop(function() {
+        $(".loader").remove();
+    });
+    
+    $(function() {
+        $("[name='menu'] > li").removeClass("active");
+        token = localStorage.getItem('access_token');
+
+        $("#signOut").click(function() {
+            var key = "access_token";
+            if (localStorage.getItem(key) === null)
+                return false;
+            localStorage.removeItem(key);
+
+            localStorage.removeItem('localCoinType');
+            localStorage.removeItem('localInvAmt');
+            
+            alert("You have singed out.");
+            location.href = "/main";
+            return true;
+        });
+
+        // 이메일, 회원번호 설정
+        $.ajax({
+            url: '/mypage/myInfoAjax',
+            type: 'POST',
+            processData: false,
+            contentType: false,
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + token);
+            },
+            success: function(data){
+                data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                if (data.result) {
+                    $("[name='mUserSeq']").text("Member No. " + data.myInfo.user_seq);
+                    $("[name='mUserEmail']").text(data.myInfo.user_email);
+                    setStep(data.myInfo);
+                } else {
+                    localStorage.removeItem("access_token");
+                    alert(data.message);
+                    if (data.loginFlg) {
+                        location.href = '/login';
+                    } else {
+                        location.reload();
+                    }
+                }
+            }
+            , error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    });
+</script>

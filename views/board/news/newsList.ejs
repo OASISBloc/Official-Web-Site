@@ -1,0 +1,91 @@
+        <div class="container">
+
+            <!-- Contents -->
+            <div class="contents">
+                <h1 class="page-tit">NEWS</h1>
+
+                <div class="news-section">
+                    
+                    <ul class="news-list" id="newsList">					
+                    </ul>
+
+                    <div class="list-btn" id="moreDiv">
+                        <a href="javascript:;" id="btnMore">See more</a>
+                    </div>
+
+                </div>
+
+            </div>
+            <!-- //Contents -->
+
+        </div>
+
+<script>
+    $(function() {
+        $("[name='news']").addClass("active");
+        $("header").addClass("sub-header");
+        $("#mHeadMenu").text('NEWS');
+        $("#countdown").remove();
+        fn_newsList('', false);
+        $("[name='mMenu'] > li").click(function() {
+            var menu = $(this).attr('name');
+            if (menu != 'faq' && menu != 'news') {
+                location.href = '/main?target=' + menu;
+            }
+        });
+    });
+
+    function fn_newsList(nextNum, more) {
+        $.ajax({
+            url: '/official/news/listAjax',
+            type: 'POST',
+            data: {'boardType': 'CD_NEWS', 'nextNum': nextNum, 'more': more},
+            dataType: 'json',
+            success: function(data){
+                $("#totCnt").text(data.cntInfo.totCnt);
+                
+                if (data.boardList && data.boardList.length > 0) {
+                    for (var i = 0; i < data.boardList.length; i++) {
+                        var newsHtml = "";
+                        var newsInfo = data.boardList[i];
+                        var contents = newsInfo.board_content.replace(/(<([^>]+)>)/ig,"")
+                        var thumbnailImg = newsInfo.thumbnail ? newsInfo.thumbnail : '/images/img_thumb_temp.jpg';
+
+                        newsHtml += "<li>";
+                        newsHtml += "    <a href='/official/news/view?boardId=" + newsInfo.board_id + "'>";
+                        newsHtml += "        <div class='thumb'><img src='" + thumbnailImg + "' alt=''></div>";
+                        newsHtml += "        <div class='content'>";
+                        newsHtml += "            <div class='head'>";
+                        newsHtml += "                <span class='num'>" + newsInfo.seq + "</span>";
+                        newsHtml += "                <p class='t'>" + newsInfo.board_subject + "</p>";
+                        newsHtml += "                <span class='d'>" + newsInfo.MDY + "</span>";
+                        newsHtml += "            </div>";
+                        newsHtml += "            <div class='body'>" + contents + "</div>";
+                        newsHtml += "        </div>";
+                        newsHtml += "    </a>";
+                        newsHtml += "</li>";
+                        
+                        if (1 == newsInfo.seq) {
+                            $("#moreDiv").hide();
+                        } else {
+                            if ((i + 1) == data.boardList.length) {
+                                $("#btnMore").attr("onclick", "fn_newsList('" + newsInfo.board_id + "', '" + true + "')");
+                                $("#moreDiv").show();
+                            }
+                        }
+                        $("#newsList").append(newsHtml);
+                    }
+                } else {
+                    var newsHtml = "<li class='nodata'>No data</li>";
+                    $("#newsList").append(newsHtml);
+                    $("#moreDiv").hide();
+                }
+                
+            }
+            , error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+
+</script>

@@ -1,0 +1,320 @@
+<script type="text/javascript" src="/js/jquery.validate.min.js"></script>
+<script type="text/javascript" src="/js/pubCommon.js"></script>
+
+            <!-- PC Contents -->
+            <div class="mp-contents pc-contents">
+                <div class="mp-tit">
+                    <h2>Exchange</h2>
+                </div>
+                <div class="table-wrap list2">
+                    <table> 
+                        <colgroup>
+                            <col style="width:33.3%;">
+                            <col style="width:33.3%;">
+                            <col style="">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>Participated amount</th>
+                                <th>Approved amount</th>
+                                <th class="result">Total OSB to receive</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="right"><span name="BTCParticipated">0.00000000</span> <span class="unit">BTC</span></td>
+                                <td class="right"><span name="BTCApproved">0.00000000</span> <span class="unit">BTC</span></td>
+                                <td rowspan="2" class="result right"><span name="totalReceive">0.00000000</span> <span class="unit">OSB</span></td>
+                            </tr>
+                            <tr>
+                                <td class="right"><span name="ETHParticipated">0.00000000</span> <span class="unit">ETH</span></td>
+                                <td class="right"><span name="ETHApproved">0.00000000</span> <span class="unit">ETH</span></td>
+                            </tr>
+                         </tbody>
+                    </table>
+                </div>
+                <section class="mp-section">
+                    <h3 class="g-tit">Wallet address for token withdrawal / deposit</h3>
+                    <div class="cont-box">
+                        
+                        <!-- 지갑 주소 등록 전 -->
+                        <div name="noWalletDiv" style="display:none;">
+                            <div class="cont-row npd">
+                                <div class="form-row flex">
+                                    <label class="fm-label bu-input" for="btc">OSB wallet address</label>
+                                    <div class="fm-input">
+                                        <input id="pcInWalletAddr" name="inWalletAddr" type="text" placeholder="">
+                                    </div>
+                                </div>
+                                <div class="inner"><p class="txt-warning">Please double-check whether you have registered the correct OSB wallet address. OASISBloc is not responsible for the lost tokens due to providing wrong addresses.</p></div>
+                            </div>
+                            <div class="btn-wrap">
+                                <button type="button" class="btn confirm small" onclick="saveWallet($('#pcInWalletAddr').val().trim())">Save</button>
+                            </div>
+                        </div>
+    
+                        <!-- 지갑 주소 등록 후 -->
+                        <div name="yesWalletDiv" style="display:none;">
+                            <div class="cont-row npd">
+                                <div class="form-row flex">
+                                    <label class="fm-label bu-input" for="btc">OSB wallet address</label>
+                                    <div class="fm-input">
+                                        <input id="pcEditWalletAddr" name="walletAddr" type="text" placeholder="" value="" readonly>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="btn-wrap">
+                                <button type="button" class="btn normal small" name="btnEdit" onclick="editWallet();">Edit</button>
+                                <button type="button" class="btn confirm small" name="btnEditSave" onclick="saveWallet($('#pcEditWalletAddr').val().trim())" style="display:none">Save</button>
+                            </div>
+                        </div>
+    
+                    </div>
+                    <h3 class="g-tit">OSB distribution history</h3>
+                    <div class="table-wrap list5">
+                        <table> 
+                            <colgroup>
+                                <col style="width:25%;">
+                                <col style="">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Distributed amount</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pcExchangeList" name="exchangeList">
+                                
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>Total</th>
+                                    <td class="result right"><span name="totExchange"></span> <span class="unit">OSB</span></td>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </div>
+                </section>
+            </div>
+            <!-- //PC Contents -->
+            <!-- Mobile Contents -->
+            <div class="mp-contents mobile-contents">
+                <div class="mp-tit">
+                    <h2>Summary</h2>
+                </div>
+                <div class="table-wrap list2">
+                    <table> 
+                        <colgroup>
+                            <col style="width:50%;">
+                            <col style="">
+                        </colgroup>
+                        <thead>
+                            <tr>
+                                <th>Participated amount</th>
+                                <th>Approved amount</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="right"><span name="BTCParticipated">0.00000000</span> <span class="unit">BTC</span></td>
+                                <td class="right"><span name="BTCApproved">0.00000000</span> <span class="unit">BTC</span></td>
+                            </tr>
+                            <tr>
+                                <td class="right"><span name="ETHParticipated">0.00000000</span> <span class="unit">ETH</span></td>
+                                <td class="right"><span name="ETHApproved">0.00000000</span> <span class="unit">ETH</span></td>
+                            </tr>
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th class="left">Total OSB to receive</th>
+                                <td class="right"><div class="total"><span name="totalReceive">0.00000000</span> <span class="unit">OSB</span></div></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+                <div class="mp-stit"><h3>Register OSB wallet address</h3></div>
+                
+                <!-- 지갑 주소 등록 전 -->
+                <div name="noWalletDiv" style="display:none;">
+                    <div class="fm-input">
+                        <input id="mbInWalletAddr" name="inWalletAddr" type="text" placeholder="">
+                    </div>
+                    <div class="inner"><p class="txt-warning">Double-check Please!<br>OASISBloc is not responsible for the lost tokens due to providing wrong addresses.</p></div>
+                    <div class="btn-wrap in">
+                        <button type="button" class="btn confirm full" onclick="saveWallet($('#mbInWalletAddr').val().trim())">Save</button>
+                    </div>
+                </div>
+                
+                <!-- 지갑 주소 등록 후 -->
+                <div name="yesWalletDiv" style="display:none;">
+                    <div class="fm-input">
+                        <input id="mbEditWalletAddr" name="walletAddr" type="text" placeholder="" value="" readonly>
+                    </div>
+                    <div class="btn-wrap inset">
+                        <button type="button" class="btn normal full" name="btnEdit" onclick="editWallet();">Edit</button>
+                        <button type="button" class="btn confirm full" name="btnEditSave" onclick="saveWallet($('#mbEditWalletAddr').val().trim())" style="display:none">Save</button>
+                    </div>
+                </div>
+                
+                <div class="mp-stit"><h3>OSB distribution history</h3></div>
+                <div class="table-wrap list6">
+                    <table> 
+                        <colgroup>
+                            <col style="width:35%;">
+                            <col style="">
+                        </colgroup>
+                        <tbody id="mbExchangeList" name="exchangeList">
+
+                        </tbody>
+                        <tfoot>
+                            <tr>
+                                <th>Total OSB</th>
+                                <td class="result right bg"><span name="totExchange"></span> <span class="unit">OSB</span></td>
+                            </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+            <!-- //Mobile Contents -->
+
+            <!-- Modal -->
+            <div id="saveWalletPop" class="modal hide fade">
+                <div class="modal-wrap">
+                    <div class="vcon v9"></div>
+                    <p class="md-tit"><strong>Your wallet address has saved</strong></p>
+                    <p class="md-desc">You are able to change your wallet address before the distribution.</p>
+                    <div class="btn-wrap">
+                        <button type="button" class="btn confirm small" onclick="location.href='/mypage/exchange'"> Confirm </button>
+                    </div>
+                </div>
+            </div>
+            <!-- //Modal -->
+
+
+<script>
+    $(function() {
+        $("[name='lExchange']").addClass("active");
+        $("#mMenuLayer").text("Exchange");
+        $("body").addClass("bg-white");
+
+        getExchangeInfo();
+    });
+
+    function getExchangeInfo() {
+        $.ajax({
+            url: '/mypage/exchangeInfoAjax',
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + token);
+            },
+            success: function(data){
+                data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                if (data.result) {
+                    if (data.OTP != 'Y') {
+                        alert("Please set-up OTP.");
+                        location.href = "/mypage/tFactorAuth";
+                    } else {
+                        // 투자 통계
+                        var statsList = data.statsInfoList;
+                        var apprTot = 0;
+                        for (var i = 0; i < statsList.length; i++) {
+                            var coinType = statsList[i].coin_type;
+                            $("[name='" + coinType + "Participated']").text(numberWithCommas(parseFloat(statsList[i].totInvestAmt ? statsList[i].totInvestAmt : '0').toFixed(8)));
+                            $("[name='" + coinType + "Approved']").text(numberWithCommas(parseFloat(statsList[i].totReceivedAmt ? statsList[i].totReceivedAmt : '0').toFixed(8)));
+
+                            apprTot = parseFloat(apprTot) + parseFloat(statsList[i].apprTotal ? statsList[i].apprTotal : '0');
+                        }
+                        $("[name='totalReceive']").text(numberWithCommas(apprTot.toFixed(8)));
+                        
+                        // 주소 레이어 제어
+                        var walletInfo = data.walletInfo;
+                        if (walletInfo.mat_wallet) {
+                            $("[name='yesWalletDiv']").show();
+                            $("[name='noWalletDiv']").hide();
+                            $("[name='walletAddr']").val(walletInfo.mat_wallet);
+                        } else {
+                            $("[name='noWalletDiv']").show();
+                            $("[name='yesWalletDiv']").hide();
+                        }
+
+                        if (!(walletInfo.exchangeStatus == 'N' || walletInfo.exchangeStatus == 'R')) {
+                            $("[name='btnEdit']").hide();
+                        }
+
+                        // 토큰 교환 내역
+                        var exchangeList = data.exchangeList;
+                        var pcExchangeHtml = "";
+                        var mbExchangeHtml = "";
+                        if (exchangeList && exchangeList.length > 0) {
+                            for (var i = 0; i < exchangeList.length; i++) {
+                                pcExchangeHtml += "<tr>";
+                                pcExchangeHtml += "    <td>" + exchangeList[i].exchangeDate + "</td>";
+                                pcExchangeHtml += "    <td class='right'>" + numberWithCommas(parseFloat(exchangeList[i].exchange_amt).toFixed(8)) + " <span class='unit'>OSB</span></td>";
+                                pcExchangeHtml += "</tr>";
+                                
+                                mbExchangeHtml += "<tr>";
+                                mbExchangeHtml += "    <td class='left'>" + exchangeList[i].exchangeDate + "</td>";
+                                mbExchangeHtml += "    <td class='right nbl'>" + numberWithCommas(parseFloat(exchangeList[i].exchange_amt).toFixed(8)) + " <span class='unit'>OSB</span></td>";
+                                mbExchangeHtml += "</tr>";
+                            }
+                            $("#pcExchangeList").html(pcExchangeHtml);
+                            $("#mbExchangeList").html(mbExchangeHtml);
+                            $("[name='totExchange']").text(numberWithCommas(parseFloat(exchangeList[exchangeList.length - 1].totExchangeAmt).toFixed(8)));
+                        } else {
+                            var exchangeHtml = "<tr>";
+                            exchangeHtml += "    <td colspan='2'>No history</td>";
+                            exchangeHtml += "</tr>";
+                            $("[name='exchangeList']").html(exchangeHtml);
+                            $("[name='totExchange']").text('-');
+                        }
+                        headerFooterPosition();
+                    }
+
+                }
+            }
+            , error: function(error) {
+                console.log(error);
+                alert('Error occurred.');
+            }
+        });
+    }
+
+    function editWallet() {
+        $("[name='walletAddr']").attr("readonly", false);
+        $("[name='btnEdit']").hide();
+        $("[name='btnEditSave']").show();
+    }
+
+    function saveWallet(val) {
+        if (val == "") {
+            alert("Please enter your wallet address.");
+            return;
+        }
+        $.ajax({
+            url: '/mypage/changeWalletAddr',
+            data: {'walletAddr': val},
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + token);
+            },
+            success: function(data){
+                
+                data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                if (data.result) {
+                    $("#saveWalletPop").modal();
+                } else {
+                    alert(data.message);
+                    location.reload();
+                }
+            }
+            , error: function(error) {
+                console.log(error);
+                alert('Error occurred.');
+            }
+        });
+    }
+
+    function setStep() {}
+</script>

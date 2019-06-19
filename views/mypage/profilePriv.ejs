@@ -1,0 +1,453 @@
+<script type="text/javascript" src="/js/jquery.validate.min.js"></script>
+
+		<!-- Contents -->
+		<div class="mp-contents">
+            <div class="mp-tit">
+                <h2>Profile</h2>
+                <p class="desc">Please enter the following details to participate in presale. All details must be in English and identical to your passport.</p>
+            </div>
+            <section class="mp-section profile">
+                <form id="personProfileForm" name="personProfileForm">
+                    <!-- input[type=hidden] 은 여기에 넣으세요 -->
+                    <div class="form-row-group first">
+                        <div class="span5 form-row">
+                            <label class="fm-label" for="user_first_name">First name</label>
+                            <div class="fm-input">
+                                <input type="text" id="user_first_name" name="user_first_name" placeholder="Enter your first name">
+                            </div>
+                        </div>
+                        <div class="span5 form-row">
+                            <label class="fm-label" for="user_last_name">Last name</label>
+                            <div class="fm-input">
+                                <input type="text" id="user_last_name" name="user_last_name" placeholder="Enter your last name">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row-group">
+                        <div class="span5 form-row">
+                            <label class="fm-label" for="country_code">Nationality</label>
+                            <div class="fm-select">
+                                <select id="country_code" name="country_code">
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="span5 form-row">
+                            <label class="fm-label" for="abode">Country of residence</label>
+                            <div class="fm-select">
+                                <select id="abode" name="abode">
+                                    <option value="">Select</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row-group">
+                        <div class="span5 form-row">
+                            <label class="fm-label" for="user_phone">Contact number</label>
+                            <div class="fm-input">
+                                <input type="text" id="user_phone" name="user_phone" placeholder="Without hyphens only the number" oninput="this.value=numberOnly(this.value)">
+                            </div>
+                        </div>
+                        <div class="span5 form-row">
+                            <label class="fm-label block" for="birthM">Date of birth</label>
+                            <div class="fm-select-group flex">
+                                <div class="inner">
+                                    <div class="fm-select" id="birthMDiv">
+                                        <select id="birthM" name="birthM">
+                                            <option value="">Month</option>
+                                        </select>
+                                    </div>
+                                    <div class="fm-select" id="birthDDiv">
+                                        <select id="birthD" name="birthD">
+                                            <option value="">Day</option>
+                                        </select>
+                                    </div>
+                                    <div class="fm-select" id="birthYDiv">
+                                        <select id="birthY" name="birthY">
+                                            <option value="">Year</option>
+                                        </select>
+                                    </div>	
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-row-group">
+                        <div class="span5 only form-row">
+                            <label class="fm-label" for="recommend">Recommendation code</label>
+                            <div class="fm-search">
+                                <div class="fm-input" id="recommendDiv">
+                                    <input type="text" id="recommend" name="recommend" oninput="recommendCheckVal()" placeholder="Enter recommendation code">
+                                </div>
+                                <button type="button" class="btn search" id="btnRecommend" style="display:none">Check validity</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="btn-wrap">
+                        <button type="button" class="btn confirm fixed" id="btnPersonUpdate" onclick="$('#personProfileForm').submit()">Save</button>
+                        <button type="button" class="btn confirm fixed" id="btnPersonEditSave" onclick="personEditSave();" style="display:none">Save</button>
+                    </div>
+                    <div class="btn-wrap col" id="participateDiv">
+                        <button type="button" class="btn confirm fixed" id="btnTokenSale" onclick="goTokenSale();" style="display:none">Participate in token sale</button>
+                        <button type="button" class="btn normal fixed" id="btnPersonEdit" onclick="editPersonProfile();" style="display:none">Edit</button>
+                    </div>
+                </form>
+            </section>
+            <div class="precaution">
+                <div class="tit">Precaution</div>
+                <ul class="list">
+                    <li><span class="num">1.</span><span class="txt">Citizens or residents of countries that restrict participation in a cryptocurrency fundraising by law may be denied from participation.
+                    </span></li>
+                    <li><span class="num">2.</span><span class="txt">You are prohibited from participating in presale if you are 21 years old or younger.
+                    </span></li>
+                </ul>
+            </div>
+        </div>
+        <!-- //Contents -->
+
+<script>
+    var recommendCheckFlg = false;
+    $(function() {      
+        $("[name='lProfile']").addClass("active");
+        $("#mMenuLayer").text("Profile");
+        
+        birthInit();
+        getMemberProfileInfo();
+
+        $("#country_code").change(function() {
+            selectCheckVal('#country_code');
+        });
+        $("#abode").change(function() {
+            selectCheckVal('#abode');
+        });
+        $("#birthM").change(function() {
+            selectCheckVal('#birthM');
+        });
+        $("#birthD").change(function() {
+            selectCheckVal('#birthD');
+        });
+        $("#birthY").change(function() {
+            selectCheckVal('#birthY');
+        });
+
+        $("#btnRecommend").click(function () {
+            if ($.trim($("#recommend").val()) == "") {
+                alert("Enter Recommendation code.");
+                return;
+            }
+            $.ajax({
+                url: '/mypage/profileCheckRecommendAjax',
+                data: {'recommend': $("#recommend").val()}, 
+                type: 'POST',
+                dataType: 'json',
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', "Bearer " + token);
+                },
+                success: function(data){
+                    if (data.result) {
+                        recommendCheckFlg = true;
+                        alert(data.message);
+                        //$("#recommend").attr("readonly", true);
+                        $("#btnRecommend").hide();
+                        $("#checkError").remove();
+                        $("#recommendDiv").removeClass("error");
+                    } else {
+                        recommendCheckFlg = false;
+                        $("#checkError").remove();
+                        $("#recommendDiv").removeClass("error");
+                        $("#recommendDiv").append("<label class='error' id='checkError'>Invalid recommendation code.</label>");
+                        $("#recommendDiv").addClass("error");
+                    }
+                }
+            }); 
+        });
+        
+        // 개인회원 프로파일 등록
+        $("#personProfileForm").validate({
+            rules: {
+                user_first_name: {
+                    required: true,
+                    maxlength: 20
+                }
+                , user_last_name: {
+                    required: true,
+                    maxlength: 20
+                }
+                , country_code: "required"
+                , abode: "required"
+                , user_phone: {
+                    required: true,
+                    number: true
+                }
+                , birthM: "required"
+                , birthD: "required"
+                , birthY: "required"
+            },
+            messages: {
+                user_first_name: {
+                    required: "Enter your first name.",
+                    maxlength: "You can enter up to 20 characters."
+                }
+                , user_last_name: {
+                    required: "Enter your last name.",
+                    maxlength: "You can enter up to 20 characters."
+                }
+                , country_code: "Select your nationality."
+                , abode: "Select your country of residence."
+                , user_phone: {
+                    required: "Enter your contact number.",
+                    number: "Please enter numbers only."
+                }
+                , birthM: "Enter your month of birth."
+                , birthD: "Enter your day of birth."
+                , birthY: "Enter your year of birth."
+            },
+            highlight: function(element, errorClass) {
+                if (errorClass == "error") {
+                    $(element).parent().addClass("error");
+                }
+            },
+            errorPlacement: function(err, el) {
+                el.after(err);
+                var errCls = el.attr("class");
+                
+                if (errCls == "error") {
+                    $(el).parent().addClass("error");
+                }
+            },
+            success: function(el) {
+                var errCls = el.attr("class");
+                $(el).parent().removeClass("error");
+
+                if ($("#recommend").val() == "") {
+                    $("#checkError").remove();
+                    $("#recommendDiv").removeClass("error");
+                    return;
+                }
+            },
+            submitHandler: function (form) {
+                if (!recommendCheckFlg && !($("#recommend").val() == "")) {
+                    $("#checkError").remove();
+                    $("#recommendDiv").removeClass("error");
+                    $("#recommendDiv").append("<label class='error' id='checkError'>Check the recomendation code.</label>");
+                    $("#recommendDiv").addClass("error");
+                    return;
+                }
+                // if ($("#recommend").val() && typeof $("#recommend").attr("readonly") == 'undefined') {
+                //     alert("Check the recomendation code.");
+                //     return;
+                // }
+                var data = {
+                    'user_first_name': $("#user_first_name").val()
+                    , 'user_last_name': $("#user_last_name").val()
+                    , 'country_code': $("#country_code").val()
+                    , 'abode': $("#abode").val()
+                    , 'user_phone': $("#user_phone").val()
+                    , 'birth': $("#birthY").val() + $("#birthM").val() + $("#birthD").val() + ""
+                    , 'recommend': $("#recommend").val()
+                }
+                $.ajax({
+                    url: '/mypage/updatePersonProfileAjax',
+                    data: data, 
+                    type: 'POST',
+                    dataType: 'json',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', "Bearer " + token);
+                    },
+                    success: function(data){
+                        data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                        if (data.result) {
+                            alert(data.message);
+                            location.href = '/mypage/profilePriv';
+                        }
+                    }
+                    , error: function(error) {
+                        alert('Error occurred.');
+                    }
+                });
+            }
+        });
+
+    });
+
+    var countries;
+
+    function birthInit() {
+        var pad = '0';
+        for (var i = 1; i < 13; i++) {
+            var val = ("" + i).length == 1 ? pad + i : i;
+            $("#birthM").append("<option value='" + val + "'>" + val + "</option>");
+            val = 0;
+        }
+        for (var i = 1; i < 32; i++) {
+            var val = ("" + i).length == 1 ? pad + i : i;
+            $("#birthD").append("<option value='" + val + "'>" + val + "</option>");
+            val = 0;
+        }
+        var year = new Date().getFullYear();
+
+        for (var i = (year - 19); i > 1899; i--) {
+            $("#birthY").append("<option value='" + i + "'>" + i + "</option>");
+        }
+    }
+
+    // 회원 프로파일 정보 조회
+    function getMemberProfileInfo() {
+        $.ajax({
+            url: '/mypage/getMemberProfileInfoAjax',
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + token);
+            },
+            success: function(data){
+                data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                if (data.result) {
+                    var memProfile = data.memProfile;
+                    if (memProfile.userd_type == 'P') { // 개인
+                        $("#personDiv").show();
+                        if (memProfile.user_first_name) {
+                            $("#personProfileForm").find("input").each(function () {
+                                $(this).prop("readonly", true);
+                            });
+                            $("#personProfileForm").find("select").each(function () {
+                                $(this).not(":selected").attr("disabled", "disabled");
+                            });
+
+                            $("#user_first_name").val(memProfile.user_first_name);
+                            $("#user_last_name").val(memProfile.user_last_name);
+                            $("#user_phone").val(memProfile.user_phone);
+                            $("#birthM").val(memProfile.mm);
+                            $("#birthD").val(memProfile.dd);
+                            $("#birthY").val(memProfile.yyyy);
+                            $("#recommend").val(memProfile.recommend);
+                            
+                            $("#btnPersonUpdate").hide();
+                            $("#btnTokenSale").show();
+                            $("#btnPersonEdit").show();
+                            $("#btnRecommend").hide();
+                            recommendCheckFlg = true;
+                        }
+
+                        countries = memProfile.countries;
+                        countries.filter(function(item) {
+                            var countryVal = item.code == memProfile.country_code ? 'selected' : '';
+                            var abodeVal = item.code == memProfile.abode ? 'selected' : '';
+                            var countryOption = "<option value='" + item.code + "' " + countryVal + ">" + item.name + "</option>";
+                            var abodeOption = "<option value='" + item.code + "' " + abodeVal + ">" + item.name + "</option>";
+                            $("#country_code").append(countryOption);
+                            $("#abode").append(abodeOption);
+                        });
+
+                    }
+                }
+            }
+            , error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+
+    // 개인 회원 정보 수정 버튼 클릭 이벤트
+    function editPersonProfile() {
+        $("#abode").prop("disabled", false);
+        $("#user_phone").prop("readonly", false);
+
+        $("#btnPersonUpdate").hide();
+        $("#btnPersonEditSave").show();
+        $("#participateDiv").hide();
+    }
+
+    // 개인회원 정보 수정
+    function personEditSave() {
+        var editFlg = true;
+        if ($("#abode").val() == "") {
+            $("#abode").parent().addClass("error");
+            if ($("#abode-error").length < 1)
+                $("#abode").parent().append("<label id='abode-error' name='abode-error' class='error' for='abode'>Select your country of residence.</label>");
+            editFlg = false;
+        } else {
+            $("#abode").parent().removeClass("error");
+            $("#abode-error").remove();
+        }
+
+        if ($.trim($("#user_phone").val()) == "") {
+            $("#user_phone").parent().addClass("error");
+            if ($("#user_phone-error").length < 1)
+                $("#user_phone").parent().append("<label id='user_phone-error' name='user_phone-error' class='error' for='user_phone'>Enter your contact number.</label>");
+            editFlg = false;
+        } else {
+            $("#user_phone").parent().removeClass("error");
+            $("#user_phone-error").remove();
+        }
+
+        if (!editFlg) {
+            return;
+        }
+
+        var data = {
+            'abode_edit': $("#abode").val()
+            , 'user_phone_edit': $("#user_phone").val()
+        }
+        $.ajax({
+            url: '/mypage/editPersonProfileAjax',
+            data: data, 
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + token);
+            },
+            success: function(data){
+                data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                if (data.result) {
+                    alert(data.message);
+                    location.href = "/mypage/profile";
+                }
+            }
+            , error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+
+    function selectCheckVal(id) {
+        if ($(id + " option:selected").val() != "") {
+            $(id + "-error").remove();
+            $(id).parent().removeClass("error");
+        }
+    }
+
+    function recommendCheckVal() {
+        recommendCheckFlg = false;
+        $("#checkError").remove();
+        $("#recommendDiv").removeClass("error");
+
+        if ($.trim($("#recommend").val()) == "") {
+            $("#btnRecommend").hide();
+        } else {
+            $("#btnRecommend").show();
+        }
+    }
+
+    function numberOnly(str) {
+        return str.replace(/[^0-9]/gi, ""); ;
+    }
+
+    // token sale 참여
+    function goTokenSale() {
+        location.href = '/mypage/tokenSale1';
+    }
+
+    function setStep(info) {
+        // if (info.completeSep == '4') {
+        //     location.href = '/mypage/tokenSale2';
+        // } else if (info.completeSep > 0) {
+        //         location.href = '/mypage/tokenSale' + (parseInt(info.completeSep) + 1);
+        // } else {
+        //     if (info.profileStep > 0 && loginFlg) {
+        //         location.href = '/mypage/tokenSale' + (parseInt(info.completeSep) + 1);
+        //     }
+        // }
+        headerFooterPosition(); // 회면 사이즈 재확인
+    }
+
+</script>

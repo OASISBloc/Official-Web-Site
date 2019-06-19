@@ -1,0 +1,165 @@
+<script type="text/javascript" src="/js/jquery.validate.min.js"></script>
+
+		<!-- Contents -->
+		<div class="contents">
+                <h1 class="h-tit">Register wallet address for refund</h1>
+                <section class="form-section">
+                    <form id="refundForm" name="refundForm">
+                        <input type="hidden" name="userUuid" value="<%=userUuid %>">
+                        <input type="hidden" name="coinType" value="<%=coinType %>">
+                        <div class="s-tit">Register your wallet address for refund.<br>Please double-check your wallet address as OASISBloc is not responsible for the<br>lost tokens due to participant’s mistake in registering the wrong wallet address.</div>
+                        <div class="form-row flex">
+                            <div class="fm-label">Token</div>
+                            <div class="fm-check-group inline">
+                                <label class="fm-check">
+                                    <input type="radio" name="raidoCoinType" id="BTCCoinType" val="BTC"><span class="txt">BTC</span>
+                                </label>
+                                <label class="fm-check">
+                                    <input type="radio" name="raidoCoinType" id="ETHCoinType" val="ETH"><span class="txt">ETH</span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <label class="fm-label" for="walletAddr">Wallet address for refund</label>
+                            <div class="fm-input">
+                                <input id="walletAddr" name="walletAddr" type="text" placeholder="Enter wallet address">
+                            </div>
+                        </div>
+                        <div class="form-row">
+                            <label class="fm-label" for="re_walletAddr">Repeat wallet address</label>
+                            <div class="fm-input">
+                                <input id="re_walletAddr" name="re_walletAddr" type="text" placeholder="Enter wallet address">
+                            </div>
+                        </div>
+                        <!-- <p class="txt-em">Enter your wallet address for refund</p> -->
+                        <div class="btn-wrap">
+                            <button type="button" class="btn confirm full" onclick="$('#refundForm').submit()">Save</button>
+                        </div>
+                    </form>
+                </section>
+            </div>
+            <!-- //Contents -->
+
+<!-- Modal -->
+<div id="refundCompleteDiv" class="modal hide fade">
+	<div class="modal-wrap">
+		<div class="vcon v5"></div>
+		<p class="md-tit"><strong>Wallet address registration completed</strong></p>
+		<div class="btn-wrap">
+            <button type="button" class="btn confirm small" onclick="location.href='/mypage/transaction'">Confirm</button>
+		</div>
+	</div>
+</div>
+<!-- //Modal -->
+
+<!-- Modal -->
+<div id="refundExpireModal" class="modal hide fade">
+    <div class="modal-wrap">
+        <div class="vcon v4"></div>
+        <p class="md-tit"><strong> Wallet address has already registered</strong></p>
+        <p class="md-desc">If you want to change your wallet address, please contact us on support@oasisbloc.io</p>
+        <div class="btn-wrap">
+            <button type="button" class="btn confirm small" onclick="location.href='/login'">Close</button>
+        </div>
+    </div>
+</div>
+<!-- //Modal -->
+
+<script>
+    $(function() {
+        var userUuid = '<%=userUuid %>';
+        var coinType = '<%=coinType %>';
+        $("#" + coinType + "CoinType").attr("checked", true);
+        $("[name='raidoCoinType']:not(:checked)").prop("disabled", true);
+
+        refundRegChk(userUuid, coinType);
+
+        $("#refundForm").validate({
+            rules: {
+                walletAddr: {
+                    required: true
+                },
+                re_walletAddr: {
+                    required: true,
+                    equalTo: '#walletAddr'
+                }
+            },
+            messages: {
+                walletAddr: {required: "Enter your wallet address for refund."},
+                re_walletAddr: {
+                    required: "Repeat your wallet address.",
+                    equalTo: "The repeated wallet address do not match. Please try again."
+                }
+            },
+            highlight: function(element, errorClass) {
+                if (errorClass == "error") {
+                    $(element).parent().addClass("error");
+                }
+            },
+            errorPlacement: function(err, el) {
+                el.after(err);
+                var errCls = el.attr("class");
+                if (errCls == "error") {
+                    $(el).parent().addClass("error");
+                }
+            },
+            success: function(el) {
+                var errCls = el.attr("class");
+                $(el).parent().removeClass("error");
+            },
+            submitHandler: function (form) {
+                $.ajax({
+                    url: '/mypage/refundWalletAjax',
+                    data: $("#refundForm").serialize(), 
+                    type: 'POST',
+                    dataType: 'json',
+                    beforeSend: function (xhr) {
+                        xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('access_token'));
+                    },
+                    success: function(data){
+                        if (data.result) {
+                            $("#refundCompleteDiv").modal();
+                        } else if (data.type) {
+                            alert(data.message);
+                        }
+                    }
+                    , error: function(error) {
+                        alert('Error occurred.');
+                    }
+                });
+            }
+        });
+    });
+
+    function refundRegChk(userUuid, coinType) {
+        $.ajax({
+            url: '/mypage/refundRegChkAjax',
+            data: {'userUuid': userUuid, 'coinType': coinType},
+            type: 'POST',
+            dataType:'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + localStorage.getItem('access_token'));
+            },
+            success : function(data) {
+                data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                if (data.result) {
+                    
+                } else {
+                    if (data.loginFlg) {
+                        alert(data.message);
+                        location.href = '/login';
+                    } else if (data.type == 'EXPIRE') {
+                        $("#refundExpireModal").modal();
+                    } else {
+                        alert(data.message);
+                        location.href = '/main';
+                    }
+                }
+            }
+
+        });
+    }
+
+    function setStep() {}
+
+</script>

@@ -1,0 +1,173 @@
+        <div class="top-wrap">
+            <a href="/main" class="h-logo"><img src="/images/main/main-logo.png" alt="OASIS Bloc"></a>
+            <a class="h-btn" href="javascript:;"><span>Menu</span></a>
+
+            <!-- sub화면 모바일에서 노출, pc에서 숨김 -->
+			<h1 class="m-page-tit" id="mHeadMenu">FAQ</h1>
+			<a href="javascript:;" class="prev-page" onclick="window.history.back()">prev page</a>
+			<!-- //sub화면 모바일에서 노출, pc에서 숨김 -->
+            
+            <!-- Memu -->
+            <div class="h-menu">
+                <div class="pane">
+                    <a href="" class="side-logo"><img src="/images/main/main-logo.png" alt="OASIS Bloc"></a>
+                
+                    <!-- <div class="side-lang-wrap">
+                        <button type="button" class="btn-lang" onclick="$('.tog-lang').slideToggle(100);">Language</button>
+                        <ul class="tog-lang">
+                            <li><a href="javascript:;">CHN</a></li>
+                        </ul>
+                    </div> -->
+
+                    <nav class="gnb">
+                        <ul name="mMenu">
+                            <li class="scroll" name="oasis"><a href="#oasis" id="linkoasis">OASISBloc</a></li>
+							<li class="scroll" name="chain"><a href="#chain" id="linkchain">Domain Chain</a></li>
+							<li class="scroll" name="team"><a href="#team" id="linkteam">Team</a></li>
+							<li class="scroll" name="tokenomics"><a href="#tokenomics" id="linktokenomics">Tokenomics</a></li>
+							<!-- <li name="faq"><a href="/official/faq">FAQ</a></li>메뉴 활성은 li에 active 클래스 추가입니다 -->
+							<li name="news"><a href="/official/news">NEWS</a></li>
+                        </ul>
+                    </nav>
+                    <ul class="use-btn">
+						<!-- <li><a hrefe="javascript:;" class="presail" onclick="window.open('/login')" id="mBtnJoinPresale">Join presale</a></li>프리세일 오픈후 노출 -->
+						<li><a href="/inquiry">Join as partner</a></li>
+						<li id="mWhitepaper"><a href="/OASISBloc_WHITEPAPER.pdf#page=1" target="_blank">Whitepaper</a></li>
+					</ul>
+
+                </div>
+                <div class="dim"></div>
+            </div>
+            <!-- //Memu -->
+
+            <!-- <div class="lang-wrap">
+                <button type="button" class="btn-lang" onclick="$('.tog-lang').slideToggle(100);">Language</button>
+                <ul class="tog-lang">
+                    <li><a href="javascript:;">CHN</a></li>
+                </ul>
+            </div>     -->
+        </div>
+
+        <!-- countdown -->
+		<div class="countdown" id="countdown" style="display:none">
+            <div class="inner">
+                <p class="end-date" id="countdownTxt">
+                    <span>Presale begins in</span>
+                    <strong>21.02.2019 / 10:00 [UTC+8] ~20.03.2019 / 10:00 [UTC+8]</strong>
+                </p>
+                <div class="timer02" id="timer02" name="timer">
+                    <div class="join">
+                        <a href="javascript:;" onclick="window.open('/login')">Join Now</a>
+                    </div>
+                    <div class="clock">
+                        <div class="text">
+                            <span class="number day">0</span>
+                            <p class="type-days">Days</p>
+                        </div>
+                        <div class="text">
+                            <span class="number hr">0</span>
+                            <p class="type-days">Hours</p>
+                        </div>
+                        <div class="text">
+                            <span class="number min">0</span>
+                            <p class="type-days">Minutes</p>
+                        </div>
+                        <div class="text">
+                            <span class="number sec">0</span>
+                            <p class="type-days">Seconds</p>
+                        </div>
+                    </div>
+                </div>
+                <a href="javascript:;" class="btn-cls" onclick="$('.countdown').fadeOut();">close</a>
+            </div>
+        </div>
+        <!-- countdown -->
+
+<script>
+    $(document).ajaxStart(function () {
+        $("body").prepend("<div class='loader'></div>");
+    });
+    $(document).ajaxStop(function() {
+        $(".loader").remove();
+    });
+
+    /*---------------------------------
+        Timer
+    ----------------------------------*/
+    var timer = function(nowSec, planSec){
+        var $el = $("[name='timer']");
+        var countDownDate = planSec;
+        var now = nowSec;
+        
+        var x = setInterval(function() {
+            //console.log(countDownDate + "    " + now);
+            var distance = countDownDate - now;
+            var days = Math.floor(distance / (60 * 60 * 24));
+            
+            var hmsSec = distance % (60 * 60 * 24)
+            //console.log("날짜뺀 초 :: " + hmsSec + "     시간 :: " + parseInt(hmsSec / (60 * 60)) + "  분 :: " + parseInt((hmsSec % (60 * 60)) / 60 ) + "  초 :: " + parseInt(hmsSec % 60));
+            var hours = parseInt(hmsSec / (60 * 60));
+            var minutes = parseInt((hmsSec % (60 * 60)) / 60 );
+            var seconds = parseInt(hmsSec % 60);
+            
+            $el.find(".day").text(days);
+            $el.find(".hr").text(hours);
+            $el.find(".min").text(minutes);
+            $el.find(".sec").text(seconds);
+                            
+            if (distance == 0) {
+                setTimer();
+            }
+            now++;
+        }, 1000);
+    }
+
+    $(document).ready(function() {
+        $("[name='mMenu'] > li").removeClass("active");
+        setTimer()
+    });
+
+    function setTimer() {
+        $.ajax({
+            url: '/getSaleStatus',
+            type: 'POST',
+            processData: false,
+            contentType: false,
+            success: function(data){                
+                var beginsOnTxt = "";
+                // if (data.timeInfo) {
+                //     var forFlg = true;
+                //     if (data.timeInfo.length > 0) {
+                //         for (var i = 0; i < data.timeInfo.length; i++) {
+                //             if (forFlg) {
+                //                 var type = data.timeInfo[i].type;
+                //                 if (type == 'A') {
+                //                     //$("#countdown").show();
+                //                     beginsOnTxt = "Presale ends on";
+                //                     timer(data.timeInfo[i].nowSec, data.timeInfo[i].planSec);
+                //                     $("#countdownTxt").html("<span>" + beginsOnTxt + "</span><strong>" + data.timeInfo[0].fromDate + " / " + data.timeInfo[0].fromTime + " [UTC+" + data.timeInfo[0].utc + "] ~ " + data.timeInfo[0].toDate + " / " + data.timeInfo[0].toTime + " [UTC+" + data.timeInfo[0].utc+ "]</strong>");
+                //                     forFlg = false;
+                //                     $("#afterOpen").show();
+                //                 } else if (type == 'B') {
+                //                     //$("#countdown").show();
+                //                     beginsOnTxt = "Presale begins on";
+                //                     timer(data.timeInfo[i].nowSec, data.timeInfo[i].planSec);
+                //                     $("#countdownTxt").html("<span>" + beginsOnTxt + "</span><strong>" + data.timeInfo[0].fromDate + " / " + data.timeInfo[0].fromTime + " [UTC+" + data.timeInfo[0].utc + "] ~ " + data.timeInfo[0].toDate + " / " + data.timeInfo[0].toTime + " [UTC+" + data.timeInfo[0].utc+ "]</strong>");
+                //                     $("#beforOpen").show();
+                //                     $("#mBtnJoinPresale").remove();
+                //                 }
+                //             }
+                //         }
+                //     }
+                // } else {
+                    $("#countdown").hide();
+                    $("#beforOpen").show();
+                    $("#mBtnJoinPresale").remove();
+                // }
+            }
+            , error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+</script>

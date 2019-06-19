@@ -1,0 +1,562 @@
+<script type="text/javascript" src="/js/pubCommon.js"></script>
+
+        <!-- PC Contents -->
+        <div class="mp-contents pc-contents">
+            <div class="mp-tit">
+                <h2>Transaction</h2>
+            </div>
+            <div class="table-wrap list2">
+                <table> 
+                    <colgroup>
+                        <col style="width:33.3%;">
+                        <col style="width:33.3%;">
+                        <col style="">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th class="tit" colspan="3">My total participation amount</th>
+                        </tr>        
+                        <tr>
+                            <th>Participated amount</th>
+                            <th>Approved amount</th>
+                            <th class="result">Total OSB to receive</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="right"><span name="BTCParticipated">0.00000000</span> <span class="unit">BTC</span></td>
+                            <td class="right"><span name="BTCApproved">0.00000000</span> <span class="unit">BTC</span></td>
+                            <td rowspan="2" class="result right"><span name="totalReceive">0.00000000</span> <span class="unit">OSB</span></td>
+                        </tr>
+                        <tr>
+                            <td class="right"><span name="ETHParticipated">0.00000000</span> <span class="unit">ETH</span></td>
+                            <td class="right"><span name="ETHApproved">0.00000000</span> <span class="unit">ETH</span></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="table-wrap list2">
+                <table> 
+                    <colgroup>
+                        <col style="width:100%;">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>KYC verification result</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="status" name="kycStatus">
+                                <em name="kycStatus1">No verification details</em>
+                                <!-- <button type="button" class="btn bu next small" name="kycStatus2">Please proceed with KYC</button> -->
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+            <nav class="mp-tabs">
+                <ul name="degreeTab">
+                    
+                </ul>
+            </nav>
+            <section class="mp-section tab-content">
+                <div class="tab-pane fade in active" id="presale1">
+                    <div class="table-wrap list3">
+                        <table> 
+                            <colgroup>
+                                <col style="width:15%;">
+                                <col style="width:20%;">
+                                <col style="width:20%;">
+                                <col style="width:20%;">
+                                <col style="">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Participated amount</th>
+                                    <th>Transferred amount</th>
+                                    <th>Expected OSB amount</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="pcTransactionHistory">
+                                <!-- 회자의 투자 이력 -->
+                            </tbody>
+                        </table>
+                    </div>
+                    <div class="table-wrap list4">
+                        <table> 
+                            <colgroup>
+                                <col style="width:23%;">
+                                <col style="width:23%;">
+                                <col style="width:25%;">
+                                <col style="">
+                            </colgroup>
+                            <thead>
+                                <tr>
+                                    <th colspan="4">Total</th>
+                                </tr>
+                            </thead>
+                            <tbody id="tokensaleHistorySum">
+                                <!-- 회차의 합계 -->
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </section>
+            <div class="precaution">
+                <div class="tit">Precaution</div>
+                <ul class="list">
+                    <li><span class="num">1.</span><span class="txt">Your participation amount is based on the actual completed transfer to the wallet.</span></li>
+                    <li><span class="num">2.</span><span class="txt">Only the participation amount transferred within 24 hours will be accepted.</span></li>
+                    <li><span class="num">3.</span><span class="txt">The minimum participation amount is <%=config.BTCMin%> BTC and <%=config.ETHMin%> ETH.</span></li>
+                    <li><span class="num">4.</span><span class="txt">Refund will be made if you transfer less than the minimum participation amount or transfer outside the presale period.</span></li>
+                    <li><span class="num">5.</span><span class="txt">Your participation status will be confirmed after the presale is closed.</span></li>
+                    <li><span class="num">6.</span><span class="txt">If you have transferred less than the registered amount (but more than the minimum participation amount), it will be displayed as 'Deposit incompleted'.<br>After the presale, the actual transferred amount will be accepted and participation will be successful.</span></li>
+                    <!-- <li><span class="num">7.</span><span class="txt">Refund will not include the transaction fee. (0.005 BTC / 0.01 ETH). </span></li> -->
+                </ul>
+            </div>
+        </div>
+        <!-- //PC Contents -->
+
+        <!-- Mobile Contents -->
+		<div class="mp-contents mobile-contents">
+            <div class="mp-tit">
+                <h2>Summary</h2>
+            </div>
+            <div class="table-wrap list2">
+                <table> 
+                    <colgroup>
+                        <col style="width:50%;">
+                        <col style="">
+                    </colgroup>
+                    <thead>
+                        <tr>
+                            <th>Participated amount</th>
+                            <th>Approved amount</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td class="right">
+                                <span name="BTCParticipated">0.00000000</span> <span class="unit">BTC</span>
+                            </td>
+                            <td class="right">
+                                <span name="BTCApproved">0.00000000</span> <span class="unit">BTC</span>
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="right">
+                                <span name="ETHParticipated">0.00000000</span> <span class="unit">ETH</span>
+                            </td>
+                            <td class="right">
+                                <span name="ETHApproved">0.00000000</span> <span class="unit">ETH</span>
+                            </td>
+                        </tr>
+                    </tbody>
+                    <tfoot>
+                        <tr>
+                            <th class="left">Total OSB to receive</th>
+                            <td class="right">
+                                <div class="total">
+                                    <span name="totalReceive">0.00000000</span> <span class="unit">OSB</span>
+                                </div>
+                            </td>
+                        </tr>
+                    </tfoot>
+                </table>
+            </div>
+            <div class="mp-stit"><h3>KYC verification result</h3></div>
+            <div class="kyc-result" name="kycStatus">
+                <em name="kycStatus1">No verification details</em>
+                <!-- <button type="button" class="btn bu next small" name="kycStatus2">Please proceed with KYC</button> -->
+            </div>
+            <div class="mp-stit"><h3>Participation history</h3></div>
+            <nav class="mp-tabs">
+                <ul name="degreeTab">
+                </ul>
+            </nav>
+            <section class="tab-content">
+                <div class="tab-pane fade in active" id="mbTransactionHistory">
+                    <!-- 회차의 투자 내역 및 합계 -->
+                </div>
+            </section>
+            <div class="precaution">
+                <div class="tit">Precaution</div>
+                <ul class="list">
+                    <li><span class="num">1.</span><span class="txt">Your participation amount is based on the actual completed transfer to the wallet.</span></li>
+                    <li><span class="num">2.</span><span class="txt">Only the participation amount transferred within 24 hours will be accepted.</span></li>
+                    <li><span class="num">3.</span><span class="txt">The minimum participation amount is <%=config.BTCMin%> BTC and <%=config.ETHMin%> ETH.</span></li>
+                    <li><span class="num">4.</span><span class="txt">Refund will be made if you transfer less than the minimum participation amount or transfer outside the presale period.</span></li>
+                    <li><span class="num">5.</span><span class="txt">Your participation status will be confirmed after the presale is closed.</span></li>
+                    <li><span class="num">6.</span><span class="txt">If you have transferred less than the registered amount (but more than the minimum participation amount), it will be displayed as 'Deposit incompleted'.<br>After the presale, the actual transferred amount will be accepted and participation will be successful.</span></li>
+                    <!-- <li><span class="num">7.</span><span class="txt">Refund will not include the transaction fee. (0.005 BTC / 0.01 ETH). </span></li> -->
+                </ul>
+            </div>
+        </div>
+        <!-- //Mobile Contents -->
+
+<!-- Modal -->
+<div id="QRcodeDiv" class="modal hide fade"><!-- 적용시 hide fade 클래스 추가해야 안보입니다 class="modal hide fade" -->
+	<div class="modal-wrap">
+		<div class="vcon v10"></div>
+		<p class="md-tit"><strong>Wallet address for deposit</strong></p>
+        <div class="qr-code">
+            <img src="" id="QrImg" alt="QR code">
+        </div>
+        <div class="form-row flex">
+            <div class="fm-input">
+                <input id="QrCode" name="QrCode" type="text" placeholder="" value="" readonly>
+            </div>
+            <button type="button" class="btn form confirm" onclick="btnCopy('QrCode')">Copy</button>
+        </div>
+		<div class="btn-wrap">
+            <button type="button" class="btn confirm small" data-dismiss="modal">Confirm</button>
+		</div>
+	</div>
+</div>
+<!-- //Modal -->
+
+<script>
+    $(function() {
+        $("[name='lTransaction']").addClass("active");
+        $("#mMenuLayer").text("Transaction");
+        $("body").addClass("bg-white");
+
+        getTransactionInfo();
+        transactionDegreeList();
+    });
+
+    // 투자 통계 및 KYC 결과 조회
+    function getTransactionInfo() {
+        $.ajax({
+            url: '/mypage/transactionParticipateInfoAjax',
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + token);
+            },
+            success: function(data){
+                data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                if (data.result) {
+                    // 투자 서머리, KYC 인증 결과 그리기
+                    var statsList = data.statsInfoList;
+                    var apprTot = 0;
+                    for (var i = 0; i < statsList.length; i++) {
+                        var coinType = statsList[i].coin_type;
+                        var userdType = statsList[i].userdType;
+                        $("[name='" + coinType + "Participated']").text(numberWithCommas(parseFloat(statsList[i].totInvestAmt ? statsList[i].totInvestAmt : '0').toFixed(8)));
+                        $("[name='" + coinType + "Approved']").text(numberWithCommas(parseFloat(statsList[i].totReceivedAmt ? statsList[i].totReceivedAmt : '0').toFixed(8)));
+                        apprTot = parseFloat(apprTot) + parseFloat(statsList[i].apprTotal ? statsList[i].apprTotal : '0');
+                                              
+                        if (i == 0) {
+                            var kycStatus1Txt = "";
+                            var kycStatus2Html = "";
+                            if (statsList[i].kycStatus == 'I') {    // 확인중
+                                kycStatus1Txt = "Verification in process";
+                                kycStatus2Html = "<button type='button' class='btn bu next small' onclick='location.href=\"/mypage/tokenSale2\"'>See more details</button>";
+                            } else if (statsList[i].kycStatus == 'Y') { // 성공
+                                kycStatus1Txt = "Success";
+                                kycStatus2Html = "<button type='button' class='btn bu next small' onclick='location.href=\"/mypage/tokenSale2\"'>Participate</button>";
+                            } else if (statsList[i].kycStatus == 'F') { // 매칭실패
+                                kycStatus1Txt = "Denied";
+                                kycStatus2Html = "<button type='button' class='btn bu next small' onclick='location.href=\"/mypage/tokenSale2\"'>See more details</button>";
+                            } else {
+                                kycStatus1Txt = "No verification details";
+                                if (userdType == 'P') {
+                                    kycStatus2Html = "<button type='button' class='btn bu next small' onclick='location.href=\"/mypage/tokenSale1\"'>Please proceed with KYC</button>";
+                                }
+                            }
+                            $("[name='kycStatus1']").text(kycStatus1Txt);
+                            $("[name='kycStatus']").append(kycStatus2Html);
+                        }
+                    }
+                    $("[name='totalReceive']").text(numberWithCommas(apprTot.toFixed(8)));
+                }
+            }
+            , error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+
+    // 투자 회차 탭 그리기
+    function transactionDegreeList() {
+        $.ajax({
+            url: '/mypage/transactionDegreeListAjax',
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + token);
+            },
+            success: function(data){
+                data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                if (data.result) {
+                    // 차수 탭 그리기
+                    var degrees = data.degrees;
+                    var degreeHtml = "";
+                    for (var i = 0; i < degrees.length; i++) {
+                        if (degrees.length == 1) {
+                            degreeHtml += "<li name='tab" + (i + 1) + "'>";
+                            degreeHtml += "    <a href='' data-toggle='tab' onclick='transactionHistList(" + degrees[i] + ")'>Presale </a>";
+                            degreeHtml += "</li>";
+                        } else if ((i + 1) == degrees.length) {
+                            degreeHtml += "<li name='tab" + (i + 1) + "'>";
+                            degreeHtml += "    <a href='' data-toggle='tab' onclick='transactionHistList(" + degrees[i] + ")'>TGE </a>";
+                            degreeHtml += "</li>";
+                        } else {
+                            var presaleTimes = i == 0 ? '1st presale': i == 1 ? '2nd presale' : (i + 1) + 'th presale';
+                            degreeHtml += "<li name='tab" + (i + 1) + "'>";
+                            degreeHtml += "    <a href='' data-toggle='tab' onclick='transactionHistList(" + degrees[i] + ")'>" + presaleTimes + " </a>";
+                            degreeHtml += "</li>";
+                        }
+                    }
+                    $("[name='degreeTab']").html(degreeHtml);
+                    if (data.curDegree) {
+                        $("[name='tab" + data.curDegree + "']").addClass("active");
+                        transactionHistList(data.curDegree)
+                    } else {
+                        $("[name='tab1']").addClass("active");
+                        transactionHistList('1');
+                    }
+                }
+            }
+            , error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+
+    // 투자내역 조회
+    function transactionHistList(degree) {
+        $.ajax({
+            url: '/mypage/transactionDegreeHistListAjax',
+            data: {'degree': degree}, 
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + token);
+            },
+            success: function(data){
+                data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                if (data.result) {
+                    var degreeList = data.degreeResultList;
+                    var pcListHtml = "";
+                    var pcFinalAmt = "";
+                    var mbListHtml = "";
+                    var mbUlStartFlg = true;
+
+                    if (degreeList && degreeList.length > 0) {
+                        for (var i = 0; i < degreeList.length; i++) {
+                            var emStart = degreeList[i].invest_status == 'I' || degreeList[i].invest_status == 'C' ? '<em>' : '';
+                            var emEnd = degreeList[i].status == 'I' || degreeList[i].invest_status == 'C' ? '</em>' : '';
+                            var coinTypeFontStart = emStart ? '' : '<span class="unit">';
+                            var coinTypeFontEnd = emEnd ? '' : '</span>';
+                            pcListHtml += "<tr>";
+                            pcListHtml += "    <td>" + degreeList[i].dmY + "</td>";
+                            pcListHtml += "    <td class='right'>" + emStart + numberWithCommas(parseFloat(degreeList[i].invest_amt).toFixed(8))  + " " + coinTypeFontStart + degreeList[i].coin_type + coinTypeFontEnd + emEnd + "</td>";
+
+                            pcListHtml += "    <td class='right'>" + emStart + numberWithCommas(parseFloat(degreeList[i].receivedAmt).toFixed(8)) + " " + coinTypeFontStart + degreeList[i].coin_type + coinTypeFontEnd + emEnd + "</td>";
+                            pcListHtml += "    <td class='right'>";
+                            if (coinTypeFontStart) {
+                                pcListHtml +=          numberWithCommas(parseFloat(degreeList[i].osbAmt).toFixed(8)) + " " + coinTypeFontStart + "OSB" + coinTypeFontEnd;
+                            } else {
+                                pcListHtml += "        <span class='gray'>" + numberWithCommas(parseFloat(degreeList[i].osbAmt).toFixed(8)) + " OSB</span>";
+                            }
+                            pcListHtml += "    </td>";
+                            pcListHtml += "    <td>";
+
+                            var investStatus = degreeList[i].invest_status == 'Y' ? '<span class="blue">Success</span>' : 
+                                                degreeList[i].invest_status == 'N' ? 'Denied' : 
+                                                degreeList[i].invest_status == 'C' ? '<em>Deposit incompleted</em>' :     // 참여하기로한 금액보다 적은 금액을 입금 시
+                                                degreeList[i].invest_status == 'I' ? '<em>Deposit incompleted</em>' : '';
+                            pcListHtml += investStatus;
+
+                            var investStatusCls = degreeList[i].invest_status == 'I' || degreeList[i].invest_status == 'C' ? 'caution': '';
+
+                            pcListHtml += "    </td>";
+                            pcListHtml += "</tr>";
+                            
+                            if (degreeList[i].invest_status == 'I' || degreeList[i].invest_status == 'C') {
+                                pcListHtml += "<tr>";
+                                pcListHtml += "    <td colspan='5'>";
+                                pcListHtml += "        <div class='trans-wrap'>";
+                                pcListHtml += "            <div class='from'>";
+                                pcListHtml += "                <span class='label trans'>From</span>";
+                                pcListHtml += "                <p class='wallet'>your wallet address to withdraw : " + degreeList[i].send_address + "</p>";
+                                pcListHtml += "            </div>";
+                                pcListHtml += "            <div class='to'>";
+                                pcListHtml += "                <span class='label trans'>To</span>";
+                                pcListHtml += "                <p class='wallet'>" + degreeList[i].coin_type + " wallet address to deposit : <span id='walletAddr" + (i + 1) + "' name='walletAddr" + (i + 1) + "'>" + degreeList[i].invest_address + "</span></p>";
+                                pcListHtml += "            </div>";
+                                pcListHtml += "            <div class='btn-wrap'>";
+                                pcListHtml += "                <button type='button' class='btn trans' onclick='btnCopy(\"walletAddr" + (i + 1) + "\")'>Copy</button>";
+                                pcListHtml += "                <button type='button' class='btn trans' onclick='showQRcode(\"" + degreeList[i].invest_address + "\")'>QR code</button>";
+                                pcListHtml += "            </div>";
+                                pcListHtml += "        </div>";
+                                pcListHtml += "    </td>";
+                                pcListHtml += "</tr>";
+
+                                mbListHtml += "<div class='status-wrap'>";
+                                mbListHtml += "    <div class='data-line'>";
+                                mbListHtml += "        <span class='left date'>" + degreeList[i].dmY + "</span>";
+                                mbListHtml += "        <span class='right status " + investStatusCls + "'>Deposit incompleted</span>";
+                                mbListHtml += "    </div>";
+                                mbListHtml += "    <div class='data-line'>";
+                                mbListHtml += "        <span class='left'>" + numberWithCommas(parseFloat(degreeList[i].receivedAmt).toFixed(8)) + "/" + numberWithCommas(parseFloat(degreeList[i].invest_amt).toFixed(8)) + " " + degreeList[i].coin_type + "</span>";
+                                mbListHtml += "        <span class='right'>" + numberWithCommas(parseFloat(degreeList[i].osbAmt).toFixed(8)) + " OSB</span>";
+                                mbListHtml += "    </div>";
+                                mbListHtml += "    <div class='trans-wrap'>";
+                                mbListHtml += "        <div class='from'>";
+                                mbListHtml += "            <div class='tit'><span class='label trans'>From</span><p class='t'>your wallet address to withdraw</p></div>";
+                                mbListHtml += "            <div class='addr'> " + degreeList[i].send_address + "</div>";
+                                mbListHtml += "        </div>";
+                                mbListHtml += "        <div class='to'>";
+                                mbListHtml += "            <div class='tit'><span class='label trans'>To</span><p class='t'>" + degreeList[i].coin_type + " wallet address to deposit</p></div>";
+                                mbListHtml += "            <div class='addr' id='walletAddr" + (i + 1) + "' name='walletAddr" + (i + 1) + "'>" + degreeList[i].invest_address + "</div>";
+                                mbListHtml += "            <div class='btn-wrap'>";
+                                mbListHtml += "                <button type='button' class='btn trans' onclick='btnCopy(\"walletAddr" + (i + 1) + "\")'>Copy</button>";
+                                mbListHtml += "                <button type='button' class='btn trans' onclick='showQRcode(\"" + degreeList[i].invest_address + "\")'>QR code</button>";
+                                mbListHtml += "            </div>";
+                                mbListHtml += "        </div>";
+                                mbListHtml += "    </div>";
+                                mbListHtml += "</div>";
+                            } else {
+                                if (mbUlStartFlg) {
+                                    mbListHtml += "<ul class='history-wrap'>";
+                                }
+                                mbUlStartFlg = false;
+                                mbListHtml += "     <li>";
+                                mbListHtml += "         <div class='data-line'>";
+                                mbListHtml += "             <span class='left date'>" + degreeList[i].dmY + "</span>";
+
+                                var investStatusCls = degreeList[i].invest_status == 'N' ? 'caution': '';
+                                var investStatusVal = degreeList[i].invest_status == 'Y' ? 'Success' : 
+                                                        degreeList[i].invest_status == 'N' ? 'Denied' :  '';
+
+                                mbListHtml += "         <span class='right status " + investStatusCls + "'>" + investStatusVal + "</span>";
+
+                                mbListHtml += "         </div>";
+                                mbListHtml += "            <div class='data-line'>";
+                                mbListHtml += "                <span class='left'>" + numberWithCommas(parseFloat(degreeList[i].receivedAmt).toFixed(8)) + "/" + numberWithCommas(parseFloat(degreeList[i].invest_amt).toFixed(8)) + " " + degreeList[i].coin_type + "</span>";
+                                mbListHtml += "                <span class='right'>" + numberWithCommas(parseFloat(degreeList[i].osbAmt).toFixed(8)) + " OSB</span>";
+                                mbListHtml += "            </div>";
+                                mbListHtml += "       </li>";   
+                            }
+                        }
+
+                        if (!mbUlStartFlg) {
+                            mbListHtml += " </ul>";
+                        }
+                        pcFinalAmt += "<tr>";
+                        pcFinalAmt += "    <th rowspan='2'>Final amount</th>";
+                        pcFinalAmt += "    <td class='right'>" + numberWithCommas(parseFloat(data.totBTCAmt).toFixed(8)) + " <span class='unit'>BTC</span></td>";
+                        pcFinalAmt += "    <th rowspan='2'>Expected amount to receive</th>";
+                        pcFinalAmt += "    <td rowspan='2'>";
+                        pcFinalAmt += "        <div class='m-line right'>";
+                        pcFinalAmt += "            <em>" + numberWithCommas(parseFloat(data.totOSBAmt).toFixed(8)) + " <span class='unit'>OSB</span></em>(" + data.bonusRate + "% bonus included)";
+                        pcFinalAmt += "        </div>";
+                        pcFinalAmt += "    </td>";
+                        pcFinalAmt += "</tr>";
+                        pcFinalAmt += "<tr>";
+                        pcFinalAmt += "    <td class='bl right'>" + numberWithCommas(parseFloat(data.totETHAmt).toFixed(8)) + " <span class='unit'>ETH</span></td>";
+                        pcFinalAmt += "</tr>";
+
+                        mbListHtml += "<div class='table-wrap list2'>";
+                        mbListHtml += "    <table>";
+                        mbListHtml += "        <colgroup>";
+                        mbListHtml += "            <col style='width:40%;'>";
+                        mbListHtml += "            <col style=''>";
+                        mbListHtml += "        </colgroup>";
+                        mbListHtml += "        <thead>";
+                        mbListHtml += "            <tr>";
+                        mbListHtml += "                <th colspan='2' class='bb2'>Total</th>";
+                        mbListHtml += "            </tr>";
+                        mbListHtml += "        </thead>";
+                        mbListHtml += "        <tbody>";
+                        mbListHtml += "            <tr>";
+                        mbListHtml += "                <th rowspan='2'>Final amount</th>";
+                        mbListHtml += "                <td class='right'>" + numberWithCommas(parseFloat(data.totBTCAmt).toFixed(8)) + " <span class='unit'>BTC</span></td>";
+                        mbListHtml += "            </tr>";
+                        mbListHtml += "            <tr>"
+                        mbListHtml += "                <td class='bl right'>" + numberWithCommas(parseFloat(data.totETHAmt).toFixed(8)) + " <span class='unit'>ETH</span></td>";
+                        mbListHtml += "            </tr>";
+                        mbListHtml += "            <tr>";
+                        mbListHtml += "                <th>Expected amount</th>";
+                        mbListHtml += "                <td class='bt right'>";
+                        mbListHtml += "                    <div class='m-line'>";
+                        mbListHtml += "                        <em>" + numberWithCommas(parseFloat(data.totOSBAmt).toFixed(8)) + " <span class='unit'>OSB</span></em>(" + data.bonusRate + "% bonus included)";
+                        mbListHtml += "                    </div>";
+                        mbListHtml += "                </td>";
+                        mbListHtml += "            </tr>";
+                        mbListHtml += "        </tbody>";
+                        mbListHtml += "    </table>";
+                        mbListHtml += "</div>";
+                    } else {
+                        pcListHtml += "<tr>";
+                        pcListHtml += "    <td>-</td>";
+                        pcListHtml += "    <td>-</td>";
+                        pcListHtml += "    <td>-</td>";
+                        pcListHtml += "    <td>-</td>";
+                        pcListHtml += "</tr>";
+
+                        pcFinalAmt += "<tr>";
+                        pcFinalAmt += "    <th rowspan='2'>Final amount</th>";
+                        pcFinalAmt += "    <td class='bl right'>- <span class='unit'>BTC</span></td>";
+                        pcFinalAmt += "    <th rowspan='2'>Expected amount to receive</th>";
+                        pcFinalAmt += "    <td rowspan='2'><div class='m-line right'><em>- <span class='unit'>OSB</span></em></div></td>";
+                        pcFinalAmt += "</tr>";
+                        pcFinalAmt += "<tr>";
+                        pcFinalAmt += "    <td class='bl right'>- <span class='unit'>ETH</span></td>";
+                        pcFinalAmt += "</tr>";
+
+                        mbListHtml = "<div class='status-wrap'><p class='no-data'>No history</p></div>";
+                    }
+                    $("#pcTransactionHistory").html(pcListHtml);
+                    $("#tokensaleHistorySum").html(pcFinalAmt);
+                    $("#mbTransactionHistory").html(mbListHtml);
+                    headerFooterPosition(); // 회면 사이즈 재설정
+                }
+            }
+            , error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+
+    function btnCopy(id) {
+        var text = $("#" + id).text();
+        if (!text) {
+            text = $("#" + id).val();
+        }
+        Clipboard.copy(text);
+        alert("Your wallet address has copied to the clipboard.");
+    }
+
+    function showQRcode(qr) {
+        $("#QRcodeDiv").modal();
+        $("#QrCode").val(qr);
+
+        $.ajax({
+            url: '/mypage/transactionQRImgAjax',
+            data: {'qrCode': qr}, 
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + token);
+            },
+            success: function(data) {
+                data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                if (data.result) {
+                    $("#QrImg").attr('src', data.qrCodeImg);
+                }
+            }
+            , error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+    
+    function setStep() {}
+</script>

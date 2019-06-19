@@ -1,0 +1,127 @@
+<script type="text/javascript" src="/js/jquery.validate.min.js"></script>
+
+        <form id="agree_form" name="agree_form">
+            <!-- Contents -->
+            <div class="mp-contents">
+                <div class="mp-tit">
+                    <h2>Precautions</h2>
+                    <p class="desc">Please read the following precautions before proceeding any further.</p>    
+                </div>
+                <section class="mp-section notice">
+                    <div class="notice-wrap">
+                        <ul class="bu-list">
+                            <li><span class="bu">1.</span>Restrictions on purchase. A participant shall not be eligible to participate in the token sale and must not purchase the tokens if the participant is:
+                                <ul>
+                                    <li>a) a citizen, resident (tax or otherwise), or a person located or domiciled in Congo, North Korea, Eritrea, Iran, Libya, Somalia, South Sudan, Sudan, Yemen, or a country or jurisdiction in which its participation in the token sale may be prohibited or restricted by applicable laws;</li>
+                                    <li>b) if the participant is a citizen, resident (tax or otherwise) or a person located or domiciled in Singapore or the United States of America, where the participant does not qualify as an accredited investor or institutional investor (each as defined under the relevant laws of Singapore or the United States of America, as the case may be).</li>
+                                </ul>
+                            </li>
+                            <li><span class="bu">2.</span>Participation in the token sale and purchase of the tokens involve a high degree of risk. Potential token holders should carefully consider and evaluate all risks and uncertainties associated with a purchase of OSB tokens.</li>
+                            <li><span class="bu">3.</span>Do not use the exchange or the emulator wallets when transferring tokens for participation.</li>
+                            <li><span class="bu">4.</span>The accepted participation amount will be the actual transferred amount (excluding transaction fee) and NOT the registered amount for participation.</li>
+                            <li><span class="bu">5.</span>Tokens that are transferred within the token sales period and more than the minimum participation limit will be accepted.</li>
+                            <li><span class="bu">6.</span>Neither Foundation Oasis nor its related corporations will be responsible or liable for any damages or losses caused due to the participant’s mistake in registering the wrong wallet address.</li>
+                            <li><span class="bu">7.</span>Important notifications and information related to OASISlBloc will be sent via email where the participants should be aware of the email address used when registering to the OASISBloc website.</li>
+                            <li><span class="bu">8.</span>Participants must ensure that all information supplied for KYC to participate in the token sale is accurate, complete and not misleading, and to promptly notify if any changes are made. Participation may be cancelled or rejected in the event of submitting misleading or false information by the participant for KYC where the participant will be held liable for any penalties that may arise and may be subject to legal sanctions.</li>
+                            <li><span class="bu">9.</span>For institutional or corporate participants, the top 5 shareholders should proceed with KYC if there is no shareholder with more than 20% of stake.</li>
+                            <li><span class="bu">10.</span>Institutional or corporate shareholders proceeding with KYC must complete registration and KYC through this website. Then the legal representative must register the information (name, registration code) of the relevant shareholder in the profile.</li>
+                            <li><span class="bu">11.</span>The process for distribution of OSB tokens will be as follows: 
+                                <ul>
+                                    <li>1) the ‘Exchange’ menu will appear once the token sales ends;</li>
+                                    <li>2) create OSB wallet;</li>
+                                    <li>3) send OSB wallet address as instructed;</li>
+                                    <li>4) wallet address and the participated amount will be checked;</li>
+                                    <li>5) the relevant amount of OSB tokens will be sent to the registered OSB wallet address.</li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <div class="notice-checklist">
+                    <p>I have read the above precautions and hereby agree to the following:</p>
+                    <ul>
+                        <li>
+                            <label class="fm-check">
+                                <input type="checkbox" name="agree_except_Nation" id="agree_except_Nation">
+                                <span class="txt">I am not subject to the participation restriction stated in the Terms and Conditions.</span>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="fm-check">
+                                <input type="checkbox" name="agree_role" id="agree_role">
+                                <span class="txt">I have read the OASISBloc Token Sale Terms and Conditions and the Privacy Policy.</span>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="fm-check">
+                                <input type="checkbox" name="agree_kyc_n_aml" id="agree_kyc_n_aml">
+                                <span class="txt">I have acknowledged that KYC & AML procedures are required to participate in the token sales.</span>
+                            </label>
+                        </li>
+                        <li>
+                            <label class="fm-check">
+                                <input type="checkbox" name="agree_risk" id="agree_risk">
+                                <span class="txt">I have acknowledged that participating in the token sales and purchasing tokens involve high risk where there may be losses.</span>
+                            </label>
+                        </li>
+                    </ul>
+                </div>
+
+                <div class="btn-wrap">
+                    <button type="button" class="btn join" id="joinTokenSale" disabled>Proceed participation</button>
+                </div>
+            </div>
+            <!-- //Contents -->
+        </form>
+
+<script>
+    $(function() {
+        $("[name='lProfile']").addClass("active");
+        $("#mMenuLayer").text("Profile");
+
+        var token = localStorage.getItem('access_token');
+
+        $("input[type='checkbox']").click(function() {
+            checkBox();
+        });
+        
+        $("#joinTokenSale").click(function() {
+            $.ajax({
+                url: '/mypage/agreeTokenSaleAjax',
+                type: 'POST',
+                dataType: 'json',
+                data: {'all_agree_token_sale': 'Y'},
+                beforeSend: function (xhr) {
+                    xhr.setRequestHeader('Authorization', "Bearer " + token);
+                },
+                success: function(data){
+                    data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                    if (data.result) {
+                        location.href = '/mypage/profile'
+                    } else {
+                        location.href = '/login';
+                    }
+                }
+                , error: function(error) {
+                    alert('Error occurred.');
+                }
+            });
+        });
+
+    });
+
+    function checkBox() {
+        var check1 = $("#agree_except_Nation").is(":checked");
+        var check2 = $("#agree_role").is(":checked");
+        var check3 = $("#agree_kyc_n_aml").is(":checked");
+        var check4 = $("#agree_risk").is(":checked");
+        if (check1 && check2 && check3 && check4) {
+            $("#joinTokenSale").prop('disabled', false);
+        } else {
+            $("#joinTokenSale").prop('disabled', true);
+        }
+    }
+
+    function setStep(info) {}
+
+</script>

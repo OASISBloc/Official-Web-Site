@@ -1,0 +1,155 @@
+<!-- TEST용 PAGE-->
+<div>
+    <span>이름 : <label id="name"></label></span>
+    <span></span>
+</div>
+<div>
+    <span>email : <label id="email"></label></span>
+    <input type="hidden" id="userEmail" />
+    <span></span>
+</div>
+<div>
+    <span>phone : <label id="phone"></label></span>
+    <span></span>
+</div>
+<div>
+    <span>userUuid : <label id="userUuid"></label></span>
+    <span></span>
+</div>
+
+<br />
+<br />
+<!-- <button id="qrcode_create" onclick="createQRcode();">Create QRcode</button>
+<div id="imgQrcode">
+<button id="qrcode_remove" onclick="removeQRcode();">Remove QRcode</button>
+<button id="logout" onclick="logout();">Logout</button> -->
+    
+</div>
+
+<script>
+    $(function() {
+        $.ajax({
+            url: '/mypage/myInfoAjax',
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', `Bearer ${token}`);
+            },
+            success: function(data) {
+                if (data.result) {
+                    var myInfo = data.myInfo;
+                    var name = `${myInfo.user_first_name} ${myInfo.user_last_name}`;
+                    var email = myInfo.user_email;
+                    var phone = myInfo.user_phone;
+                    var userUuid = myInfo.user_uuid;
+                    $("#name").text(name);
+                    $("#email").text(email);
+                    $("#userEmail").val(email);
+                    $("#phone").text(phone);
+                    $("#userUuid").text(userUuid);
+                    
+                    if(myInfo.secretKey != null){
+
+                    }
+                } else {
+                    alert(data.message);
+                    if (data.loginFlg) {
+                        location.href = '/login';
+                    }
+                }
+            },
+            error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    });
+
+    function removeQRcode(){
+        $.ajax({
+            url: '/mypage/removeQRcodeAjax',
+            type: 'POST',
+            dataType:'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', `Bearer ${localStorage.getItem('access_token')}`);
+            },
+            success : function(){
+                alert("Your OTP has been deleted.")
+            }
+
+        })
+    }
+
+    // OTP QRCode 생성
+    function createQRcode() {
+        $.ajax({
+            url: '/mypage/createQRcodeAjax',
+            type: 'POST',
+            data: {'userEmail': $("#userEmail").val()},
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', `Bearer ${localStorage.getItem('access_token')}`);
+            },
+            success: function(data) {
+                data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                if (data.result) {
+                    var innerHtml = `
+                            <div>
+                                <img src='${data.qrcode}'>
+                                <input type='hidden' id='secretKey' value='${data.secretKey}'>
+                                <input type='hidden' id='secretAsciiKey' value='${data.secretAsciiKey}'>
+                            </div>
+                            <div>
+                                <span>
+                                    user password : <input type='password' id='user_pwd'>
+                                </span>
+                                <span>
+                                    otp number : <input type='text' id='user_otp'>
+                                </span>
+                            </div>
+                            <button onclick='createOTP();'>otp 등록</button>
+                        `;
+                    $("#imgQrcode").append(innerHtml);
+                } else {
+                    alert(data.message);
+                    if (data.loginFlg) {
+                        location.href = '/login';
+                    }
+                }
+
+            },
+            error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+
+    // OTP 등록
+    function createOTP() {
+        $.ajax({
+            url: '/mypage/createOTPAjax',
+            type: 'POST',
+            data: {'secretKey': $("#secretKey").val(), 'secretAsciiKey': $("#secretAsciiKey").val(), 'user_pwd': $("#user_pwd").val(), 'user_otp': $("#user_otp").val()},
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', `Bearer ${localStorage.getItem('access_token')}`);
+            },
+            success: function(data) {
+                data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                if (data.result) {
+                    alert(data.message);
+                    location.href = "/mypage/mypage";
+                } else {
+                    alert(data.message);
+                    if (data.loginFlg) {
+                        location.href = '/login';
+                    }
+                }
+
+            },
+            error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+
+</script>

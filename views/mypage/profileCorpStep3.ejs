@@ -1,0 +1,136 @@
+		<!-- Contents -->
+		<div class="mp-contents">
+			<div class="mp-tit">
+                <h2>Profile</h2>
+                <p class="desc">Please double-check the registered details of shareholders.</p>
+            </div>
+            <section class="mp-section step">
+                <div class="step-head cf">
+                    <div class="s-tit">
+                        <em class="n">Step 3</em><span class="t">Shareholders detail</span>
+                    </div>
+                    <div class="step">
+                        <ul>
+                            <li>1</li>
+                            <li>2</li>
+                            <li class="active">3</li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="step-body">
+                    <form action="">
+                        <!-- input[type=hidden] 은 여기에 넣으세요 -->
+                        <div class="form-row-group">
+                            <div class="span5 form-row only">
+                                <label class="fm-label" for="">Shareholders</label>
+                                <div class="fm-expand">
+                                    <ul class="list" id="shareholderList">
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-row-group">
+                            <div class="span5 only form-row">
+                                <label class="fm-label" for="shareHolderFile">Shareholder list</label> 
+                                <div class="fm-input clip">
+                                    <input id="shareHolderFile" type="text" value="" readonly>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="btn-wrap">
+							<button type="button" class="btn bu prev" onclick="location.href='/mypage/profileCorpStep2'">Back</button>
+							<button type="button" class="btn confirm fixed" onclick="goTokenSale()">Participate in token sale</button>
+                        </div>
+                    </form>
+                </div>
+            </section>
+            <div class="precaution">
+                <div class="tit">Precaution</div>
+                <ul class="list">
+                    <li><span class="num">1.</span><span class="txt">Please contact us to change the Company information.</span></li>
+                    <li><span class="num">2.</span><span class="txt">The admin will review and may request for additional documents.</span></li>    
+                </ul>
+            </div>
+    
+    
+		</div>
+        <!-- //Contents -->
+
+<script>
+    $(function() {
+        $("[name='lProfile']").addClass("active");
+        $("#mMenuLayer").text("Profile");
+
+        getProfileCorpStep3();
+    });
+
+    // 1. 법인 회원 프로파일 정보 조회
+    function getProfileCorpStep3() {
+        $.ajax({
+            url: '/mypage/profileCorpStep3Ajax',
+            type: 'POST',
+            dataType: 'json',
+            beforeSend: function (xhr) {
+                xhr.setRequestHeader('Authorization', "Bearer " + token);
+            },
+            success: function(data){
+                data.refToken ? localStorage.setItem('access_token', data.refToken) : '';
+                if (data.result) {
+                    var memProfile = data.memProfile[0];
+                    if (memProfile.complete_yn == 'Y') {
+                        var memProfileList = data.memProfile;
+                        var innerHtml = "";
+                        var tokenFlg = true;
+                        for (var i = 0; i < memProfileList.length; i++) {
+                            if (memProfileList[i].sh_name) {
+                                innerHtml += "<li>";
+                                innerHtml += "    <div class='ex-wrap list'>";
+                                innerHtml += "        <div class='fm-input'>";
+                                innerHtml += "            <input type='text' name='shName[]' id='shName_" + i + "' value='" + memProfileList[i].sh_name + "' readonly>";
+                                innerHtml += "        </div>";
+                                innerHtml += "        <div class='fm-input'>";
+                                innerHtml += "            <input type='text' name='shUserSeq[]' id='shUserSeq_" + i + "' value='" + memProfileList[i].sh_user_seq +"' readonly>";
+                                innerHtml += "        </div>";
+                                innerHtml += "    </div>";
+                                innerHtml += "</li>";
+
+                                // if (tokenFlg && memProfileList[i].kyc_yn == 'N') {
+                                //     tokenFlg = false;
+                                // }
+                            }
+                        }
+                        $("#shareholderList").html(innerHtml);
+                        // if (tokenFlg) $("#btnTokenSale").attr("disabled", false);
+                        if (data.memAttachFiles) {
+                            var attachFiles = data.memAttachFiles;
+                            for (var i = 0; i < attachFiles.length; i++) {
+                                if (attachFiles[i].attach_type == 'S') {
+                                    $("#shareHolderFile").val(attachFiles[i].org_filename);
+                                }
+                            }
+                        }
+                        headerFooterPosition(); // 회면 사이즈 재설정
+                    } else {
+                        location.href = '/mypage/profile';
+                    }
+                } else {
+                    alert(data.message);
+                    if (data.loginFlg) {
+                        location.href = '/login';
+                    }
+                }
+            }
+            , error: function(error) {
+                alert('Error occurred.');
+            }
+        });
+    }
+
+    // proceed
+    function goTokenSale() {
+        location.href = '/mypage/tokenSale1';
+    }
+
+    function setStep(info) {}
+
+</script>
