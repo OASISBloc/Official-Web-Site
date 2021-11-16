@@ -6,7 +6,7 @@
     "start": "node ./bin/www"
   },
   "dependencies": {
-    "aws-sdk": "^2.279.1",
+    "aws-sdk": "^2.814.0",
     "aws-xray-sdk": "^2.2.0",
     "bitcoin-core": "^2.0.0",
     "body-parser": "^1.18.3",
